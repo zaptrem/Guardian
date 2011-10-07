@@ -3,6 +3,7 @@ package org.guardian;
 import static org.guardian.util.BukkitUtils.info;
 import static org.guardian.util.BukkitUtils.severe;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -56,7 +57,7 @@ public class Guardian extends JavaPlugin
 	/**
 	 * Returns all log matching specified parameters. Also intern methods should use this.
 	 **/
-	public List<DataEntry> getLog(QueryParams params) {
+	public List<DataEntry> getLog(QueryParams params) throws SQLException {
 		return database.getEntries(params);
 	}
 
@@ -77,7 +78,7 @@ public class Guardian extends JavaPlugin
 	/**
 	 * Deletes all log matching specified parameters. Also intern methods should use this.
 	 **/
-	public void clearLog(QueryParams params) {
-		database.deleteEntries(params);
+	public void clearLog(QueryParams params) throws SQLException {
+		database.removeEntries(params);
 	}
 }

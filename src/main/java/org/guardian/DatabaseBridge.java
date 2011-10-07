@@ -11,17 +11,17 @@ public interface DatabaseBridge extends Closeable
 	/**
 	 * Returns all log matching specified parameters. Database specific implementing of getLog()
 	 **/
-	List<DataEntry> getEntries(QueryParams params);
+	List<DataEntry> getEntries(QueryParams params) throws SQLException;
 
 	/**
 	 * Performs a single insert.
 	 **/
-	void addEntry(DataEntry entry);
+	void addEntry(DataEntry entry) throws SQLException;
 
 	/**
 	 * Deletes all entries from database matching specified parameters.
 	 **/
-	void deleteEntries(QueryParams params);
+	void removeEntries(QueryParams params) throws SQLException;
 
 	/**
 	 * Deletes entries from database.
@@ -29,12 +29,20 @@ public interface DatabaseBridge extends Closeable
 	 * @param entries
 	 * DataEntries to be deleted. Id must be set.
 	 **/
-	void deleteEntries(List<DataEntry> entries);
+	void removeEntries(List<DataEntry> entries) throws SQLException;
 
 	/**
-	 * Checks whether the DBMS runs/works.
+	 * Sets rollbacked column.
+	 * 
+	 * @param entries
+	 * DataEntries to be modified. Id must be set.
 	 **/
-	boolean test() throws Exception;
+	void setRollbacked(List<DataEntry> entries, boolean rollbacked) throws SQLException;
+
+	/**
+	 * Checks whether the connection works. Can be implemented as ping.
+	 **/
+	boolean test() throws SQLException;
 
 	/**
 	 * Creates tables if necessary

@@ -10,7 +10,7 @@ import org.guardian.entries.DataEntry;
 public class Rollback implements Runnable
 {
 	private final Queue<DataEntry> entries;
-	private int taskId = -1;
+	private final int taskId;
 
 	Rollback(List<DataEntry> entries) {
 		this.entries = new LinkedBlockingQueue<DataEntry>(entries);
@@ -22,8 +22,9 @@ public class Rollback implements Runnable
 		final int counter = 0;
 		while (!entries.isEmpty() && counter < 1000) {
 			final DataEntry entry = entries.poll();
-			for (final BlockState state : entry.getRollbackBlockStates())
-				state.update();
+			if (!entry.isRollbacked())
+				for (final BlockState state : entry.getRollbackBlockStates())
+					state.update();
 		}
 		if (entries.isEmpty())
 			Bukkit.getScheduler().cancelTask(taskId);
