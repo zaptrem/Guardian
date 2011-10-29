@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.permissions.PermissionDefault;
 import org.guardian.tools.Tool;
 import org.guardian.tools.ToolBehavior;
 import org.guardian.tools.ToolMode;
+import org.guardian.util.BukkitUtils;
 
 public class Config {
 
@@ -28,7 +28,7 @@ public class Config {
         user = config.getString("mysql.user");
         password = config.getString("mysql.password");
         debug = config.getBoolean("debug", false);
-        
+
         final ConfigurationSection configSec = config.getConfigurationSection("tools");
         final Set<String> toolNames = configSec.getKeys(false);
         final List<Tool> tools = new ArrayList<Tool>();
@@ -47,7 +47,7 @@ public class Config {
                 final PermissionDefault pdef = PermissionDefault.valueOf(config.getString(path + ".permissionDefault").toUpperCase());
                 tools.add(new Tool(toolName, aliases, leftClickBehavior, rightClickBehavior, defaultEnabled, item, null, mode, pdef));
             } catch (final Exception ex) {
-                Guardian.logger.log(Level.WARNING, "Error at parsing tool '" + toolName + "':)", ex);
+                BukkitUtils.warning("Error at parsing tool '" + toolName + "':)", ex);
             }
         }
         toolsByName = new HashMap<String, Tool>();
@@ -57,8 +57,11 @@ public class Config {
             toolsByName.put(tool.name, tool);
             for (final String alias : tool.aliases) {
                 toolsByName.put(alias, tool);
-
             }
         }
+    }
+
+    public static boolean isLogged(ActionType action) {
+        return true;
     }
 }

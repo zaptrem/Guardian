@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,9 +21,8 @@ public class Guardian extends JavaPlugin {
     private static Guardian guardian;
     private boolean errorWhileLoading = false;
     private DatabaseBridge database = null;
-
     private GuardianCommandExecutor commandExecutor;
-    
+
     public static Guardian getInstance() {
         return guardian;
     }
@@ -35,18 +35,24 @@ public class Guardian extends JavaPlugin {
     @Override
     public void onEnable() {
         final PluginManager pm = getServer().getPluginManager();
+
         Config.load(this);
-        if (errorWhileLoading) {
-            pm.disablePlugin(this);
-            return;
-        }
+
         Plugin we = pm.getPlugin("WorldEdit");
         if (we != null) {
             worldEdit = (WorldEditPlugin) we;
             BukkitUtils.info(worldEdit.getDescription().getVersion() + " has been found, selection rollbacks enabled");
         }
+
         commandExecutor = new GuardianCommandExecutor(this);
-        getCommand("guardian").setExecutor(commandExecutor);     
+        getCommand("guardian").setExecutor(commandExecutor);
+
+        if (errorWhileLoading) {
+            BukkitUtils.severe("Fatal error detected! v" + getDescription().getVersion() + " disabled");
+            pm.disablePlugin(this);
+            return;
+        }
+
         BukkitUtils.info("v" + getDescription().getVersion() + " enabled");
     }
 

@@ -18,6 +18,9 @@ permissions:
     guardian.clearlog:
         description: The ability to clear Guardian logs
         default: op
+    guardian.command:
+        description: Allows the user to see Guardian
+        default: true
     guardian.lookup:
         description: Allows the looking up of events
         default: op
