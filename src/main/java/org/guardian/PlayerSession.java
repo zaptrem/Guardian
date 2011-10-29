@@ -2,10 +2,10 @@ package org.guardian;
 
 import org.bukkit.command.CommandSender;
 
-public class PlayerSession {
+public class PlayerSession
+{
+	private final CommandSender sender;
 
-	private CommandSender sender;
-	
 	public PlayerSession(CommandSender sender) {
 		this.sender = sender;
 	}
@@ -13,8 +13,4 @@ public class PlayerSession {
 	public CommandSender getSender() {
 		return sender;
 	}
-	public void setSender(CommandSender sender) {
-		this.sender = sender;
-	}
-	
 }
