@@ -1,7 +1,7 @@
 name: Guardian
 version: 0.1
-description: Bukkit plugin to automatically group bPermissions users when they enter a password
-authors: [Ol]
+description: The future of griefer tracking and rollback for Bukkit
+authors: [oliverw92, DiddiZ, md_5]
 website: https://github.com/Guardian-Security/Guardian
 
 main: org.guardian.Guardian
