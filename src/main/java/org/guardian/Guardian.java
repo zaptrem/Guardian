@@ -1,11 +1,14 @@
 package org.guardian;
 
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.guardian.commands.GuardianCommandExecutor;
 import org.guardian.entries.DataEntry;
 import org.guardian.params.QueryParams;
 import org.guardian.util.BukkitUtils;
@@ -13,10 +16,13 @@ import org.guardian.util.BukkitUtils;
 public class Guardian extends JavaPlugin {
 
     public static final Logger logger = Bukkit.getLogger();
+    public WorldEditPlugin worldEdit = null;
     private static Guardian guardian;
     private boolean errorWhileLoading = false;
     private DatabaseBridge database = null;
 
+    private GuardianCommandExecutor commandExecutor;
+    
     public static Guardian getInstance() {
         return guardian;
     }
@@ -34,6 +40,13 @@ public class Guardian extends JavaPlugin {
             pm.disablePlugin(this);
             return;
         }
+        Plugin we = pm.getPlugin("WorldEdit");
+        if (we != null) {
+            worldEdit = (WorldEditPlugin) we;
+            BukkitUtils.info(worldEdit.getDescription().getVersion() + " has been found, selection rollbacks enabled");
+        }
+        commandExecutor = new GuardianCommandExecutor(this);
+        getCommand("guardian").setExecutor(commandExecutor);     
         BukkitUtils.info("v" + getDescription().getVersion() + " enabled");
     }
 

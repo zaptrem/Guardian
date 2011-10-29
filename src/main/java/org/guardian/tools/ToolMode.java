@@ -2,11 +2,12 @@ package org.guardian.tools;
 
 public enum ToolMode {
 
-    CLEARLOG("logblock.clearlog"),
-    LOOKUP("logblock.lookup"),
-    REDO("logblock.rollback"),
-    ROLLBACK("logblock.rollback"),
-    WRITELOGFILE("logblock.rollback");
+    CLEARLOG("guardian.clearlog"),
+    LOOKUP("guardian.lookup"),
+    REDO("guardian.redo"),
+    ROLLBACK("guardian.rollback"),
+    UNDO("guardian.undo"),
+    WRITELOGFILE("guardian.writelog");
     private final String permission;
 
     private ToolMode(String permission) {

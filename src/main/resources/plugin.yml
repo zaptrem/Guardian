@@ -1,7 +1,35 @@
 name: Guardian
 version: 0.1
 description: Bukkit plugin to automatically group bPermissions users when they enter a password
-author: md_5
-website: https://github.com/md-5/Vote4Diamndz
+authors: [Ol]
+website: https://github.com/Guardian-Security/Guardian
 
 main: org.guardian.Guardian
+
+softdepend: [WorldEdit]
+
+commands:
+  guardian:
+    description: Access to the main Guardian command
+    aliases: gd
+    permission: guardian.command
+    
+permissions:
+    guardian.clearlog:
+        description: The ability to clear Guardian logs
+        default: op
+    guardian.lookup:
+        description: Allows the looking up of events
+        default: op
+    guardian.redo:
+        description: The ability to redo an undone rollback 
+        default: op
+    guardian.rollback:
+        description: Allows the rollbacking of events
+        default: op
+    guardian.undo:
+        description: The ability to undo a rollback
+        default: op
+    guardian.writelog:
+        description: The ability to write a log based on the previous rollback
+        default: op
