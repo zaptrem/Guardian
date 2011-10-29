@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,10 +17,10 @@ public class Guardian extends JavaPlugin {
 
     public static final Logger logger = Bukkit.getLogger();
     public WorldEditPlugin worldEdit = null;
+    public GuardianCommandExecutor commandExecutor;
     private static Guardian guardian;
     private boolean errorWhileLoading = false;
     private DatabaseBridge database = null;
-    private GuardianCommandExecutor commandExecutor;
 
     public static Guardian getInstance() {
         return guardian;
