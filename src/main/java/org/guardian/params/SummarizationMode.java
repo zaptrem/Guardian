@@ -1,5 +1,6 @@
 package org.guardian.params;
 
 public enum SummarizationMode {
-	NONE, PLAYERS, TYPES
+
+    NONE, PLAYERS, TYPES
 }

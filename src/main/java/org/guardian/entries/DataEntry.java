@@ -6,94 +6,94 @@ import org.bukkit.Location;
 import org.bukkit.block.BlockState;
 import org.guardian.ActionType;
 
-public abstract class DataEntry
-{
-	protected static final SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
-	protected int id;
-	protected ActionType action;
-	protected long date;
-	protected String playerName;
-	protected String worldName;
-	protected Location loc;
-	protected boolean rollbacked;
-	protected String pluginName;
-	protected List<DataEntry> children;
+public abstract class DataEntry {
 
-	public int getId() {
-		return id;
-	}
+    protected static final SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
+    protected int id;
+    protected ActionType action;
+    protected long date;
+    protected String playerName;
+    protected String worldName;
+    protected Location loc;
+    protected boolean rollbacked;
+    protected String pluginName;
+    protected List<DataEntry> children;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public ActionType getAction() {
-		return action;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setAction(ActionType action) {
-		this.action = action;
-	}
+    public ActionType getAction() {
+        return action;
+    }
 
-	public long getDate() {
-		return date;
-	}
+    public void setAction(ActionType action) {
+        this.action = action;
+    }
 
-	public void setDate(long date) {
-		this.date = date;
-	}
+    public long getDate() {
+        return date;
+    }
 
-	public String getPlayerName() {
-		return playerName;
-	}
+    public void setDate(long date) {
+        this.date = date;
+    }
 
-	public void setPlayerName(String playerName) {
-		this.playerName = playerName;
-	}
+    public String getPlayerName() {
+        return playerName;
+    }
 
-	public String getWorldName() {
-		return worldName;
-	}
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
 
-	public void setWorldName(String worldName) {
-		this.worldName = worldName;
-	}
+    public String getWorldName() {
+        return worldName;
+    }
 
-	public Location getLocation() {
-		return loc;
-	}
+    public void setWorldName(String worldName) {
+        this.worldName = worldName;
+    }
 
-	public void setLocation(Location loc) {
-		this.loc = loc;
-	}
+    public Location getLocation() {
+        return loc;
+    }
 
-	public boolean isRollbacked() {
-		return rollbacked;
-	}
+    public void setLocation(Location loc) {
+        this.loc = loc;
+    }
 
-	public void setRollbacked(boolean rollbacked) {
-		this.rollbacked = rollbacked;
-	}
+    public boolean isRollbacked() {
+        return rollbacked;
+    }
 
-	public String getPluginName() {
-		return pluginName;
-	}
+    public void setRollbacked(boolean rollbacked) {
+        this.rollbacked = rollbacked;
+    }
 
-	public void setPluginName(String pluginName) {
-		this.pluginName = pluginName;
-	}
+    public String getPluginName() {
+        return pluginName;
+    }
 
-	public List<DataEntry> getChildren() {
-		return children;
-	}
+    public void setPluginName(String pluginName) {
+        this.pluginName = pluginName;
+    }
 
-	public void setChildren(List<DataEntry> children) {
-		this.children = children;
-	}
+    public List<DataEntry> getChildren() {
+        return children;
+    }
 
-	abstract public List<BlockState> getRollbackBlockStates();
+    public void setChildren(List<DataEntry> children) {
+        this.children = children;
+    }
 
-	abstract public List<BlockState> getRebuildBlockStates();
+    abstract public List<BlockState> getRollbackBlockStates();
 
-	abstract public String getMessage();
+    abstract public List<BlockState> getRebuildBlockStates();
+
+    abstract public String getMessage();
 }

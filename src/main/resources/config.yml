@@ -1,0 +1,30 @@
+# default config.yml
+tools:
+    tool:
+        permissionDefault: 'TRUE'
+        item: 270
+        leftClickBehavior: NONE
+        params: area 0 all sum none limit 15 desc silent
+        rightClickBehavior: TOOL
+        aliases:
+        - t
+        defaultEnabled: true
+        mode: LOOKUP
+    toolblock:
+        permissionDefault: 'TRUE'
+        item: 7
+        leftClickBehavior: TOOL
+        params: area 0 all sum none limit 15 desc silent
+        rightClickBehavior: BLOCK
+        aliases:
+        - tb
+        defaultEnabled: true
+        mode: LOOKUP
+debug: false
+version: '0.1'
+mysql:
+    port: 3306
+    host: localhost
+    user: username
+    password: pass
+    database: minecraft

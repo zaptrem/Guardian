@@ -1,3 +1,7 @@
 name: Guardian
 version: 0.1
-main: org.guardian.Guardian.Guardian
+description: Bukkit plugin to automatically group bPermissions users when they enter a password
+author: md_5
+website: https://github.com/md-5/Vote4Diamndz
+
+main: org.guardian.Guardian

@@ -1,5 +1,6 @@
 package org.guardian.tools;
 
 public enum ToolBehavior {
-	TOOL, BLOCK, NONE
+
+    TOOL, BLOCK, NONE
 }
