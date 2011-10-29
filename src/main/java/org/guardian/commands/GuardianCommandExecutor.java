@@ -15,7 +15,7 @@ public class GuardianCommandExecutor implements CommandExecutor {
 
     public GuardianCommandExecutor(final Guardian plugin) {
         this.plugin = plugin;
-        
+
         //Register commands
         commands.add(new ExampleCommand());
         commands.add(new HelpCommand());
@@ -28,25 +28,29 @@ public class GuardianCommandExecutor implements CommandExecutor {
      * @param Label - String
      * @param args[] - String[]
      */
+    @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-    	
-    	//If no arg provided for guardian command, set to help by default
-    	if (args.length == 0)
-			args = new String[]{"help"};
-    	
-    	//Loop through commands to find match. Supports sub-commands
-		outer:
-		for (BaseCommand guardCmd : commands.toArray(new BaseCommand[0])) {
-			String[] cmds = guardCmd.name.split(" ");
-			for (int i = 0; i < cmds.length; i++)
-				if (i >= args.length || !cmds[i].equalsIgnoreCase(args[i])) continue outer;
-			return guardCmd.run(plugin, sender, args, label);
-		}
-    	
-    	//If no matches, just send help
-		new HelpCommand().run(plugin, sender, args, label);
-		return true;
-		
-    }
 
+        //If no arg provided for guardian command, set to help by default
+        if (args.length == 0) {
+            args = new String[]{"help"};
+        }
+
+        //Loop through commands to find match. Supports sub-commands
+        outer:
+        for (BaseCommand guardCmd : commands.toArray(new BaseCommand[0])) {
+            String[] cmds = guardCmd.name.split(" ");
+            for (int i = 0; i < cmds.length; i++) {
+                if (i >= args.length || !cmds[i].equalsIgnoreCase(args[i])) {
+                    continue outer;
+                }
+            }
+            return guardCmd.run(plugin, sender, args, label);
+        }
+
+        //If no matches, just send help
+        new HelpCommand().run(plugin, sender, args, label);
+        return true;
+
+    }
 }
