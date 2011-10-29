@@ -3,7 +3,9 @@ package org.guardian;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.permissions.PermissionDefault;
 import org.guardian.tools.Tool;
@@ -26,7 +28,9 @@ public class Config {
         user = config.getString("mysql.user");
         password = config.getString("mysql.password");
         debug = config.getBoolean("debug", false);
-        final List<String> toolNames = config.getList("tools");
+        
+        final ConfigurationSection configSec = config.getConfigurationSection("tools");
+        final Set<String> toolNames = configSec.getKeys(false);
         final List<Tool> tools = new ArrayList<Tool>();
         for (final String toolName : toolNames) {
             try {
