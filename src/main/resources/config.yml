@@ -1,4 +1,14 @@
 # default config.yml
+version: '0.1'
+mysql:
+    port: 3306
+    host: localhost
+    user: username
+    password: pass
+    database: minecraft
+debug: false
+ninja: true
+werollback: true
 tools:
     tool:
         permissionDefault: 'TRUE'
@@ -10,6 +20,7 @@ tools:
         - t
         defaultEnabled: true
         mode: LOOKUP
+        give: true
     toolblock:
         permissionDefault: 'TRUE'
         item: 7
@@ -20,12 +31,4 @@ tools:
         - tb
         defaultEnabled: true
         mode: LOOKUP
-debug: false
-ninja: true
-version: '0.1'
-mysql:
-    port: 3306
-    host: localhost
-    user: username
-    password: pass
-    database: minecraft
+        give: true

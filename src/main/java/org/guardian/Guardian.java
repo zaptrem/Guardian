@@ -10,7 +10,11 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.guardian.commands.GuardianCommandExecutor;
 import org.guardian.entries.DataEntry;
+import org.guardian.listeners.HighBlockListener;
 import org.guardian.listeners.HighPlayerListener;
+import org.guardian.listeners.MonitorBlockListener;
+import org.guardian.listeners.MonitorEntityListener;
+import org.guardian.listeners.MonitorPlayerListener;
 import org.guardian.params.QueryParams;
 import org.guardian.util.BukkitUtils;
 
@@ -22,7 +26,11 @@ public class Guardian extends JavaPlugin {
     private boolean errorWhileLoading = false;
     private DatabaseBridge database = null;
     public GuardianCommandExecutor commandExecutor;
+    public HighBlockListener highBlockListener;
     public HighPlayerListener highPlayerListener;
+    public MonitorBlockListener monitorBlockListener;
+    public MonitorEntityListener monitorEntityListener;
+    public MonitorPlayerListener monitorPlayerListener;
 
     public static Guardian getInstance() {
         return guardian;
@@ -42,13 +50,18 @@ public class Guardian extends JavaPlugin {
         Plugin we = pm.getPlugin("WorldEdit");
         if (we != null) {
             worldEdit = (WorldEditPlugin) we;
-            BukkitUtils.info("WorldEdit" + worldEdit.getDescription().getVersion() + " has been found, selection rollbacks enabled");
+            BukkitUtils.info("WorldEdit " + worldEdit.getDescription().getVersion() + " has been found, selection rollbacks enabled");
         }
 
         commandExecutor = new GuardianCommandExecutor(this);
         getCommand("guardian").setExecutor(commandExecutor);
 
+        highBlockListener = new HighBlockListener(this);
         highPlayerListener = new HighPlayerListener(this);
+        monitorBlockListener = new MonitorBlockListener(this);
+        monitorEntityListener = new MonitorEntityListener(this);
+        monitorPlayerListener = new MonitorPlayerListener(this);
+
 
         if (errorWhileLoading) {
             BukkitUtils.severe("Fatal error detected! v" + getDescription().getVersion() + " disabled");

@@ -12,5 +12,17 @@ public class MonitorPlayerListener extends PlayerListener {
 
     public MonitorPlayerListener(final Guardian plugin) {
         this.plugin = plugin;
+        Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_CHAT, this, Priority.Monitor, plugin);
+        Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_COMMAND_PREPROCESS, this, Priority.Monitor, plugin);
+        Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_BED_ENTER, this, Priority.Monitor, plugin);
+        Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_BED_LEAVE, this, Priority.Monitor, plugin);
+        Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_DROP_ITEM, this, Priority.Monitor, plugin);
+        Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_INTERACT, this, Priority.Monitor, plugin);
+        Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_JOIN, this, Priority.Monitor, plugin);
+        Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_KICK, this, Priority.Monitor, plugin);
+        Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_LOGIN, this, Priority.Monitor, plugin);
+        Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_PICKUP_ITEM, this, Priority.Monitor, plugin);
+        Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_QUIT, this, Priority.Monitor, plugin);
+        Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_TELEPORT, this, Priority.Monitor, plugin);
     }
 }

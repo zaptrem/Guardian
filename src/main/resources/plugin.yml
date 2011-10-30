@@ -33,6 +33,9 @@ permissions:
     guardian.see:
         description: The ability to sense Guardians presence when in ninja mode
         default: op
+    guardian.superpick:
+        description: The ability to use Guardians super pick
+        default: op
     guardian.undo:
         description: The ability to undo a rollback
         default: op

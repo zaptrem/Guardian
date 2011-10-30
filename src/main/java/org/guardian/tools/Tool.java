@@ -14,8 +14,10 @@ public class Tool {
     public final QueryParams params;
     public final ToolMode mode;
     public final PermissionDefault permissionDefault;
+    public final boolean giveTool;
 
-    public Tool(String name, List<String> aliases, ToolBehavior leftClickBehavior, ToolBehavior rightClickBehavior, boolean defaultEnabled, int item, QueryParams params, ToolMode mode, PermissionDefault permissionDefault) {
+    public Tool(String name, List<String> aliases, ToolBehavior leftClickBehavior, ToolBehavior rightClickBehavior,
+            boolean defaultEnabled, int item, QueryParams params, ToolMode mode, PermissionDefault permissionDefault, Boolean giveTool) {
         this.name = name;
         this.aliases = aliases;
         this.leftClickBehavior = leftClickBehavior;
@@ -25,5 +27,6 @@ public class Tool {
         this.params = params;
         this.mode = mode;
         this.permissionDefault = permissionDefault;
+        this.giveTool = giveTool;
     }
 }
