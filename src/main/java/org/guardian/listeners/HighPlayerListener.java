@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.guardian.Config;
 import org.guardian.Guardian;
@@ -29,20 +26,6 @@ public class HighPlayerListener extends PlayerListener {
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.getPlayer().hasPermission("guardian.superpick")) {
-            ItemStack item = event.getItem();
-            BlockBreakEvent e = new BlockBreakEvent(event.getClickedBlock(), event.getPlayer());
-            if (e.getBlock() != null) {
-                Bukkit.getServer().getPluginManager().callEvent(e);
-            }
-            if (!e.isCancelled() && (item.getType().equals(Material.WOOD_PICKAXE)
-                    || item.getType().equals(Material.STONE_PICKAXE) || item.getType().equals(Material.IRON_PICKAXE)
-                    || item.getType().equals(Material.GOLD_PICKAXE) || item.getType().equals(Material.DIAMOND_PICKAXE))) {
-                if (e.getBlock() != null) {
-                    e.getBlock().setType(Material.AIR);
-                }
-            }
-        }
     }
 
     @Override
