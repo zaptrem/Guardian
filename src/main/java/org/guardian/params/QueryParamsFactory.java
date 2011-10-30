@@ -2,6 +2,8 @@ package org.guardian.params;
 
 import static org.bukkit.Bukkit.getServer;
 import static org.guardian.util.Utils.isInt;
+import static org.guardian.util.Utils.join;
+import static org.guardian.util.Utils.parseTimeSpec;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -12,7 +14,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.guardian.ActionType;
 import org.guardian.Guardian;
-import org.guardian.util.Utils;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
 import com.sk89q.worldedit.bukkit.selections.Selection;
@@ -28,7 +29,7 @@ public class QueryParamsFactory
 
 	private QueryParamsFactory(Guardian guardian) {
 		this.guardian = guardian;
-		parser = new LogBlockParamsParser(guardian);
+		parser = new LogBlockParamsParser(guardian); // TODO This has to be selectable in config
 	}
 
 	public QueryParams create(CommandSender sender, List<String> args) throws IllegalArgumentException {
@@ -50,6 +51,7 @@ public class QueryParamsFactory
 				case AREA:
 					if (sender instanceof Player) {
 						params.setLocation(((Player)sender).getLocation());
+						params.setSelection(null);
 						if (paramArgs.size() == 0)
 							params.setRadius(20); // TODO Get default value from config
 						else if (isInt(paramArgs.get(0)))
@@ -64,9 +66,11 @@ public class QueryParamsFactory
 						final PluginManager pm = getServer().getPluginManager();
 						if (pm.isPluginEnabled("WorldEdit")) {
 							final Selection sel = ((WorldEditPlugin)pm.getPlugin("WorldEdit")).getSelection((Player)sender);
-							if (sel != null && sel instanceof CuboidSelection)
+							if (sel != null && sel instanceof CuboidSelection) {
 								params.setSelection(sel);
-							else
+								params.setLocation(null);
+								params.setRadius(-1);
+							} else
 								throw new IllegalArgumentException("No selection defined ");
 						} else
 							throw new IllegalArgumentException("WorldEdit is not enabled");
@@ -92,16 +96,16 @@ public class QueryParamsFactory
 					}
 					break;
 				case SINCE:
-					final String since = Utils.join(paramArgs, " ");
-					final int minutessince = Utils.parseTimeSpec(since);
+					final String since = join(paramArgs, " ");
+					final int minutessince = parseTimeSpec(since);
 					if (minutessince > 0)
 						params.setSince(minutessince);
 					else
 						throw new IllegalArgumentException("Not a valid time spec '" + since + "'");
 					break;
 				case BEFORE:
-					final String before = Utils.join(paramArgs, " ");
-					final int minutesbefore = Utils.parseTimeSpec(before);
+					final String before = join(paramArgs, " ");
+					final int minutesbefore = parseTimeSpec(before);
 					if (minutesbefore > 0)
 						params.setBefore(minutesbefore);
 					else
@@ -127,7 +131,7 @@ public class QueryParamsFactory
 					params.setNeedCoords(true);
 					break;
 				case MATCH:
-					params.setTextMatch(Utils.join(paramArgs, " "));
+					params.setTextMatch(join(paramArgs, " "));
 					break;
 				case ASC:
 					params.setOrder(Order.ASC);
@@ -148,6 +152,8 @@ public class QueryParamsFactory
 					break;
 			}
 		}
-		return null;
+		if (params.getWorlds().size() == 0)
+			params.setWorlds(getServer().getWorlds());
+		return params;
 	}
 }
