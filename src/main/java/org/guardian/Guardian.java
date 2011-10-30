@@ -10,6 +10,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.guardian.commands.GuardianCommandExecutor;
 import org.guardian.entries.DataEntry;
+import org.guardian.listeners.HighPlayerListener;
 import org.guardian.params.QueryParams;
 import org.guardian.util.BukkitUtils;
 
@@ -17,10 +18,11 @@ public class Guardian extends JavaPlugin {
 
     public static final Logger logger = Bukkit.getLogger();
     public WorldEditPlugin worldEdit = null;
-    public GuardianCommandExecutor commandExecutor;
     private static Guardian guardian;
     private boolean errorWhileLoading = false;
     private DatabaseBridge database = null;
+    public GuardianCommandExecutor commandExecutor;
+    public HighPlayerListener highPlayerListener;
 
     public static Guardian getInstance() {
         return guardian;
@@ -40,11 +42,13 @@ public class Guardian extends JavaPlugin {
         Plugin we = pm.getPlugin("WorldEdit");
         if (we != null) {
             worldEdit = (WorldEditPlugin) we;
-            BukkitUtils.info(worldEdit.getDescription().getVersion() + " has been found, selection rollbacks enabled");
+            BukkitUtils.info("WorldEdit" + worldEdit.getDescription().getVersion() + " has been found, selection rollbacks enabled");
         }
 
         commandExecutor = new GuardianCommandExecutor(this);
         getCommand("guardian").setExecutor(commandExecutor);
+
+        highPlayerListener = new HighPlayerListener(this);
 
         if (errorWhileLoading) {
             BukkitUtils.severe("Fatal error detected! v" + getDescription().getVersion() + " disabled");

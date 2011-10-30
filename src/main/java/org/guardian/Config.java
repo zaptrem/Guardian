@@ -15,6 +15,7 @@ import org.guardian.util.BukkitUtils;
 public class Config {
 
     public static String url, user, password;
+    public static boolean ninja;
     public static boolean debug;
     public static HashMap<String, Tool> toolsByName;
     public static HashMap<Integer, Tool> toolsByType;
@@ -28,6 +29,8 @@ public class Config {
         user = config.getString("mysql.user");
         password = config.getString("mysql.password");
         debug = config.getBoolean("debug", false);
+        
+        ninja = config.getBoolean("ninja");
 
         final ConfigurationSection configSec = config.getConfigurationSection("tools");
         final Set<String> toolNames = configSec.getKeys(false);

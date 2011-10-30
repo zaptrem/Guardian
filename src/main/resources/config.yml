@@ -21,6 +21,7 @@ tools:
         defaultEnabled: true
         mode: LOOKUP
 debug: false
+ninja: true
 version: '0.1'
 mysql:
     port: 3306
