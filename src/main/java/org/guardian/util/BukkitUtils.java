@@ -35,18 +35,18 @@ public class BukkitUtils {
         }
         return String.valueOf(type);
     }
-    
-	/**
-	 * Send a message to a CommandSender (can be a player or console).
-	 * Has parsing built in for &a colours, as well as `n for new line
-	 * @param player sender to send to
-	 * @param msg message to send
-	 */
-	public static void sendMessage(CommandSender player, String msg) {
 
-		player.sendMessage(msg);
-		// TODO add in line-length checking, color wrapping etc
-	}
+    /**
+     * Send a message to a CommandSender (can be a player or console).
+     * Has parsing built in for &a colours, as well as `n for new line
+     * @param player sender to send to
+     * @param msg message to send
+     */
+    public static void sendMessage(CommandSender player, String msg) {
+
+        player.sendMessage(msg);
+        // TODO add in line-length checking, color wrapping etc
+    }
 
     /**
      * Send an info level log message to console
@@ -123,6 +123,4 @@ public class BukkitUtils {
     public static double distance(Location from, Location to) {
         return Math.sqrt(Math.pow(from.getX() - to.getX(), 2) + Math.pow(from.getY() - to.getY(), 2) + Math.pow(from.getZ() - to.getZ(), 2));
     }
-
-    
 }

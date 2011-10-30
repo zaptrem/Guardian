@@ -5,7 +5,6 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
@@ -30,7 +29,7 @@ public class HighPlayerListener extends PlayerListener {
 
     @Override
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (true) {
+        if (event.getPlayer().hasPermission("guardian.superpick")) {
             ItemStack item = event.getItem();
             BlockBreakEvent e = new BlockBreakEvent(event.getClickedBlock(), event.getPlayer());
             if (e.getBlock() != null) {
@@ -48,14 +47,13 @@ public class HighPlayerListener extends PlayerListener {
 
     @Override
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
-        if (Config.ninja) {
+        if (Config.ninja && !event.getPlayer().hasPermission("guardian.see")) {
             Player player = event.getPlayer();
             String[] split = event.getMessage().split("\\s+");
             String command = split[0].substring(1);
             String args = split.length >= 2 ? split[1] : "";
 
-            if ((command.equalsIgnoreCase("plugins") || command.equalsIgnoreCase("pl")
-                    && !player.hasPermission("guardian.see"))) {
+            if ((command.equalsIgnoreCase("plugins") || command.equalsIgnoreCase("pl"))) {
                 event.setCancelled(true);
                 String message = "Plugins: ";
                 List<String> output = new ArrayList<String>();
@@ -69,13 +67,14 @@ public class HighPlayerListener extends PlayerListener {
                     message += o + ChatColor.WHITE + ", ";
                 }
                 player.sendMessage(message.substring(0, message.length() - 2));
-            }
-            if ((command.equalsIgnoreCase("version") || command.equalsIgnoreCase("ver")
-                    || command.equalsIgnoreCase("icanhasbukkit")) && args.equals("Guardian")
-                    && !player.hasPermission("guardian.see")) {
+            } else if ((command.equalsIgnoreCase("version") || command.equalsIgnoreCase("ver")
+                    || command.equalsIgnoreCase("icanhasbukkit")) && args.equals("Guardian")) {
                 event.setCancelled(true);
                 player.sendMessage("This server is not running any plugin by that name.");
                 player.sendMessage("Use /plugins to get a list of plugins.");
+            } else if (command.equalsIgnoreCase("guardian") || command.equalsIgnoreCase("gd")) {
+                event.setCancelled(true);
+                player.sendMessage("Unknown command. Type \"help\" for help.");
             }
         }
     }
