@@ -1,13 +1,7 @@
-# default config.yml
-version: '0.1'
-mysql:
-    port: 3306
-    host: localhost
-    user: username
-    password: pass
-    database: minecraft
+version: 0.1
+bridge: Guardian-MySQL-0.1-SNAPSHOT
 debug: false
-ninja: true
+ninja: false
 werollback: true
 tools:
     tool:

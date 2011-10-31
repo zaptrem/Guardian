@@ -1,8 +1,10 @@
 package org.guardian;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -62,6 +64,15 @@ public class Guardian extends JavaPlugin {
         monitorEntityListener = new MonitorEntityListener(this);
         monitorPlayerListener = new MonitorPlayerListener(this);
 
+        File dirs = new File("plugins" + File.separator + "Guardian" + File.separator + "bridges" + File.separator);
+        File file = new File("plugins" + File.separator + "Guardian" + File.separator + "bridges" + File.separator + Config.bridge);
+        dirs.mkdirs();
+        if (!file.exists()) {
+            errorWhileLoading = true;
+            BukkitUtils.severe("Could not find a valid bridge! Please check it is installed and present in config.yml");
+        } else {
+            setDatabase(DatabaseLoader.loadAddon(file));
+        }
 
         if (errorWhileLoading) {
             BukkitUtils.severe("Fatal error detected! v" + getDescription().getVersion() + " disabled");

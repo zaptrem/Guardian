@@ -15,7 +15,7 @@ import org.guardian.util.BukkitUtils;
 public class Config {
 
     public static int version;
-    public static String url, user, password;
+    public static String bridge;
     public static boolean debug;
     public static boolean ninja;
     public static boolean werollback;
@@ -29,14 +29,13 @@ public class Config {
 
         version = config.getInt("version");
 
-        url = "jdbc:mysql://" + config.getString("mysql.host") + ":" + config.getString("mysql.port") + "/" + config.getString("mysql.database");
-        user = config.getString("mysql.user");
-        password = config.getString("mysql.password");
-
+        bridge = config.getString("bridge", "Guardian-MySQL-0.1-SNAPSHOT");
+        bridge += ".jar";
         debug = config.getBoolean("debug", false);
         ninja = config.getBoolean("ninja", false);
         werollback = config.getBoolean("werollback", true);
 
+        
         final ConfigurationSection configSec = config.getConfigurationSection("tools");
         final Set<String> toolNames = configSec.getKeys(false);
         final List<Tool> tools = new ArrayList<Tool>();

@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
-<project default="guardian">
-    <target name="guardian">
+<project default="Guardian">
+    <target name="Guardian">
         <mkdir dir="lib/"/>
         <mkdir dir="bin/"/>
         <mkdir dir="release/"/>
