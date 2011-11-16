@@ -14,6 +14,11 @@ public interface DatabaseBridge extends Closeable
 	List<DataEntry> getEntries(QueryParams params) throws SQLException;
 
 	/**
+	 * Returns the count of matching specified parameters.
+	 **/
+	int getCount(QueryParams params) throws SQLException;
+
+	/**
 	 * Performs a single insert.
 	 **/
 	void addEntry(DataEntry entry) throws SQLException;
