@@ -53,4 +53,9 @@ public interface DatabaseBridge extends Closeable
 	 * Creates tables if necessary
 	 **/
 	boolean checkTables() throws SQLException;
+
+	/**
+	 * Checks whether the underlying data structure is capable to log
+	 **/
+	boolean canLog(Logging logging);
 }
