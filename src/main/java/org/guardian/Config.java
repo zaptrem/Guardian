@@ -1,7 +1,10 @@
 package org.guardian;
 
 import static org.bukkit.Bukkit.getWorld;
+import static org.guardian.util.BukkitUtils.severe;
 import static org.guardian.util.BukkitUtils.warning;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +24,7 @@ public class Config
 	public static boolean debug;
 	public static boolean ninja;
 	public static boolean werollback;
-	public static Set<World> loggedWorlds;
+	public static Map<World, WorldConfig> worlds;
 	public static List<Tool> tools;
 	public static Map<String, Tool> toolsByName;
 	public static Map<Integer, Tool> toolsByType;
@@ -42,7 +45,11 @@ public class Config
 		for (final String worldName : toStringList(config.getStringList("loggedWorlds"))) {
 			final World world = getWorld(worldName);
 			if (world != null)
-				loggedWorlds.add(world);
+				try {
+					worlds.put(world, new WorldConfig(new File(guardian.getDataFolder(), world.getWorldFolder().getName())));
+				} catch (final IOException ex) {
+					severe("Failed to save world config", ex);
+				}
 			else
 				warning("There is no world called '" + worldName + "'");
 		}
