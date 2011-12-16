@@ -4,7 +4,6 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -22,21 +21,16 @@ import org.guardian.util.BukkitUtils;
 
 public class Guardian extends JavaPlugin {
 
-    public static final Logger logger = Bukkit.getLogger();
-    public WorldEditPlugin worldEdit = null;
+    public WorldEditPlugin worldEdit;
     private static Guardian guardian;
     private boolean errorWhileLoading = false;
-    private DatabaseBridge database = null;
-    public GuardianCommandExecutor commandExecutor;
-    public HighBlockListener highBlockListener;
-    public HighPlayerListener highPlayerListener;
-    public MonitorBlockListener monitorBlockListener;
-    public MonitorEntityListener monitorEntityListener;
-    public MonitorPlayerListener monitorPlayerListener;
-
-    public static Guardian getInstance() {
-        return guardian;
-    }
+    private DatabaseBridge database;
+    private Config conf;
+    private GuardianCommandExecutor commandExecutor;
+    private HighPlayerListener highPlayerListener;
+    private MonitorBlockListener monitorBlockListener;
+    private MonitorEntityListener monitorEntityListener;
+    private MonitorPlayerListener monitorPlayerListener;
 
     @Override
     public void onLoad() {
@@ -45,27 +39,25 @@ public class Guardian extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        final PluginManager pm = getServer().getPluginManager();
-
-        Config.load(this);
-
-        Plugin we = pm.getPlugin("WorldEdit");
-        if (we != null) {
-            worldEdit = (WorldEditPlugin) we;
-            BukkitUtils.info("WorldEdit " + worldEdit.getDescription().getVersion() + " has been found, selection rollbacks enabled");
-        }
+        conf = new Config(this);
+        conf.load();
 
         commandExecutor = new GuardianCommandExecutor(this);
         getCommand("guardian").setExecutor(commandExecutor);
 
-        highBlockListener = new HighBlockListener(this);
         highPlayerListener = new HighPlayerListener(this);
         monitorBlockListener = new MonitorBlockListener(this);
         monitorEntityListener = new MonitorEntityListener(this);
         monitorPlayerListener = new MonitorPlayerListener(this);
 
+        final PluginManager pm = getServer().getPluginManager();
+        Plugin we = pm.getPlugin("WorldEdit");
+        if (we != null) {
+            worldEdit = (WorldEditPlugin) we;
+            BukkitUtils.info("WorldEdit " + worldEdit.getDescription().getVersion() + " has been found, selection rollbacks enabled");
+        }
         File dirs = new File("plugins" + File.separator + "Guardian" + File.separator + "bridges" + File.separator);
-        File file = new File("plugins" + File.separator + "Guardian" + File.separator + "bridges" + File.separator + Config.bridge);
+        File file = new File("plugins" + File.separator + "Guardian" + File.separator + "bridges" + File.separator + getConf().bridge);
         dirs.mkdirs();
         if (!file.exists()) {
             errorWhileLoading = true;
@@ -86,6 +78,10 @@ public class Guardian extends JavaPlugin {
     @Override
     public void onDisable() {
         BukkitUtils.info("v" + getDescription().getVersion() + " disabled");
+    }
+
+    public static Guardian getInstance() {
+        return guardian;
     }
 
     /**
@@ -123,5 +119,12 @@ public class Guardian extends JavaPlugin {
      **/
     public void clearLog(QueryParams params) throws SQLException {
         database.removeEntries(params);
+    }
+
+    /**
+     * @return the config
+     */
+    public Config getConf() {
+        return conf;
     }
 }

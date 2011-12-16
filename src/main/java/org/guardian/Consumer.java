@@ -4,8 +4,8 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Level;
 import org.guardian.entries.DataEntry;
+import org.guardian.util.BukkitUtils;
 
 public class Consumer implements Runnable {
 
@@ -23,7 +23,7 @@ public class Consumer implements Runnable {
         try {
             // TODO
         } catch (final Exception ex) {
-            Guardian.logger.log(Level.SEVERE, "[Guardian Consumer] Exception: ", ex);
+            BukkitUtils.severe("[Guardian Consumer] Exception: ", ex);
         } finally {
             // TODO Release connection
             lock.unlock();

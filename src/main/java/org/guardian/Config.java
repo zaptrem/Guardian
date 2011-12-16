@@ -17,83 +17,95 @@ import org.guardian.tools.Tool;
 import org.guardian.tools.ToolBehavior;
 import org.guardian.tools.ToolMode;
 
-public class Config
-{
-	public static int version;
-	public static String bridge;
-	public static boolean debug;
-	public static boolean ninja;
-	public static boolean werollback;
-	public static Map<World, WorldConfig> worlds;
-	public static List<Tool> tools;
-	public static Map<String, Tool> toolsByName;
-	public static Map<Integer, Tool> toolsByType;
+public class Config {
 
-	static void load(Guardian guardian) {
-		final FileConfiguration config = guardian.getConfig();
-		config.options().copyDefaults(true);
-		guardian.saveConfig();
+    public int version;
+    public String bridge;
+    public boolean debug;
+    public boolean ninja;
+    public boolean werollback;
+    public Map<World, WorldConfig> worlds;
+    public List<Tool> tools;
+    public Map<String, Tool> toolsByName;
+    public Map<Integer, Tool> toolsByType;
+    private Guardian plugin;
 
-		version = config.getInt("version");
+    public Config(final Guardian plugin) {
+        this.plugin = plugin;
+    }
 
-		bridge = config.getString("bridge", "Guardian-MySQL-0.1-SNAPSHOT");
-		if (!bridge.endsWith(".jar"))
-			bridge += ".jar";
-		debug = config.getBoolean("debug", false);
-		ninja = config.getBoolean("ninja", false);
+    public void load() {
+        final FileConfiguration config = plugin.getConfig();
+        config.options().copyDefaults(true);
+        plugin.saveConfig();
 
-		for (final String worldName : toStringList(config.getStringList("loggedWorlds"))) {
-			final World world = getWorld(worldName);
-			if (world != null)
-				try {
-					worlds.put(world, new WorldConfig(new File(guardian.getDataFolder(), world.getWorldFolder().getName())));
-				} catch (final IOException ex) {
-					severe("Failed to save world config", ex);
-				}
-			else
-				warning("There is no world called '" + worldName + "'");
-		}
+        version = config.getInt("version");
 
-		final Set<String> toolNames = config.getConfigurationSection("tools").getKeys(false);
-		tools = new ArrayList<Tool>();
-		for (final String toolName : toolNames)
-			try {
-				final String path = "tools." + toolName;
-				final List<String> aliases = toStringList(config.getList(path + ".aliases", null));
-				final ToolBehavior leftClickBehavior = ToolBehavior.valueOf(config.getString(path + ".leftClickBehavior").toUpperCase());
-				final ToolBehavior rightClickBehavior = ToolBehavior.valueOf(config.getString(path + ".rightClickBehavior").toUpperCase());
-				final boolean defaultEnabled = config.getBoolean(path + ".defaultEnabled", false);
-				final int item = config.getInt(path + ".item", 0);
-				// TODO
-				// final QueryParams params = new QueryParams();
-				// params.prepareToolQuery = true;
-				// params.parseArgs(Bukkit.getConsoleSender(), Arrays.asList(config.getString(path + ".params").split(" ")));
-				final ToolMode mode = ToolMode.valueOf(config.getString(path + ".mode").toUpperCase());
-				final PermissionDefault pdef = PermissionDefault.valueOf(config.getString(path + ".permissionDefault").toUpperCase());
-				final boolean giveTool = config.getBoolean(path + ".giveTool", true);
-				tools.add(new Tool(toolName, aliases, leftClickBehavior, rightClickBehavior, defaultEnabled, item, null, mode, pdef, giveTool));
-			} catch (final Exception ex) {
-				warning("Error at parsing tool '" + toolName + "':)", ex);
-			}
-		toolsByName = new HashMap<String, Tool>();
-		toolsByType = new HashMap<Integer, Tool>();
-		for (final Tool tool : tools) {
-			toolsByType.put(tool.item, tool);
-			toolsByName.put(tool.name, tool);
-			for (final String alias : tool.aliases)
-				toolsByName.put(alias, tool);
-		}
-	}
+        bridge = config.getString("bridge", "Guardian-MySQL-0.1-SNAPSHOT");
+        if (!bridge.endsWith(".jar")) {
+            bridge += ".jar";
+        }
+        debug = config.getBoolean("debug", false);
+        ninja = config.getBoolean("ninja", false);
 
-	public static List<String> toStringList(List<?> list) {
-		if (list == null)
-			return new ArrayList<String>();
-		final List<String> strs = new ArrayList<String>(list.size());
-		for (final Object obj : list)
-			if (obj instanceof String)
-				strs.add((String)obj);
-			else
-				strs.add(String.valueOf(obj));
-		return strs;
-	}
+        for (final String worldName : toStringList(config.getStringList("loggedWorlds"))) {
+            final World world = getWorld(worldName);
+            if (world != null) {
+                try {
+                    worlds.put(world, new WorldConfig(new File(plugin.getDataFolder(), world.getWorldFolder().getName())));
+                } catch (final IOException ex) {
+                    severe("Failed to save world config", ex);
+                }
+            } else {
+                warning("There is no world called '" + worldName + "'");
+            }
+        }
+
+        final Set<String> toolNames = config.getConfigurationSection("tools").getKeys(false);
+        tools = new ArrayList<Tool>();
+        for (final String toolName : toolNames) {
+            try {
+                final String path = "tools." + toolName;
+                final List<String> aliases = toStringList(config.getList(path + ".aliases", null));
+                final ToolBehavior leftClickBehavior = ToolBehavior.valueOf(config.getString(path + ".leftClickBehavior").toUpperCase());
+                final ToolBehavior rightClickBehavior = ToolBehavior.valueOf(config.getString(path + ".rightClickBehavior").toUpperCase());
+                final boolean defaultEnabled = config.getBoolean(path + ".defaultEnabled", false);
+                final int item = config.getInt(path + ".item", 0);
+                // TODO
+                // final QueryParams params = new QueryParams();
+                // params.prepareToolQuery = true;
+                // params.parseArgs(Bukkit.getConsoleSender(), Arrays.asList(config.getString(path + ".params").split(" ")));
+                final ToolMode mode = ToolMode.valueOf(config.getString(path + ".mode").toUpperCase());
+                final PermissionDefault pdef = PermissionDefault.valueOf(config.getString(path + ".permissionDefault").toUpperCase());
+                final boolean giveTool = config.getBoolean(path + ".giveTool", true);
+                tools.add(new Tool(toolName, aliases, leftClickBehavior, rightClickBehavior, defaultEnabled, item, null, mode, pdef, giveTool));
+            } catch (final Exception ex) {
+                warning("Error at parsing tool '" + toolName + "':)", ex);
+            }
+        }
+        toolsByName = new HashMap<String, Tool>();
+        toolsByType = new HashMap<Integer, Tool>();
+        for (final Tool tool : tools) {
+            toolsByType.put(tool.item, tool);
+            toolsByName.put(tool.name, tool);
+            for (final String alias : tool.aliases) {
+                toolsByName.put(alias, tool);
+            }
+        }
+    }
+
+    public List<String> toStringList(List<?> list) {
+        if (list == null) {
+            return new ArrayList<String>();
+        }
+        final List<String> strs = new ArrayList<String>(list.size());
+        for (final Object obj : list) {
+            if (obj instanceof String) {
+                strs.add((String) obj);
+            } else {
+                strs.add(String.valueOf(obj));
+            }
+        }
+        return strs;
+    }
 }

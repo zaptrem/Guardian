@@ -10,7 +10,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.material.MaterialData;
-import org.guardian.Config;
 import org.guardian.Guardian;
 
 public class BukkitUtils {
@@ -55,7 +54,7 @@ public class BukkitUtils {
         final StringBuilder out = new StringBuilder();
         out.append("[Guardian] ");
         out.append(msg);
-        Guardian.logger.log(Level.INFO, out.toString());
+        log.log(Level.INFO, out.toString());
     }
 
     /**
@@ -65,7 +64,7 @@ public class BukkitUtils {
         final StringBuilder out = new StringBuilder();
         out.append("[Guardian] ");
         out.append(msg);
-        Guardian.logger.log(Level.WARNING, out.toString());
+        log.log(Level.WARNING, out.toString());
     }
 
     /**
@@ -82,21 +81,21 @@ public class BukkitUtils {
         final StringBuilder out = new StringBuilder();
         out.append("[Guardian] ");
         out.append(msg);
-        Guardian.logger.log(Level.SEVERE, out.toString());
+        log.log(Level.SEVERE, out.toString());
     }
 
     /**
      * Send a severe level stacktrace to console
      */
     public static void severe(String msg, Exception ex) {
-        Guardian.logger.log(Level.SEVERE, "[Guardian] " + msg + ":", ex);
+        log.log(Level.SEVERE, "[Guardian] " + msg + ":", ex);
     }
 
     /**
      * Send an debug message to console if debug is enabled
      */
     public static void debug(String msg) {
-        if (Config.debug) {
+        if (Guardian.getInstance().getConf().debug) {
             info("DEBUG: " + msg);
         }
     }

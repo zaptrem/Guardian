@@ -1,7 +1,5 @@
 package org.guardian.listeners;
 
-import static org.guardian.Config.loggedWorlds;
-import static org.guardian.Config.toolsByType;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;

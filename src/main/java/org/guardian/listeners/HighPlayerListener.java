@@ -11,7 +11,6 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.plugin.Plugin;
-import org.guardian.Config;
 import org.guardian.Guardian;
 
 public class HighPlayerListener extends PlayerListener {
@@ -30,7 +29,7 @@ public class HighPlayerListener extends PlayerListener {
 
     @Override
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
-        if (Config.ninja && !event.getPlayer().hasPermission("guardian.see")) {
+        if (plugin.getConf().ninja && !event.getPlayer().hasPermission("guardian.see")) {
             Player player = event.getPlayer();
             String[] split = event.getMessage().split("\\s+");
             String command = split[0].substring(1);
@@ -50,8 +49,8 @@ public class HighPlayerListener extends PlayerListener {
                     message += o + ChatColor.WHITE + ", ";
                 }
                 player.sendMessage(message.substring(0, message.length() - 2));
-            } else if ((command.equalsIgnoreCase("version") || command.equalsIgnoreCase("ver")
-                    || command.equalsIgnoreCase("icanhasbukkit")) && args.equals("Guardian")) {
+            } else if ((command.equalsIgnoreCase("version") || command.equalsIgnoreCase("ver"))
+                    && args.equals("Guardian")) {
                 event.setCancelled(true);
                 player.sendMessage("This server is not running any plugin by that name.");
                 player.sendMessage("Use /plugins to get a list of plugins.");
