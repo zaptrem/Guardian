@@ -3,6 +3,7 @@ bridge: Guardian-MySQL-0.1-SNAPSHOT
 debug: false
 ninja: false
 werollback: true
+consumerDelay: 6
 tools:
     tool:
         permissionDefault: 'TRUE'

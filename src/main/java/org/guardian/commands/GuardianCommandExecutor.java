@@ -2,7 +2,6 @@ package org.guardian.commands;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -10,12 +9,10 @@ import org.guardian.Guardian;
 
 public class GuardianCommandExecutor implements CommandExecutor {
 
-    private Guardian plugin;
-    public List<BaseCommand> commands = new ArrayList<BaseCommand>();
+    private List<BaseCommand> commands = new ArrayList<BaseCommand>();
+    private Guardian plugin = Guardian.getInstance();
 
-    public GuardianCommandExecutor(final Guardian plugin) {
-        this.plugin = plugin;
-
+    public GuardianCommandExecutor() {
         //Register commands
         commands.add(new ExampleCommand());
         commands.add(new HelpCommand());

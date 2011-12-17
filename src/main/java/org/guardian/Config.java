@@ -20,6 +20,7 @@ import org.guardian.tools.ToolMode;
 public class Config {
 
     public int version;
+    public int consumerDelay;
     public String bridge;
     public boolean debug;
     public boolean ninja;
@@ -47,6 +48,7 @@ public class Config {
         }
         debug = config.getBoolean("debug", false);
         ninja = config.getBoolean("ninja", false);
+        consumerDelay = config.getInt("consumerDelay");
 
         for (final String worldName : toStringList(config.getStringList("loggedWorlds"))) {
             final World world = getWorld(worldName);

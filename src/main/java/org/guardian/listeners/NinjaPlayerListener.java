@@ -8,23 +8,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.plugin.Plugin;
 import org.guardian.Guardian;
 
-public class HighPlayerListener extends PlayerListener {
+public class NinjaPlayerListener extends PlayerListener {
 
-    private Guardian plugin;
+    private final Guardian plugin = Guardian.getInstance();
 
-    public HighPlayerListener(final Guardian plugin) {
-        this.plugin = plugin;
-        Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_INTERACT, this, Priority.High, plugin);
-        Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_COMMAND_PREPROCESS, this, Priority.High, plugin);
-    }
-
-    @Override
-    public void onPlayerInteract(PlayerInteractEvent event) {
+    public NinjaPlayerListener() {
+        Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_COMMAND_PREPROCESS, this, Priority.Normal, plugin);
     }
 
     @Override
@@ -39,7 +32,7 @@ public class HighPlayerListener extends PlayerListener {
                 event.setCancelled(true);
                 String message = "Plugins: ";
                 List<String> output = new ArrayList<String>();
-                for (Plugin pl : plugin.getServer().getPluginManager().getPlugins()) {
+                for (Plugin pl : Bukkit.getServer().getPluginManager().getPlugins()) {
                     String name = pl.getDescription().getName();
                     if (!name.equalsIgnoreCase("Guardian")) {
                         output.add((pl.isEnabled() ? ChatColor.GREEN : ChatColor.RED) + name);
@@ -49,14 +42,21 @@ public class HighPlayerListener extends PlayerListener {
                     message += o + ChatColor.WHITE + ", ";
                 }
                 player.sendMessage(message.substring(0, message.length() - 2));
-            } else if ((command.equalsIgnoreCase("version") || command.equalsIgnoreCase("ver"))
+                return;
+            }
+
+            if ((command.equalsIgnoreCase("version") || command.equalsIgnoreCase("ver"))
                     && args.equals("Guardian")) {
                 event.setCancelled(true);
                 player.sendMessage("This server is not running any plugin by that name.");
                 player.sendMessage("Use /plugins to get a list of plugins.");
-            } else if (command.equalsIgnoreCase("guardian") || command.equalsIgnoreCase("gd")) {
+                return;
+            }
+
+            if (command.equalsIgnoreCase("guardian") || command.equalsIgnoreCase("gd")) {
                 event.setCancelled(true);
                 player.sendMessage("Unknown command. Type \"help\" for help.");
+                return;
             }
         }
     }

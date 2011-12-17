@@ -21,10 +21,9 @@ import org.guardian.Guardian;
 
 public class MonitorBlockListener extends BlockListener {
 
-    private Guardian plugin;
+    private final Guardian plugin = Guardian.getInstance();
 
-    public MonitorBlockListener(final Guardian plugin) {
-        this.plugin = plugin;
+    public MonitorBlockListener() {
         Bukkit.getServer().getPluginManager().registerEvent(Type.BLOCK_BREAK, this, Priority.Monitor, plugin);
         Bukkit.getServer().getPluginManager().registerEvent(Type.BLOCK_BURN, this, Priority.Monitor, plugin);
         Bukkit.getServer().getPluginManager().registerEvent(Type.BLOCK_DISPENSE, this, Priority.Monitor, plugin);

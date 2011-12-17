@@ -1,19 +1,19 @@
 name: Guardian
 version: 0.1
 description: The future of griefer tracking and rollback for Bukkit
-authors: [oliverw92, DiddiZ, md_5]
+authors: [DiddiZ, md_5, oliverw92]
 website: https://github.com/Guardian-Security/Guardian
 
 main: org.guardian.Guardian
 
-softdepend: [WorldEdit]
+softdepend: [Spout, WorldEdit]
 
 commands:
   guardian:
     description: Access to the main Guardian command
     aliases: gd
     permission: guardian.command
-    
+
 permissions:
     guardian.clearlog:
         description: The ability to clear Guardian logs
@@ -25,16 +25,13 @@ permissions:
         description: Allows the looking up of events
         default: op
     guardian.redo:
-        description: The ability to redo an undone rollback 
+        description: The ability to redo an undone rollback
         default: op
     guardian.rollback:
         description: Allows the rollbacking of events
         default: op
     guardian.see:
         description: The ability to sense Guardians presence when in ninja mode
-        default: op
-    guardian.superpick:
-        description: The ability to use Guardians super pick
         default: op
     guardian.undo:
         description: The ability to undo a rollback

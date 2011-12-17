@@ -8,10 +8,9 @@ import org.guardian.Guardian;
 
 public class MonitorPlayerListener extends PlayerListener {
 
-    private Guardian plugin;
+    private final Guardian plugin = Guardian.getInstance();
 
-    public MonitorPlayerListener(final Guardian plugin) {
-        this.plugin = plugin;
+    public MonitorPlayerListener() {
         Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_CHAT, this, Priority.Monitor, plugin);
         Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_COMMAND_PREPROCESS, this, Priority.Monitor, plugin);
         Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_BED_ENTER, this, Priority.Monitor, plugin);
