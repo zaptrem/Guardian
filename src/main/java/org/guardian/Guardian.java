@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.List;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.getspout.spout.Spout;
 import org.guardian.commands.GuardianCommandExecutor;
 import org.guardian.entries.DataEntry;
 import org.guardian.listeners.ToolBlockListener;
@@ -23,7 +22,6 @@ public class Guardian extends JavaPlugin {
     // Plugins
     private static Guardian guardian;
     private WorldEditPlugin worldEdit;
-    private Spout spout;
     // Config and commands
     private Config conf;
     private GuardianCommandExecutor commandExecutor;
@@ -66,9 +64,8 @@ public class Guardian extends JavaPlugin {
         monitorPlayerListener = new MonitorPlayerListener();
         // Check for Spout
         Plugin spoutPlugin = getServer().getPluginManager().getPlugin("Spout");
-        if (spoutPlugin != null) {
-            spout = (Spout) spoutPlugin;
-            BukkitUtils.info("Spout " + getSpout().getDescription().getVersion() + " has been found, accurate chest logging enabled");
+        if (spoutPlugin.isEnabled()) {
+            BukkitUtils.info("Spout " + spoutPlugin.getDescription().getVersion() + " has been found, accurate chest logging enabled");
         }
         // WorldEdit
         Plugin wePlugin = getServer().getPluginManager().getPlugin("WorldEdit");
@@ -90,6 +87,10 @@ public class Guardian extends JavaPlugin {
         } else {
             database = DatabaseLoader.loadAddon(file);
         }
+        /*
+         * END TODO
+         *
+         */
         // Start the consumer
         consumerId = getServer().getScheduler().scheduleAsyncRepeatingTask(this, consumer, conf.consumerDelay * 20, conf.consumerDelay * 20);
         if (consumerId <= 0) {
@@ -146,13 +147,6 @@ public class Guardian extends JavaPlugin {
      */
     public WorldEditPlugin getWorldEdit() {
         return worldEdit;
-    }
-
-    /**
-     * @return the Spout instance
-     */
-    public Spout getSpout() {
-        return spout;
     }
 
     /**

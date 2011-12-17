@@ -1,6 +1,10 @@
 package org.guardian.listeners;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -9,6 +13,7 @@ import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.block.BlockFadeEvent;
 import org.bukkit.event.block.BlockFormEvent;
 import org.bukkit.event.block.BlockFromToEvent;
+import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
@@ -30,6 +35,7 @@ public class MonitorBlockListener extends BlockListener {
         Bukkit.getServer().getPluginManager().registerEvent(Type.BLOCK_FADE, this, Priority.Monitor, plugin);
         Bukkit.getServer().getPluginManager().registerEvent(Type.BLOCK_FORM, this, Priority.Monitor, plugin);
         Bukkit.getServer().getPluginManager().registerEvent(Type.BLOCK_FROMTO, this, Priority.Monitor, plugin);
+        Bukkit.getServer().getPluginManager().registerEvent(Type.BLOCK_IGNITE, this, Priority.Monitor, plugin);
         Bukkit.getServer().getPluginManager().registerEvent(Type.BLOCK_PHYSICS, this, Priority.Monitor, plugin);
         Bukkit.getServer().getPluginManager().registerEvent(Type.BLOCK_PISTON_EXTEND, this, Priority.Monitor, plugin);
         Bukkit.getServer().getPluginManager().registerEvent(Type.BLOCK_PISTON_RETRACT, this, Priority.Monitor, plugin);
@@ -37,10 +43,23 @@ public class MonitorBlockListener extends BlockListener {
         Bukkit.getServer().getPluginManager().registerEvent(Type.BLOCK_SPREAD, this, Priority.Monitor, plugin);
         Bukkit.getServer().getPluginManager().registerEvent(Type.LEAVES_DECAY, this, Priority.Monitor, plugin);
         Bukkit.getServer().getPluginManager().registerEvent(Type.SIGN_CHANGE, this, Priority.Monitor, plugin);
+
     }
 
     @Override
     public void onBlockBreak(BlockBreakEvent event) {
+        World world = event.getBlock().getWorld();
+        if (!plugin.getConf().isLogged(world)) {
+            return;
+        }
+        String player = event.getPlayer().getName();
+        if (plugin.getConf().isIgnored(player)) {
+            return;
+        }
+        Location location = event.getBlock().getLocation();
+        int type = event.getBlock().getTypeId();
+        byte data = event.getBlock().getData();
+        // TODO Log the data
     }
 
     @Override
@@ -64,6 +83,10 @@ public class MonitorBlockListener extends BlockListener {
     }
 
     @Override
+    public void onBlockIgnite(BlockIgniteEvent event) {
+    }
+
+    @Override
     public void onBlockPhysics(BlockPhysicsEvent event) {
     }
 
@@ -77,6 +100,18 @@ public class MonitorBlockListener extends BlockListener {
 
     @Override
     public void onBlockPlace(BlockPlaceEvent event) {
+        World world = event.getBlock().getWorld();
+        if (!plugin.getConf().isLogged(world)) {
+            return;
+        }
+        String player = event.getPlayer().getName();
+        if (plugin.getConf().isIgnored(player)) {
+            return;
+        }
+        Location location = event.getBlock().getLocation();
+        int type = event.getBlock().getTypeId();
+        byte data = event.getBlock().getData();
+        // TODO Log the data
     }
 
     @Override

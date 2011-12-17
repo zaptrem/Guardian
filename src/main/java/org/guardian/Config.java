@@ -10,6 +10,7 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
 import org.guardian.tools.Tool;
 import org.guardian.tools.ToolBehavior;
@@ -28,6 +29,7 @@ public class Config {
     public List<Tool> tools;
     public Map<String, Tool> toolsByName;
     public Map<Integer, Tool> toolsByType;
+    public ArrayList<String> ignoredPlayers;
     private Guardian plugin;
 
     public Config(final Guardian plugin) {
@@ -49,6 +51,7 @@ public class Config {
         ninja = config.getBoolean("ninja", false);
         consumerDelay = config.getInt("consumerDelay");
 
+        ignoredPlayers = new ArrayList<String>();
         for (final String worldName : toStringList(config.getStringList("loggedWorlds"))) {
             final World world = Bukkit.getServer().getWorld(worldName);
             if (world != null) {
@@ -108,5 +111,17 @@ public class Config {
             }
         }
         return strs;
+    }
+    /*
+     * Check whether the world is to be logged
+     *
+     */
+
+    public boolean isLogged(World world) {
+        return worlds.containsKey(world);
+    }
+
+    public boolean isIgnored(String p) {
+        return ignoredPlayers.contains(p);
     }
 }
