@@ -1,8 +1,5 @@
 package org.guardian;
 
-import static org.bukkit.Bukkit.getWorld;
-import static org.guardian.util.BukkitUtils.severe;
-import static org.guardian.util.BukkitUtils.warning;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,12 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.permissions.PermissionDefault;
 import org.guardian.tools.Tool;
 import org.guardian.tools.ToolBehavior;
 import org.guardian.tools.ToolMode;
+import org.guardian.util.BukkitUtils;
 
 public class Config {
 
@@ -25,7 +24,7 @@ public class Config {
     public boolean debug;
     public boolean ninja;
     public boolean werollback;
-    public Map<World, WorldConfig> worlds;
+    public HashMap<World, WorldConfig> worlds;
     public List<Tool> tools;
     public Map<String, Tool> toolsByName;
     public Map<Integer, Tool> toolsByType;
@@ -51,15 +50,15 @@ public class Config {
         consumerDelay = config.getInt("consumerDelay");
 
         for (final String worldName : toStringList(config.getStringList("loggedWorlds"))) {
-            final World world = getWorld(worldName);
+            final World world = Bukkit.getServer().getWorld(worldName);
             if (world != null) {
                 try {
                     worlds.put(world, new WorldConfig(new File(plugin.getDataFolder(), world.getWorldFolder().getName())));
                 } catch (final IOException ex) {
-                    severe("Failed to save world config", ex);
+                    BukkitUtils.severe("Failed to save world config", ex);
                 }
             } else {
-                warning("There is no world called '" + worldName + "'");
+                BukkitUtils.warning("There is no world called '" + worldName + "'");
             }
         }
 
@@ -82,7 +81,7 @@ public class Config {
                 final boolean giveTool = config.getBoolean(path + ".giveTool", true);
                 tools.add(new Tool(toolName, aliases, leftClickBehavior, rightClickBehavior, defaultEnabled, item, null, mode, pdef, giveTool));
             } catch (final Exception ex) {
-                warning("Error at parsing tool '" + toolName + "':)", ex);
+                BukkitUtils.warning("Error at parsing tool '" + toolName + "':)", ex);
             }
         }
         toolsByName = new HashMap<String, Tool>();

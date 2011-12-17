@@ -34,7 +34,8 @@ public class Guardian extends JavaPlugin {
     private MonitorBlockListener monitorBlockListener;
     private MonitorEntityListener monitorEntityListener;
     private MonitorPlayerListener monitorPlayerListener;
-    // Database and consumer
+    // Database, consumer, sessions etc
+    private SessionManager sessionMan;
     private DatabaseBridge database;
     private Consumer consumer;
     private int consumerId;
@@ -75,7 +76,12 @@ public class Guardian extends JavaPlugin {
             worldEdit = (WorldEditPlugin) wePlugin;
             BukkitUtils.info("WorldEdit " + getWorldEdit().getDescription().getVersion() + " has been found, selection rollbacks enabled");
         }
-        // Unfinished bridge stuff TODO
+        // Initialise the session manager
+        sessionMan = new SessionManager();
+        /*
+         * Unfinished bridge stuff TODO
+         *
+         */
         File file = new File("plugins" + File.separator + "Guardian" + File.separator + "bridges" + File.separator + getConf().bridge);
         file.mkdir();
         if (!file.exists()) {
@@ -119,6 +125,20 @@ public class Guardian extends JavaPlugin {
      */
     public Config getConf() {
         return conf;
+    }
+
+    /**
+     * @return the current session manager
+     */
+    public SessionManager getSessionManager() {
+        return sessionMan;
+    }
+
+    /**
+     * @return the main command executor for Guardian
+     */
+    public GuardianCommandExecutor getCommandExecutor() {
+        return commandExecutor;
     }
 
     /**

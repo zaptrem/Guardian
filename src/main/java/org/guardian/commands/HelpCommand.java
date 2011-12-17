@@ -17,14 +17,14 @@ public class HelpCommand extends BaseCommand {
         if (args.isEmpty()) {
             BukkitUtils.sendMessage(sender, "---------------------- Guardian ----------------------");
             BukkitUtils.sendMessage(sender, "Type /guardian help <command> for more info on that command");
-            for (BaseCommand cmd : plugin.commandExecutor.commands.toArray(new BaseCommand[0])) {
+            for (BaseCommand cmd : plugin.getCommandExecutor().getCommands().toArray(new BaseCommand[0])) {
                 if (cmd.permission()) {
                     BukkitUtils.sendMessage(sender, "- /" + usedCommand + " " + cmd.name + " " + cmd.usage);
                 }
             }
         } //Command-specific help
         else {
-            for (BaseCommand cmd : plugin.commandExecutor.commands.toArray(new BaseCommand[0])) {
+            for (BaseCommand cmd : plugin.getCommandExecutor().getCommands().toArray(new BaseCommand[0])) {
                 if (cmd.permission() && cmd.name.equalsIgnoreCase(args.get(0))) {
                     BukkitUtils.sendMessage(sender, "---------------------- Guardian - " + cmd.name);
                     BukkitUtils.sendMessage(sender, "- /" + usedCommand + " " + cmd.name + " " + cmd.usage);

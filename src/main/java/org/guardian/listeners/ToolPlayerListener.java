@@ -33,9 +33,9 @@ public class ToolPlayerListener extends PlayerListener {
             if (tool != null) {
                 final Action action = event.getAction();
                 final Player player = event.getPlayer();
-                if ((action == Action.RIGHT_CLICK_BLOCK || action == Action.LEFT_CLICK_BLOCK) && loggedWorlds.contains(player.getWorld()) && player.hasPermission("guardian.tools." + tool.name)) {
+                if ((action == Action.RIGHT_CLICK_BLOCK || action == Action.LEFT_CLICK_BLOCK) && plugin.getConf().worlds.containsKey(player.getWorld()) && player.hasPermission("guardian.tools." + tool.name)) {
                     final ToolBehavior behavior = action == Action.RIGHT_CLICK_BLOCK ? tool.rightClickBehavior : tool.leftClickBehavior;
-                    final SessionToolData toolData = SessionManager.getSession(player).getToolDatas().get(tool);
+                    final SessionToolData toolData = plugin.getSessionManager().getSession(player).getToolDatas().get(tool);
                     if (behavior != ToolBehavior.NONE && toolData.isEnabled()) {
                         final Block block = event.getClickedBlock();
                         final QueryParams params = toolData.getParams();
