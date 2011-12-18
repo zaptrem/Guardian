@@ -25,13 +25,6 @@ public class Guardian extends JavaPlugin {
     // Config and commands
     private Config conf;
     private GuardianCommandExecutor commandExecutor;
-    // Listeners
-    private NinjaPlayerListener ninjaPlayerListener;
-    private ToolBlockListener toolBlockListener;
-    private ToolPlayerListener toolPlayerListener;
-    private MonitorBlockListener monitorBlockListener;
-    private MonitorEntityListener monitorEntityListener;
-    private MonitorPlayerListener monitorPlayerListener;
     // Database, consumer, sessions etc
     private SessionManager sessionMan;
     private DatabaseBridge database;
@@ -45,8 +38,6 @@ public class Guardian extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Error checker
-        boolean errorWhileEnabling = false;
         // Load config
         conf = new Config(this);
         conf.load();
@@ -55,19 +46,22 @@ public class Guardian extends JavaPlugin {
         getCommand("guardian").setExecutor(commandExecutor);
         // Activate listeners
         if (getConf().ninja) {
-            ninjaPlayerListener = new NinjaPlayerListener();
+            new NinjaPlayerListener();
         }
-        toolBlockListener = new ToolBlockListener();
-        toolPlayerListener = new ToolPlayerListener();
-        monitorBlockListener = new MonitorBlockListener();
-        monitorEntityListener = new MonitorEntityListener();
-        monitorPlayerListener = new MonitorPlayerListener();
+        new ToolBlockListener();
+        new ToolPlayerListener();
+        new MonitorBlockListener();
+        new MonitorEntityListener();
+        new MonitorPlayerListener();
         // Check for Spout
         Plugin spoutPlugin = getServer().getPluginManager().getPlugin("Spout");
         if (spoutPlugin.isEnabled()) {
+            // TODO activate listeners
             BukkitUtils.info("Spout " + spoutPlugin.getDescription().getVersion() + " has been found, accurate chest logging enabled");
+        } else {
+            // TODO alternative chest logging
         }
-        // WorldEdit
+        // Check for WorldEdit
         Plugin wePlugin = getServer().getPluginManager().getPlugin("WorldEdit");
         if (wePlugin != null) {
             worldEdit = (WorldEditPlugin) wePlugin;
@@ -75,32 +69,33 @@ public class Guardian extends JavaPlugin {
         }
         // Initialise the session manager
         sessionMan = new SessionManager();
-        /*
-         * Unfinished bridge stuff TODO
-         *
-         */
-        File file = new File("plugins" + File.separator + "Guardian" + File.separator + "bridges" + File.separator + getConf().bridge);
-        file.mkdir();
+        // Lets get some bridge action going
+        File file = new File(getDataFolder() + File.separator + "bridges" + File.separator + getConf().bridge);
+        file.getParentFile().mkdirs();
         if (!file.exists()) {
-            errorWhileEnabling = true;
-            BukkitUtils.severe("Could not find a valid bridge! Please check it is installed and present in config.yml");
+            fatalError("Could not find a valid bridge! Please check it is installed and present in config.yml");
+            return;
         } else {
-            database = DatabaseLoader.loadAddon(file);
+            database = DatabaseLoader.loadBridge(file);
         }
-        /*
-         * END TODO
-         *
-         */
+        // Something went wrong
+        if (database == null) {
+            fatalError(getConf().bridge + " is not a database bridge!");
+            return;
+        }
+        // Check that the database is working
+        try {
+            if (!database.test()) {
+                fatalError("The database bridge failed to verify itself");
+                return;
+            }
+        } catch (SQLException ex) {
+            fatalError(ex.getMessage());
+        }
         // Start the consumer
         consumerId = getServer().getScheduler().scheduleAsyncRepeatingTask(this, consumer, conf.consumerDelay * 20, conf.consumerDelay * 20);
         if (consumerId <= 0) {
-            errorWhileEnabling = true;
-        }
-        // Check for errors before giving the all clear
-        if (errorWhileEnabling) {
-            BukkitUtils.severe("Fatal error detected! v" + getDescription().getVersion() + " disabled");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
+            fatalError("Failed to start the consumer");
         }
         // It's all good!
         BukkitUtils.info("v" + getDescription().getVersion() + " enabled");
@@ -112,6 +107,12 @@ public class Guardian extends JavaPlugin {
         getServer().getScheduler().cancelTask(consumerId);
         // I bid ye good day
         BukkitUtils.info("v" + getDescription().getVersion() + " disabled");
+    }
+
+    public void fatalError(String error) {
+        BukkitUtils.severe(error);
+        BukkitUtils.severe("Fatal error detected! v" + getDescription().getVersion() + " disabled");
+        getServer().getPluginManager().disablePlugin(this);
     }
 
     /**

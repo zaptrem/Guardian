@@ -43,10 +43,7 @@ public class Config {
 
         version = config.getInt("version");
 
-        bridge = config.getString("bridge", "Guardian-MySQL-0.1-SNAPSHOT");
-        if (!bridge.endsWith(".jar")) {
-            bridge += ".jar";
-        }
+        bridge = config.getString("bridge", "Guardian-MySQL-0.1-SNAPSHOT.jar");
         debug = config.getBoolean("debug", false);
         ninja = config.getBoolean("ninja", false);
         consumerDelay = config.getInt("consumerDelay");

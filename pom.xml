@@ -9,16 +9,17 @@
     <packaging>jar</packaging>
 
     <name>Guardian</name>
-    <url>https://github.com/Guardian-Security/Guardian</url>
+    <url>https://github.com/${project.organization}/${project.name}</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.organization>Guardian-Security</project.organization>
     </properties>
 
     <scm>
-        <connection>scm:git:git://github.com/Guardian-Security/Guardian.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/Guardian-Security/Guardian.git</developerConnection>
-        <url>https://github.com/Guardian-Security/Guardian</url>
+        <connection>scm:git:git://github.com/${project.organization}/${project.name}.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/${project.organization}/${project.name}.git</developerConnection>
+        <url>https://github.com/${project.organization}/${project.name}</url>
     </scm>
 
     <repositories>

@@ -6,12 +6,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
-import org.guardian.SessionManager;
 import org.guardian.params.QueryParams;
 import org.guardian.tools.SessionToolData;
 import org.guardian.tools.Tool;
 import org.guardian.tools.ToolBehavior;
-import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
@@ -48,7 +46,7 @@ public class ToolPlayerListener extends PlayerListener {
                         } else {
                             for (final BlockFace face : new BlockFace[]{BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST}) {
                                 if (block.getRelative(face).getTypeId() == 54) {
-                                    params.setSelection(new CuboidSelection(event.getPlayer().getWorld(), block.getLocation(), block.getRelative(face).getLocation()));
+                                    // TODO params.setSelection(new CuboidSelection(event.getPlayer().getWorld(), block.getLocation(), block.getRelative(face).getLocation()));
                                 }
                             }
                             if (params.getSelection() == null) {
