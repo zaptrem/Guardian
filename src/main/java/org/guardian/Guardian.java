@@ -103,8 +103,10 @@ public class Guardian extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Cancel the task
+        // Cancel the consumer task
         getServer().getScheduler().cancelTask(consumerId);
+        // Cancel anything else that happens to be working for us
+        getServer().getScheduler().cancelTasks(this);
         // I bid ye good day
         BukkitUtils.info("v" + getDescription().getVersion() + " disabled");
     }
