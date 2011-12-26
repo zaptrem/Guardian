@@ -77,7 +77,7 @@ public class Guardian extends JavaPlugin {
         // Initialise the session manager
         sessionMan = new SessionManager();
         // Lets get some bridge action going
-        File file = new File(getDataFolder() + File.separator + "bridges" + File.separator + getConf().bridge);
+        File file = new File(getDataFolder() + File.separator + "bridges" + File.separator + getConf().bridgeName);
         file.getParentFile().mkdirs();
         if (!file.exists()) {
             BukkitUtils.severe("Could not find a valid bridge! Please check it is installed and present in config.yml");
@@ -89,7 +89,7 @@ public class Guardian extends JavaPlugin {
         }
         // Something went wrong
         if (database == null) {
-            fatalError(getConf().bridge + " is not a database bridge!");
+            fatalError(getConf().bridgeName + " is not a database bridge!");
             return;
         }
         // Check that the database is working
@@ -103,7 +103,7 @@ public class Guardian extends JavaPlugin {
             return;
         }
         // Start the consumer
-        consumerId = getServer().getScheduler().scheduleAsyncRepeatingTask(this, consumer, conf.consumerDelay * 20, conf.consumerDelay * 20);
+        consumerId = getServer().getScheduler().scheduleAsyncRepeatingTask(this, consumer, getConf().delayBetweenRuns * 20, getConf().delayBetweenRuns * 20);
         if (consumerId <= 0) {
             fatalError("Failed to start the consumer");
         }

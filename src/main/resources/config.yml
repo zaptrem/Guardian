@@ -8,10 +8,9 @@ bridge:
     tablePrefix: gd_
     host: localhost
     port: 3306
-    database: minecraft
+    database: guardian
     username: root
     password: 'password'
-    path: plugins/Guardian/log.db
     max-connections: 10
 worlds:
     ignored:

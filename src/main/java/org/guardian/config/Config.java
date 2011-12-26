@@ -1,31 +1,28 @@
 package org.guardian.config;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.permissions.PermissionDefault;
 import org.guardian.Guardian;
-import org.guardian.WorldConfig;
+import org.guardian.params.QueryParams;
 import org.guardian.tools.Tool;
 import org.guardian.tools.ToolBehavior;
 import org.guardian.tools.ToolMode;
 import org.guardian.util.BukkitUtils;
+import org.guardian.util.Utils;
 
 public class Config {
 
     // Main config
     public boolean debug, checkVersion, sendStatistics, logPlayerInfo, ninjaMode;
     // Bridge config
-    public String name, tablePrefix, host;
+    public String bridgeName, tablePrefix, host;
     public int port;
     public String database, username, password;
-    public File path;
     public int maxConnections;
     public String url;
     // World config
@@ -36,16 +33,18 @@ public class Config {
     public int linesLimit, defaultTime, defaultDistance, linesPerPage;
     // Clearlog config
     public boolean enableAutoClearLog;
-    public ArrayList<String> autoParameters =  new ArrayList<String>();
+    public ArrayList<QueryParams> autoParameters = new ArrayList<QueryParams>();
     public boolean dumpClearedLog;
     // Rolback config
-    public ArrayList<Integer> ignoredBlocks = new ArrayList<Integer>();
-    public ArrayList<Integer> forcedBlocks = new ArrayList<Integer>();
+    public ArrayList<Integer> ignoredBlocks;
+    public ArrayList<Integer> forcedBlocks;
     // TODO Permission groups
     // Tools
     public ArrayList<Tool> tools;
     public HashMap<String, Tool> toolsByName;
     public HashMap<Integer, Tool> toolsByType;
+    // Materials
+    // TODO material data class
     // Other
     private final Guardian plugin = Guardian.getInstance();
 
@@ -56,25 +55,42 @@ public class Config {
         plugin.saveConfig();
         // Populate main config
         debug = config.getBoolean("debug");
-        bridge = config.getString("bridge");
+        checkVersion = config.getBoolean("checkVersion");
+        sendStatistics = config.getBoolean("sendStatistics");
+        logPlayerInfo = config.getBoolean("logPlayerInfo");
         ninjaMode = config.getBoolean("ninjaMode");
-        consumerDelay = config.getInt("consumerDelay");
-        werollback = config.getBoolean("werollback");
-        
-        ignoredPlayers = new ArrayList<String>();
-        for (final String worldName : toStringList(config.getStringList("loggedWorlds"))) {
-            final World world = Bukkit.getServer().getWorld(worldName);
-            if (world != null) {
-                try {
-                    worlds.put(world, new WorldConfig(new File(plugin.getDataFolder(), world.getWorldFolder().getName())));
-                } catch (final IOException ex) {
-                    BukkitUtils.severe("Failed to save world config", ex);
-                }
-            } else {
-                BukkitUtils.warning("There is no world called '" + worldName + "'");
-            }
-        }
+        // Populate bridge config
+        bridgeName = config.getString("bridge.name");
+        tablePrefix = config.getString("bridge.tablePrefix");
+        host = config.getString("bridge.host");
+        port = config.getInt("bridge.port");
+        database = config.getString("bridge.database");
+        username = config.getString("bridge.username");
+        password = config.getString("bridge.password");
+        maxConnections = config.getInt("bridge.maxConnections");
+        // Populate the world config
+        // TODO
+        // Populate the consumer config
+        maxTimerPerRun = config.getInt("consumer.maxTimePerRun");
+        forceToProcessAtLeast = config.getInt("consumer.forceToProcessAtLeast");
+        delayBetweenRuns = config.getInt("consumer.delayBetweenRuns");
+        // Populate the lookup config
+        linesLimit = config.getInt("lookup.linesLimit");
+        defaultTime = Utils.parseTimeSpec(config.getString("lookup.defaultTime"));
+        defaultDistance = config.getInt("lookup.defaultDistance");
+        linesPerPage = config.getInt("lookup.linesPerPage");
+        // Populate the clearlog config
+        enableAutoClearLog = config.getBoolean("clearlog.enableAutoClearLog");
+        // TODO autoParamaters
+        dumpClearedLog = config.getBoolean("clearlog.dumpClearedLog");
+        // Rollback config
+        ignoredBlocks = (config.getIntegerList("rollback.ignoredBlocks") != null)
+                ? (ArrayList<Integer>) config.getIntegerList("rollback.ignoredBlocks") : new ArrayList<Integer>();
+        forcedBlocks = (config.getIntegerList("rollback.forcedBlocks") != null)
+                ? (ArrayList<Integer>) config.getIntegerList("rollback.forcedBlocks") : new ArrayList<Integer>();
+        // TODO permission groups
 
+        // TODO Populate the tool config
         final Set<String> toolNames = config.getConfigurationSection("tools").getKeys(false);
         tools = new ArrayList<Tool>();
         for (final String toolName : toolNames) {
@@ -106,6 +122,7 @@ public class Config {
                 toolsByName.put(alias, tool);
             }
         }
+        // TODO Populate the material config
     }
 
     public List<String> toStringList(List<?> list) {

@@ -101,7 +101,7 @@ public class BukkitUtils {
     }
 
     /**
-     * Returns the friendly name of an entity
+     * Returns the friendly bridgeName of an entity
      **/
     public static String getEntityName(Entity entity) {
         if (entity instanceof Player) {
