@@ -13,6 +13,7 @@ import org.guardian.listeners.NinjaPlayerListener;
 import org.guardian.listeners.MonitorBlockListener;
 import org.guardian.listeners.MonitorEntityListener;
 import org.guardian.listeners.MonitorPlayerListener;
+import org.guardian.listeners.MonitorVehicleListener;
 import org.guardian.listeners.ToolPlayerListener;
 import org.guardian.params.QueryParams;
 import org.guardian.util.BukkitUtils;
@@ -39,13 +40,13 @@ public class Guardian extends JavaPlugin {
     @Override
     public void onEnable() {
         // Load config
-        conf = new Config(this);
+        conf = new Config();
         conf.load();
         // Initialise commands
         commandExecutor = new GuardianCommandExecutor();
         getCommand("guardian").setExecutor(commandExecutor);
         // Activate listeners
-        if (getConf().ninja) {
+        if (getConf().ninjaMode) {
             new NinjaPlayerListener();
         }
         new ToolBlockListener();
@@ -53,6 +54,7 @@ public class Guardian extends JavaPlugin {
         new MonitorBlockListener();
         new MonitorEntityListener();
         new MonitorPlayerListener();
+        new MonitorVehicleListener();
         // Check for Spout
         Plugin spoutPlugin = getServer().getPluginManager().getPlugin("Spout");
         if (spoutPlugin.isEnabled()) {

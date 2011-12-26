@@ -22,7 +22,7 @@ public class NinjaPlayerListener extends PlayerListener {
 
     @Override
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
-        if (plugin.getConf().ninja && !event.getPlayer().hasPermission("guardian.see")) {
+        if (plugin.getConf().ninjaMode && !event.getPlayer().hasPermission("guardian.see")) {
             Player player = event.getPlayer();
             String[] split = event.getMessage().split("\\s+");
             String command = split[0].substring(1);

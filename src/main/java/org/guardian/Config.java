@@ -10,7 +10,6 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
 import org.guardian.tools.Tool;
 import org.guardian.tools.ToolBehavior;
@@ -19,35 +18,32 @@ import org.guardian.util.BukkitUtils;
 
 public class Config {
 
-    public int version;
-    public int consumerDelay;
-    public String bridge;
+    // Main config
     public boolean debug;
-    public boolean ninja;
+    public String bridge;
+    public boolean ninjaMode;
+    public int consumerDelay;
     public boolean werollback;
+    // Other config
     public HashMap<World, WorldConfig> worlds;
     public List<Tool> tools;
     public Map<String, Tool> toolsByName;
     public Map<Integer, Tool> toolsByType;
     public ArrayList<String> ignoredPlayers;
-    private Guardian plugin;
-
-    public Config(final Guardian plugin) {
-        this.plugin = plugin;
-    }
+    private final Guardian plugin = Guardian.getInstance();
 
     public void load() {
+        // Load the config
         final FileConfiguration config = plugin.getConfig();
         config.options().copyDefaults(true);
         plugin.saveConfig();
-
-        version = config.getInt("version");
-
-        bridge = config.getString("bridge", "Guardian-MySQL-0.1-SNAPSHOT.jar");
-        debug = config.getBoolean("debug", false);
-        ninja = config.getBoolean("ninja", false);
+        // Populate main config
+        debug = config.getBoolean("debug");
+        bridge = config.getString("bridge");
+        ninjaMode = config.getBoolean("ninjaMode");
         consumerDelay = config.getInt("consumerDelay");
-
+        werollback = config.getBoolean("werollback");
+        
         ignoredPlayers = new ArrayList<String>();
         for (final String worldName : toStringList(config.getStringList("loggedWorlds"))) {
             final World world = Bukkit.getServer().getWorld(worldName);
@@ -109,10 +105,6 @@ public class Config {
         }
         return strs;
     }
-    /*
-     * Check whether the world is to be logged
-     *
-     */
 
     public boolean isLogged(World world) {
         return worlds.containsKey(world);

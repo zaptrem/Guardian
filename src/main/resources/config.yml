@@ -1,9 +1,117 @@
-version: 0.1
-bridge: Guardian-MySQL-0.1-SNAPSHOT.jar
 debug: false
-ninja: false
-werollback: true
-consumerDelay: 6
+checkVersion: true
+sendStatistics: true
+ninjaMode: false
+bridge:
+    name: Guardian-MySQL-0.1-SNAPSHOT.jar
+    tablePrefix: gd
+    hostname: localhost
+    port: 3306
+    database: minecraft
+    username: root
+    password: 'password'
+    path: plugins/Guardian/log.db	
+    max-connections: 10
+worlds:
+    global:
+        # block events
+        block-break: true
+        block-burn: true
+        block-dispense: true
+        block-fade: true
+        block-form: true
+        block-from-to: true
+        block-lava-flow: true
+        block-water-flow: true
+        block-ignite: true
+        block-physics: true
+        block-piston: true
+        block-place: true
+        block-spread: true
+        block-sign-change: true
+        # entity events
+        entity-enderman-pickup: true
+        entity-enderman-place: true
+        entity-death: true
+        # explosion events
+        entity-explode: true
+        entity-creeper-explode: true
+        entity-creeper-explode-as-player: false
+        entity-enderdragon-destroy: true
+        entity-ghast-fireball: true
+        entity-tnt-explode: true
+        # paiting events
+        entity-painting-break: true
+        entity-paitning-place: true
+        # player events
+        player-chat: true
+        player-command: true
+        player-bed: true
+        player-bucket-empty: true
+        player-bucket-fill: true
+        player-death: true
+        player-item-drop: true
+        player-interact: true
+        player-join: true
+        player-kick: true
+        player-item-pickup: true
+        player-teleport: true
+        # vehicle events
+        vehicle-create: true
+        vehicle-destroy: true
+        vehicle-enter: true
+        vehicle-exit: true   
+        # world events
+        world-portal-create: true
+        world-structure-grow: true
+        # other events
+        container-transaction: true
+    world_nether:
+        lava-flow: false
+logging:
+  hiddenBlocks:
+  - 0
+  logPlayerInfo: true
+  hiddenPlayers: []
+consumer:
+  timePerRun: 200
+  forceToProcessAtLeast: 20
+  delayBetweenRuns: 6
+lookup:
+  linesLimit: 1500
+  defaultTime: 30 minutes
+  defaultDist: 20
+  linesPerPage: 15
+questioner:
+  askClearLogs: true
+  banPermission: mcbans.ban.local
+  askRollbacks: true
+  askRedos: true
+  askClearLogAfterRollback: true
+  askRollbackAfterBan: false
+
+clearlog:
+  enableAutoClearLog: false
+  auto:
+  - world "world" before 365 days all
+  - world "world" player lavaflow waterflow leavesdecay before 7 days all
+  - world world_nether before 365 days all
+  - world world_nether player lavaflow before 7 days all
+  dumpDeletedLog: false
+rollback:
+    replaceAnyway:
+        - 8
+  - 9
+  - 10
+  - 11
+  - 51
+  dontRollback:
+  - 10
+  - 11
+  - 46
+  - 51
+   maxArea: 50
+  maxTime: 2 days
 tools:
     tool:
         permissionDefault: 'TRUE'
