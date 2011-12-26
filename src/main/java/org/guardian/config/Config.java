@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -21,17 +20,33 @@ import org.guardian.util.BukkitUtils;
 public class Config {
 
     // Main config
-    public boolean debug;
-    public String bridge;
-    public boolean ninjaMode;
-    public int consumerDelay;
-    public boolean werollback;
-    // Other config
-    public HashMap<World, WorldConfig> worlds;
-    public List<Tool> tools;
-    public Map<String, Tool> toolsByName;
-    public Map<Integer, Tool> toolsByType;
-    public ArrayList<String> ignoredPlayers;
+    public boolean debug, checkVersion, sendStatistics, logPlayerInfo, ninjaMode;
+    // Bridge config
+    public String name, tablePrefix, host;
+    public int port;
+    public String database, username, password;
+    public File path;
+    public int maxConnections;
+    public String url;
+    // World config
+    // TODO World config
+    // Consumer config
+    public int maxTimerPerRun, forceToProcessAtLeast, delayBetweenRuns;
+    // Lookup config
+    public int linesLimit, defaultTime, defaultDistance, linesPerPage;
+    // Clearlog config
+    public boolean enableAutoClearLog;
+    public ArrayList<String> autoParameters =  new ArrayList<String>();
+    public boolean dumpClearedLog;
+    // Rolback config
+    public ArrayList<Integer> ignoredBlocks = new ArrayList<Integer>();
+    public ArrayList<Integer> forcedBlocks = new ArrayList<Integer>();
+    // TODO Permission groups
+    // Tools
+    public ArrayList<Tool> tools;
+    public HashMap<String, Tool> toolsByName;
+    public HashMap<Integer, Tool> toolsByType;
+    // Other
     private final Guardian plugin = Guardian.getInstance();
 
     public void load() {

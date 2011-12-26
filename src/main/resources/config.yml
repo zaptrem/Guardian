@@ -5,8 +5,8 @@ logPlayerInfo: true
 ninjaMode: false
 bridge:
     name: Guardian-MySQL-0.1-SNAPSHOT.jar
-    tablePrefix: gd
-    hostname: localhost
+    tablePrefix: gd_
+    host: localhost
     port: 3306
     database: minecraft
     username: root
@@ -14,6 +14,8 @@ bridge:
     path: plugins/Guardian/log.db
     max-connections: 10
 worlds:
+    ignored:
+        - FreeForAll
     global:
         # block events
         block-break: true
@@ -23,7 +25,9 @@ worlds:
         block-form: true
         block-from-to: true
         block-lava-flow: true
+        block-lava-flow-as-player: false        
         block-water-flow: true
+        block-water-flow-as-player: false
         block-ignite: true
         block-physics: true
         block-piston: true
@@ -67,14 +71,11 @@ worlds:
         world-structure-grow: true
         # other events
         container-transaction: true
+        ignoredPlayers:
+            - Notch: true
+            - jeb_: true
     world_nether:
         lava-flow: false
-logging:
-    ignoredBlocks:
-    - 0
-    ignoredPlayers:
-    - Notch
-    - jeb_
 consumer:
     maxTimePerRun: 200
     forceToProcessAtLeast: 20
@@ -82,18 +83,29 @@ consumer:
 lookup:
     linesLimit: 1500
     defaultTime: 30m
-    defaultDist: 20
+    defaultDistance: 20
     linesPerPage: 15
 clearlog:
     enableAutoClearLog: false
     # TODO refine argument structure
-    auto:
+    autoParameters:
     - world "world" before 365 days all
     - world "world" player lavaflow waterflow leavesdecay before 7 days all
     - world world_nether before 365 days all
     - world world_nether player lavaflow before 7 days all
     dumpClearedLog: false
 rollback:
+    ignoredBlocks:
+    - 10
+    - 11
+    - 46
+    - 51
+    forcedBlocks:
+    - 8
+    - 9
+    - 10
+    - 11
+    - 51
     xsmall:
         maxArea: 50
         maxTime: 2d

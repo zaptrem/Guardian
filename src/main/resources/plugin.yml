@@ -38,3 +38,21 @@ permissions:
     guardian.writelog:
         description: The ability to write a log based on the previous rollback
         default: op
+    guardian.rollback.xsmall:
+        description: The user is allowed to rollback xsmall griefs
+        default: false
+    guardian.rollback.small:
+        description: The user is allowed to rollback small griefs
+        default: false
+    guardian.rollback.medium:
+        description: The user is allowed to rollback medium griefs
+        default: false
+    guardian.rollback.large:
+        description: The user is allowed to rollback large griefs
+        default: false
+    guardian.rollback.xlarge:
+        description: The user is allowed to rollback xlarge griefs
+        default: false
+    guardian.rollback.any:
+        description: The user is allowed to rollback any size griefs
+        default: op
