@@ -5,7 +5,7 @@
 
     <groupId>org.guardian</groupId>
     <artifactId>guardian</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>dev-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Guardian</name>
@@ -13,14 +13,14 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <build.number>custom-build</build.number>
         <project.organization>Guardian-Security</project.organization>
+        <build.number>${project.version}</build.number>
     </properties>
 
     <licenses>
         <license>
-            <name>TODO</name>
-            <url>http://www.where.com/does/this/go.html</url>
+            <name>Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</name>
+            <url>http://creativecommons.org/licenses/by-nc-sa/3.0/</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
@@ -33,7 +33,7 @@
     
     <ciManagement>
         <system>jenkins</system>
-        <url>http://ci.getspout.org</url>
+        <url>http://guardian.mossycobble.com:8080/jenkins/</url>
     </ciManagement>
     
     <repositories>
@@ -80,27 +80,5 @@
                 </includes>
             </resource>
         </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>1.5</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <artifactSet>
-                                <includes>
-                                    <include>com.googlecode.json-simple:json-simple</include>
-                                </includes>
-                            </artifactSet>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
     </build>
 </project>
