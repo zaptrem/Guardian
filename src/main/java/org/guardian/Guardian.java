@@ -1,5 +1,6 @@
 package org.guardian;
 
+import org.guardian.config.Config;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import java.io.File;
 import java.sql.SQLException;

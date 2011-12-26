@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.guardian</groupId>
-    <artifactId>Guardian</artifactId>
+    <artifactId>guardian</artifactId>
     <version>0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -13,15 +13,29 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <build.number>custom-build</build.number>
         <project.organization>Guardian-Security</project.organization>
     </properties>
 
+    <licenses>
+        <license>
+            <name>TODO</name>
+            <url>http://www.where.com/does/this/go.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    
     <scm>
         <connection>scm:git:git://github.com/${project.organization}/${project.name}.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/${project.organization}/${project.name}.git</developerConnection>
         <url>https://github.com/${project.organization}/${project.name}</url>
     </scm>
-
+    
+    <ciManagement>
+        <system>jenkins</system>
+        <url>http://ci.getspout.org</url>
+    </ciManagement>
+    
     <repositories>
         <repository>
             <id>spout-repo</id>
@@ -40,14 +54,53 @@
             <version>1.0.1-R2-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.getspout</groupId>
-            <artifactId>spoutapi</artifactId>
-            <version>dev-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldedit</artifactId>
             <version>5.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.getspout</groupId>
+            <artifactId>spoutpluginapi</artifactId>
+            <version>dev-SNAPSHOT</version>
+        </dependency>
     </dependencies>
+    
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>plugin.yml</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>com.googlecode.json-simple:json-simple</include>
+                                </includes>
+                            </artifactSet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

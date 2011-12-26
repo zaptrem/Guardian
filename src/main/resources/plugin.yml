@@ -1,18 +1,17 @@
 name: Guardian
-version: 0.1
+version: ${build.number}
 description: The future of griefer tracking and rollback for Bukkit
 authors: [DiddiZ, md_5, oliverw92]
 website: https://github.com/Guardian-Security/Guardian
 
 main: org.guardian.Guardian
-
 softdepend: [Spout, WorldEdit]
 
 commands:
-  guardian:
-    description: Access to the main Guardian command
-    aliases: gd
-    permission: guardian.command
+    guardian:
+        description: Access to the main Guardian command
+        aliases: gd
+        permission: guardian.command 
 
 permissions:
     guardian.clearlog:
