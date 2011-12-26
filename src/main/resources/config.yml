@@ -1,6 +1,7 @@
 debug: false
 checkVersion: true
 sendStatistics: true
+logPlayerInfo: true
 ninjaMode: false
 bridge:
     name: Guardian-MySQL-0.1-SNAPSHOT.jar
@@ -10,7 +11,7 @@ bridge:
     database: minecraft
     username: root
     password: 'password'
-    path: plugins/Guardian/log.db	
+    path: plugins/Guardian/log.db
     max-connections: 10
 worlds:
     global:
@@ -69,17 +70,18 @@ worlds:
     world_nether:
         lava-flow: false
 logging:
-  hiddenBlocks:
+  ignoredBlocks:
   - 0
-  logPlayerInfo: true
-  hiddenPlayers: []
+  ignoredPlayers:
+  - Notch
+  - jeb_
 consumer:
   timePerRun: 200
   forceToProcessAtLeast: 20
   delayBetweenRuns: 6
 lookup:
   linesLimit: 1500
-  defaultTime: 30 minutes
+  defaultTime: 30m
   defaultDist: 20
   linesPerPage: 15
 questioner:
@@ -89,7 +91,6 @@ questioner:
   askRedos: true
   askClearLogAfterRollback: true
   askRollbackAfterBan: false
-
 clearlog:
   enableAutoClearLog: false
   auto:
@@ -99,37 +100,37 @@ clearlog:
   - world world_nether player lavaflow before 7 days all
   dumpDeletedLog: false
 rollback:
-    replaceAnyway:
-        - 8
-  - 9
-  - 10
-  - 11
-  - 51
-  dontRollback:
-  - 10
-  - 11
-  - 46
-  - 51
-   maxArea: 50
-  maxTime: 2 days
+    xsmall:
+        maxArea: 50
+        maxTime: 2d
+    small:
+        maxArea: 100
+        maxTime: 4d
+    medium:
+        maxArea: 250
+        maxTime: 1w
+    large:
+        maxArea: 500
+        maxTime: 2w
+    xlarge:
+        maxArea: 1000
+        maxTime: 1M
 tools:
     tool:
-        permissionDefault: 'TRUE'
         item: 270
         leftClickBehavior: NONE
-        params: area 0 all sum none limit 15 desc silent
         rightClickBehavior: TOOL
+        params: area 0 all sum none limit 15 desc silent
         aliases:
         - t
         defaultEnabled: true
         mode: LOOKUP
         give: true
     toolblock:
-        permissionDefault: 'TRUE'
-        item: 7
+        item: 17
         leftClickBehavior: TOOL
-        params: area 0 all sum none limit 15 desc silent
         rightClickBehavior: BLOCK
+        params: area 0 all sum none limit 15 desc silent
         aliases:
         - tb
         defaultEnabled: true
