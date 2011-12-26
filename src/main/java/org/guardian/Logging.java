@@ -6,4 +6,5 @@ public enum Logging {
 	public static int length = Logging.values().length;
 
 	// TODO Adapt to actually needs, this is roughly copied from LB
+        // See actiontype.java
 }

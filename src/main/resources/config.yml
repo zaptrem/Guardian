@@ -80,7 +80,6 @@ consumer:
     forceToProcessAtLeast: 20
     delayBetweenRuns: 6
 lookup:
-    # TODO refine argument structure
     linesLimit: 1500
     defaultTime: 30m
     defaultDist: 20
@@ -94,7 +93,6 @@ clearlog:
     - world world_nether before 365 days all
     - world world_nether player lavaflow before 7 days all
     dumpClearedLog: false
-# TODO refine argument structure
 rollback:
     xsmall:
         maxArea: 50

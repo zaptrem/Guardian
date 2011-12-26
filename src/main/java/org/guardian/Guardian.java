@@ -9,6 +9,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.guardian.commands.GuardianCommandExecutor;
 import org.guardian.entries.DataEntry;
+import org.guardian.listeners.ChestPlayerListener;
+import org.guardian.listeners.ChestSpoutListener;
 import org.guardian.listeners.ToolBlockListener;
 import org.guardian.listeners.NinjaPlayerListener;
 import org.guardian.listeners.MonitorBlockListener;
@@ -16,6 +18,7 @@ import org.guardian.listeners.MonitorEntityListener;
 import org.guardian.listeners.MonitorPlayerListener;
 import org.guardian.listeners.MonitorVehicleListener;
 import org.guardian.listeners.ToolPlayerListener;
+import org.guardian.listeners.UtilPlayerListener;
 import org.guardian.params.QueryParams;
 import org.guardian.util.BukkitUtils;
 
@@ -50,19 +53,20 @@ public class Guardian extends JavaPlugin {
         if (getConf().ninjaMode) {
             new NinjaPlayerListener();
         }
-        new ToolBlockListener();
-        new ToolPlayerListener();
         new MonitorBlockListener();
         new MonitorEntityListener();
         new MonitorPlayerListener();
         new MonitorVehicleListener();
+        new ToolBlockListener();
+        new ToolPlayerListener();
+        new UtilPlayerListener();
         // Check for Spout
         Plugin spoutPlugin = getServer().getPluginManager().getPlugin("Spout");
         if (spoutPlugin.isEnabled()) {
-            // TODO activate listeners
+            new ChestSpoutListener();
             BukkitUtils.info("Spout " + spoutPlugin.getDescription().getVersion() + " has been found, accurate chest logging enabled");
         } else {
-            // TODO alternative chest logging
+            new ChestPlayerListener();
         }
         // Check for WorldEdit
         Plugin wePlugin = getServer().getPluginManager().getPlugin("WorldEdit");
@@ -76,7 +80,9 @@ public class Guardian extends JavaPlugin {
         File file = new File(getDataFolder() + File.separator + "bridges" + File.separator + getConf().bridge);
         file.getParentFile().mkdirs();
         if (!file.exists()) {
-            fatalError("Could not find a valid bridge! Please check it is installed and present in config.yml");
+            BukkitUtils.severe("Could not find a valid bridge! Please check it is installed and present in config.yml");
+            BukkitUtils.warning("Attemptng to download the MySQL bridge for you");
+            // TODO Actually download it
             return;
         } else {
             database = DatabaseLoader.loadBridge(file);
@@ -94,6 +100,7 @@ public class Guardian extends JavaPlugin {
             }
         } catch (SQLException ex) {
             fatalError(ex.getMessage());
+            return;
         }
         // Start the consumer
         consumerId = getServer().getScheduler().scheduleAsyncRepeatingTask(this, consumer, conf.consumerDelay * 20, conf.consumerDelay * 20);
