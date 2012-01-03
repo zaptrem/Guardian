@@ -8,11 +8,11 @@ import org.getspout.spoutapi.event.inventory.InventoryListener;
 import org.getspout.spoutapi.event.inventory.InventoryOpenEvent;
 import org.guardian.Guardian;
 
-public class ChestSpoutListener extends InventoryListener {
+public class ChestSpoutInventoryListener extends InventoryListener {
 
     private final Guardian plugin = Guardian.getInstance();
 
-    public ChestSpoutListener() {
+    public ChestSpoutInventoryListener() {
         Bukkit.getServer().getPluginManager().registerEvent(Type.CUSTOM_EVENT, this, Priority.Monitor, plugin);
     }
 

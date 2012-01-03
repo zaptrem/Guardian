@@ -3,6 +3,7 @@ checkVersion: true
 sendStatistics: true
 logPlayerInfo: true
 ninjaMode: false
+motd: true
 bridge:
     name: Guardian-MySQL-0.1-SNAPSHOT.jar
     tablePrefix: gd_
@@ -38,11 +39,11 @@ worlds:
         entity-enderman-place: true
         entity-death: true
         # explosion events
-        entity-explode: true
         entity-creeper-explode: true
         entity-creeper-explode-as-player: false
         entity-enderdragon-destroy: true
         entity-ghast-fireball: true
+        entity-other-explode: true
         entity-tnt-explode: true
         # paiting events
         entity-painting-break: true
@@ -50,7 +51,8 @@ worlds:
         # player events
         player-chat: true
         player-command: true
-        player-bed: true
+        player-bed-enter: true
+        player-bed-exit: true
         player-bucket-empty: true
         player-bucket-fill: true
         player-death: true

@@ -18,7 +18,7 @@ import org.guardian.util.Utils;
 public class Config {
 
     // Main config
-    public boolean debug, checkVersion, sendStatistics, logPlayerInfo, ninjaMode;
+    public boolean debug, checkVersion, sendStatistics, logPlayerInfo, ninjaMode, motd;
     // Bridge config
     public String bridgeName, tablePrefix, host;
     public int port;
@@ -59,6 +59,7 @@ public class Config {
         sendStatistics = config.getBoolean("sendStatistics");
         logPlayerInfo = config.getBoolean("logPlayerInfo");
         ninjaMode = config.getBoolean("ninjaMode");
+        motd = config.getBoolean("motd");
         // Populate bridge config
         bridgeName = config.getString("bridge.name");
         tablePrefix = config.getString("bridge.tablePrefix");

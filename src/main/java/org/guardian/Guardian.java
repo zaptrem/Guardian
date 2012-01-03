@@ -10,7 +10,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.guardian.commands.GuardianCommandExecutor;
 import org.guardian.entries.DataEntry;
 import org.guardian.listeners.ChestPlayerListener;
-import org.guardian.listeners.ChestSpoutListener;
+import org.guardian.listeners.ChestSpoutInventoryListener;
+import org.guardian.listeners.ChestSpoutPlayerListener;
 import org.guardian.listeners.ToolBlockListener;
 import org.guardian.listeners.NinjaPlayerListener;
 import org.guardian.listeners.MonitorBlockListener;
@@ -63,10 +64,12 @@ public class Guardian extends JavaPlugin {
         // Check for Spout
         Plugin spoutPlugin = getServer().getPluginManager().getPlugin("Spout");
         if (spoutPlugin.isEnabled()) {
-            new ChestSpoutListener();
+            new ChestSpoutInventoryListener();
+            new ChestSpoutPlayerListener();
             BukkitUtils.info("Spout " + spoutPlugin.getDescription().getVersion() + " has been found, accurate chest logging enabled");
         } else {
             new ChestPlayerListener();
+            BukkitUtils.info("Spout has not been found, accurate chest logging disabled");
         }
         // Check for WorldEdit
         Plugin wePlugin = getServer().getPluginManager().getPlugin("WorldEdit");
@@ -81,12 +84,10 @@ public class Guardian extends JavaPlugin {
         file.getParentFile().mkdirs();
         if (!file.exists()) {
             BukkitUtils.severe("Could not find a valid bridge! Please check it is installed and present in config.yml");
-            BukkitUtils.warning("Attemptng to download the MySQL bridge for you");
+            BukkitUtils.warning("Attempting to download the MySQL bridge for you");
             // TODO Actually download it
-            return;
-        } else {
-            database = DatabaseLoader.loadBridge(file);
         }
+        database = DatabaseLoader.loadBridge(file);
         // Something went wrong
         if (database == null) {
             fatalError(getConf().bridgeName + " is not a database bridge!");
