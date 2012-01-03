@@ -14,9 +14,8 @@ bridge:
     password: 'password'
     max-connections: 10
 worlds:
-    ignored:
-        - FreeForAll
     global:
+        ignored: true
         # block events
         block-break: true
         block-burn: true
@@ -107,21 +106,22 @@ rollback:
     - 10
     - 11
     - 51
-    xsmall:
-        maxArea: 50
-        maxTime: 2d
-    small:
-        maxArea: 100
-        maxTime: 4d
-    medium:
-        maxArea: 250
-        maxTime: 1w
-    large:
-        maxArea: 500
-        maxTime: 2w
-    xlarge:
-        maxArea: 1000
-        maxTime: 1M
+    sizes:
+        xsmall:
+            maxArea: 50
+            maxTime: 2d
+        small:
+            maxArea: 100
+            maxTime: 4d
+        medium:
+           maxArea: 250
+           maxTime: 1w
+        large:
+            maxArea: 500
+            maxTime: 2w
+        xlarge:
+            maxArea: 1000
+            maxTime: 1M
 # TODO refine argument structure
 tools:
     tool:

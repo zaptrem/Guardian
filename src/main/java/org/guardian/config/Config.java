@@ -1,14 +1,19 @@
 package org.guardian.config;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.permissions.PermissionDefault;
 import org.guardian.Guardian;
 import org.guardian.params.QueryParams;
+import org.guardian.permissions.RollbackSize;
+import org.guardian.permissions.RollbackSizes;
 import org.guardian.tools.Tool;
 import org.guardian.tools.ToolBehavior;
 import org.guardian.tools.ToolMode;
@@ -26,7 +31,7 @@ public class Config {
     public int maxConnections;
     public String url;
     // World config
-    // TODO World config
+    public HashMap<String, WorldConfig> worlds = new HashMap<String, WorldConfig>();
     // Consumer config
     public int maxTimerPerRun, forceToProcessAtLeast, delayBetweenRuns;
     // Lookup config
@@ -38,7 +43,7 @@ public class Config {
     // Rolback config
     public ArrayList<Integer> ignoredBlocks;
     public ArrayList<Integer> forcedBlocks;
-    // TODO Permission groups
+    public EnumMap<RollbackSize, RollbackSizes> rollbackSizes = new EnumMap<RollbackSize, RollbackSizes>(RollbackSize.class);
     // Tools
     public ArrayList<Tool> tools;
     public HashMap<String, Tool> toolsByName;
@@ -70,7 +75,20 @@ public class Config {
         password = config.getString("bridge.password");
         maxConnections = config.getInt("bridge.maxConnections");
         // Populate the world config
-        // TODO
+        ConfigurationSection globalSection = config.getConfigurationSection("worlds.global");
+        for (World world : Bukkit.getServer().getWorlds()) {
+            String name = world.getName();
+            if (name.equalsIgnoreCase("global")) {
+                return;
+            }
+            ConfigurationSection cs = config.getConfigurationSection("worlds." + world.getName());
+            for (String key : globalSection.getKeys(false)) {
+                if (!cs.isSet(key)) {
+                    cs.set(key, globalSection.get(key));
+                }
+            }
+            worlds.put(name, new WorldConfig(cs));
+        }
         // Populate the consumer config
         maxTimerPerRun = config.getInt("consumer.maxTimePerRun");
         forceToProcessAtLeast = config.getInt("consumer.forceToProcessAtLeast");
@@ -89,8 +107,11 @@ public class Config {
                 ? (ArrayList<Integer>) config.getIntegerList("rollback.ignoredBlocks") : new ArrayList<Integer>();
         forcedBlocks = (config.getIntegerList("rollback.forcedBlocks") != null)
                 ? (ArrayList<Integer>) config.getIntegerList("rollback.forcedBlocks") : new ArrayList<Integer>();
-        // TODO permission groups
-
+        // Permissions
+        ConfigurationSection permSection = config.getConfigurationSection("rollback.sizes");
+        for (String key: permSection.getKeys(false)){
+            rollbackSizes.put(RollbackSize.valueOf(key), new RollbackSizes(permSection.getInt(key + ".maxArea"), permSection.getInt(key + ".maxTime")));
+        }
         // TODO Populate the tool config
         final Set<String> toolNames = config.getConfigurationSection("tools").getKeys(false);
         tools = new ArrayList<Tool>();

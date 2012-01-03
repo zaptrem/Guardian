@@ -5,6 +5,7 @@ import org.bukkit.configuration.ConfigurationSection;
 
 public class WorldConfig {
 
+    private boolean ignored;
     private boolean blockBreak, blockBurn, blockDispense, blockFade, blockForm, blockFromTo,
             blockLavaFlow, blockLavaFlowAsPlayer, blockWaterFlow, blockWaterFlowAsPlayer, blockIgnite,
             blockPhysics, blockPiston, blockPlace, blockSpread, blockSignChange;
@@ -19,6 +20,7 @@ public class WorldConfig {
     private ArrayList<String> ignoredPlayers = new ArrayList<String>();
 
     public WorldConfig(final ConfigurationSection config) {
+        ignored = config.getBoolean("ignored");
         // Block events
         blockBreak = config.getBoolean("block-break");
         blockBurn = config.getBoolean("block-burn");
@@ -70,5 +72,7 @@ public class WorldConfig {
         // world events
         worldPortalCreate = config.getBoolean("world-portal-create");
         worldStructureGrow = config.getBoolean("world-structure-grow");
+        // player config
+        ignoredPlayers = (ArrayList<String>) config.getStringList("ignoredPlayers");
     }
 }
