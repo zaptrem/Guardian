@@ -1,5 +1,6 @@
 package org.guardian.config;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
 import org.guardian.Guardian;
 import org.guardian.params.QueryParams;
@@ -49,7 +51,7 @@ public class Config {
     public HashMap<String, Tool> toolsByName;
     public HashMap<Integer, Tool> toolsByType;
     // Materials
-    // TODO material data class
+    public MaterialData materialDataManager;
     // Other
     private final Guardian plugin = Guardian.getInstance();
 
@@ -109,7 +111,7 @@ public class Config {
                 ? (ArrayList<Integer>) config.getIntegerList("rollback.forcedBlocks") : new ArrayList<Integer>();
         // Permissions
         ConfigurationSection permSection = config.getConfigurationSection("rollback.sizes");
-        for (String key: permSection.getKeys(false)){
+        for (String key : permSection.getKeys(false)) {
             rollbackSizes.put(RollbackSize.valueOf(key), new RollbackSizes(permSection.getInt(key + ".maxArea"), permSection.getInt(key + ".maxTime")));
         }
         // TODO Populate the tool config
@@ -144,7 +146,8 @@ public class Config {
                 toolsByName.put(alias, tool);
             }
         }
-        // TODO Populate the material config
+        // Materials
+        materialDataManager = new MaterialData(new File(plugin.getDataFolder().getPath() + File.separator + "materials.yml"));
     }
 
     public List<String> toStringList(List<?> list) {
@@ -162,11 +165,11 @@ public class Config {
         return strs;
     }
 
-    public boolean isLogged(World world) {
-        return worlds.containsKey(world);
+    public boolean isLogged(String world) {
+        return worlds.get(world).ignored;
     }
 
-    public boolean isIgnored(String p) {
-        return ignoredPlayers.contains(p);
+    public boolean isIgnored(Player p) {
+        return worlds.get(p.getWorld().getName()).ignoredPlayers.contains(p.getName());
     }
 }

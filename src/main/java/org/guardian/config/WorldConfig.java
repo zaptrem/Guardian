@@ -5,19 +5,19 @@ import org.bukkit.configuration.ConfigurationSection;
 
 public class WorldConfig {
 
-    private boolean ignored;
-    private boolean blockBreak, blockBurn, blockDispense, blockFade, blockForm, blockFromTo,
+    public boolean ignored;
+    public boolean blockBreak, blockBurn, blockDispense, blockFade, blockForm, blockFromTo,
             blockLavaFlow, blockLavaFlowAsPlayer, blockWaterFlow, blockWaterFlowAsPlayer, blockIgnite,
             blockPhysics, blockPiston, blockPlace, blockSpread, blockSignChange;
-    private boolean entityEndermanPickup, entityEndermanPlace, entityDeath, entityCreeperExplode,
+    public boolean entityEndermanPickup, entityEndermanPlace, entityDeath, entityCreeperExplode,
             entityCreeperExplodeAsPlayer, entityEnderdragonDestroy, entityGhastFireball,
             entityOtherExplode, entityTntExplode, entityPaintingBreak, entityPaintingPlace;
-    private boolean playerChat, playerCommand, playerBedEnter, playerBedExit, playerBucketEmpty,
+    public boolean playerChat, playerCommand, playerBedEnter, playerBedExit, playerBucketEmpty,
             playerBucketFill, playerDeath, playerItemDrop, playerInteract, playerJoin, playerKick,
             playerItemPickup, playerTeleport;
-    private boolean vehicleCreate, vehicleDestroy, vehicleEnter, vehicleExit;
-    private boolean worldPortalCreate, worldStructureGrow;
-    private ArrayList<String> ignoredPlayers = new ArrayList<String>();
+    public boolean vehicleCreate, vehicleDestroy, vehicleEnter, vehicleExit;
+    public boolean worldPortalCreate, worldStructureGrow;
+    public ArrayList<String> ignoredPlayers = new ArrayList<String>();
 
     public WorldConfig(final ConfigurationSection config) {
         ignored = config.getBoolean("ignored");
