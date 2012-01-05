@@ -1,5 +1,5 @@
 name: Guardian
-version: ${build.number}
+version: ${project.build.number}
 description: The future of griefer tracking and rollback for Bukkit
 authors: [DiddiZ, md_5, oliverw92]
 website: https://github.com/Guardian-Security/Guardian

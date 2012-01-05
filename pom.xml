@@ -14,7 +14,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.organization>Guardian-Security</project.organization>
-        <build.number>${project.version}</build.number>
+        <project.build.number>${project.version}</project.build.number>
     </properties>
 
     <licenses>
