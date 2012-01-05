@@ -1,29 +1,30 @@
 package org.guardian;
 
-import org.guardian.config.Config;
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.guardian.commands.GuardianCommandExecutor;
-import org.guardian.entries.DataEntry;
+import org.guardian.config.Config;
+import org.guardian.entries.Entry;
 import org.guardian.listeners.ChestPlayerListener;
 import org.guardian.listeners.ChestSpoutInventoryListener;
 import org.guardian.listeners.ChestSpoutPlayerListener;
-import org.guardian.listeners.ToolBlockListener;
-import org.guardian.listeners.NinjaPlayerListener;
 import org.guardian.listeners.MonitorBlockListener;
 import org.guardian.listeners.MonitorEntityListener;
 import org.guardian.listeners.MonitorPlayerListener;
 import org.guardian.listeners.MonitorVehicleListener;
+import org.guardian.listeners.NinjaPlayerListener;
+import org.guardian.listeners.ToolBlockListener;
 import org.guardian.listeners.ToolPlayerListener;
 import org.guardian.listeners.UtilPlayerListener;
 import org.guardian.params.QueryParams;
 import org.guardian.util.BukkitUtils;
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
-public class Guardian extends JavaPlugin {
+public class Guardian extends JavaPlugin
+{
 
     // Plugins
     private static Guardian guardian;
@@ -51,9 +52,8 @@ public class Guardian extends JavaPlugin {
         commandExecutor = new GuardianCommandExecutor();
         getCommand("guardian").setExecutor(commandExecutor);
         // Activate listeners
-        if (getConf().ninjaMode) {
+        if (getConf().ninjaMode)
             new NinjaPlayerListener();
-        }
         new MonitorBlockListener();
         new MonitorEntityListener();
         new MonitorPlayerListener();
@@ -62,7 +62,7 @@ public class Guardian extends JavaPlugin {
         new ToolPlayerListener();
         new UtilPlayerListener();
         // Check for Spout
-        Plugin spoutPlugin = getServer().getPluginManager().getPlugin("Spout");
+        final Plugin spoutPlugin = getServer().getPluginManager().getPlugin("Spout");
         if (spoutPlugin.isEnabled()) {
             new ChestSpoutInventoryListener();
             new ChestSpoutPlayerListener();
@@ -72,15 +72,15 @@ public class Guardian extends JavaPlugin {
             BukkitUtils.info("Spout has not been found, accurate chest logging disabled");
         }
         // Check for WorldEdit
-        Plugin wePlugin = getServer().getPluginManager().getPlugin("WorldEdit");
+        final Plugin wePlugin = getServer().getPluginManager().getPlugin("WorldEdit");
         if (wePlugin != null) {
-            worldEdit = (WorldEditPlugin) wePlugin;
+            worldEdit = (WorldEditPlugin)wePlugin;
             BukkitUtils.info("WorldEdit " + getWorldEdit().getDescription().getVersion() + " has been found, selection rollbacks enabled");
         }
         // Initialise the session manager
         sessionMan = new SessionManager();
         // Lets get some bridge action going
-        File file = new File(getDataFolder() + File.separator + "bridges" + File.separator + getConf().bridgeName);
+        final File file = new File(getDataFolder() + File.separator + "bridges" + File.separator + getConf().bridgeName);
         file.getParentFile().mkdirs();
         if (!file.exists()) {
             BukkitUtils.severe("Could not find a valid bridge! Please check it is installed and present in config.yml");
@@ -99,15 +99,14 @@ public class Guardian extends JavaPlugin {
                 fatalError("The database bridge failed to verify itself");
                 return;
             }
-        } catch (SQLException ex) {
+        } catch (final SQLException ex) {
             fatalError(ex.getMessage());
             return;
         }
         // Start the consumer
         consumerId = getServer().getScheduler().scheduleAsyncRepeatingTask(this, consumer, getConf().delayBetweenRuns * 20, getConf().delayBetweenRuns * 20);
-        if (consumerId <= 0) {
+        if (consumerId <= 0)
             fatalError("Failed to start the consumer");
-        }
         // It's all good!
         BukkitUtils.info("v" + getDescription().getVersion() + " enabled");
     }
@@ -165,19 +164,22 @@ public class Guardian extends JavaPlugin {
 
     /**
      * Returns all log matching specified parameters. Also intern methods should use this.
-     *
-     * @param params the query paramaters to use
+     * 
+     * @param params
+     * the query paramaters to use
      * @return A list of all entries
-     * @throws SQLException  when there is a database error
+     * @throws SQLException
+     * when there is a database error
      */
-    public List<DataEntry> getLog(QueryParams params) throws SQLException {
+    public List<Entry> getLog(QueryParams params) throws SQLException {
         return database.getEntries(params);
     }
 
     /**
      * Performs a rollback on all log matching specified parameters. Also intern methods should use this.
-     *
-     * @param params the query paramaters to use
+     * 
+     * @param params
+     * the query paramaters to use
      */
     public void rollback(QueryParams params) {
         // TODO
@@ -185,8 +187,9 @@ public class Guardian extends JavaPlugin {
 
     /**
      * Redoes all changes matching parameters, basically a undo of a rollback. Internal methods should use this.
-     *
-     * @param params the query paramaters to use
+     * 
+     * @param params
+     * the query paramaters to use
      */
     public void rebuild(QueryParams params) {
         // TODO
@@ -194,11 +197,20 @@ public class Guardian extends JavaPlugin {
 
     /**
      * Deletes all log matching specified parameters. Also intern methods should use this.
-     *
-     * @param params the query paramaters to use
-     * @throws SQLException when there is a database error
+     * 
+     * @param params
+     * the query paramaters to use
+     * @throws SQLException
+     * when there is a database error
      */
     public void clearLog(QueryParams params) throws SQLException {
         database.removeEntries(params);
+    }
+
+    /**
+     * @return the currently used DatabaseBridge
+     */
+    public DatabaseBridge getDatabaseBridge() {
+        return database;
     }
 }
