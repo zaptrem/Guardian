@@ -1,12 +1,11 @@
 package org.guardian.entries;
 
-
 /**
- * Class for parsing managing player's {@PlayerSession}s
+ * Interface for basic Entry methods
  * 
  * @author DiddiZ
  */
 public interface Entry
 {
-	public String getMessage();
+    public String getMessage();
 }
