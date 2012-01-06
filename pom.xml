@@ -38,12 +38,8 @@
     
     <repositories>
         <repository>
-            <id>spout-repo</id>
-            <url>http://repo.getspout.org/</url>
-        </repository>
-        <repository>
-            <id>sk89q-mvn2</id>
-            <url>http://mvn2.sk89q.com/repo/</url>
+            <id>guardian-repo</id>
+            <url>http://guardian.mossycobble.com:8080/repo/content/groups/public/</url>
         </repository>
     </repositories>
 
