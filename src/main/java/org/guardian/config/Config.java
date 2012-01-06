@@ -22,7 +22,8 @@ import org.guardian.tools.ToolMode;
 import org.guardian.util.BukkitUtils;
 import org.guardian.util.Utils;
 
-public class Config {
+public class Config
+{
 
     // Main config
     public boolean debug, checkVersion, sendStatistics, logPlayerInfo, ninjaMode, motd;
@@ -77,18 +78,15 @@ public class Config {
         password = config.getString("bridge.password");
         maxConnections = config.getInt("bridge.maxConnections");
         // Populate the world config
-        ConfigurationSection globalSection = config.getConfigurationSection("worlds.global");
-        for (World world : Bukkit.getServer().getWorlds()) {
-            String name = world.getName();
-            if (name.equalsIgnoreCase("global")) {
+        final ConfigurationSection globalSection = config.getConfigurationSection("worlds.global");
+        for (final World world : Bukkit.getServer().getWorlds()) {
+            final String name = world.getName();
+            if (name.equalsIgnoreCase("global"))
                 return;
-            }
-            ConfigurationSection cs = config.getConfigurationSection("worlds." + world.getName());
-            for (String key : globalSection.getKeys(false)) {
-                if (!cs.isSet(key)) {
+            final ConfigurationSection cs = config.getConfigurationSection("worlds." + world.getName());
+            for (final String key : globalSection.getKeys(false))
+                if (!cs.isSet(key))
                     cs.set(key, globalSection.get(key));
-                }
-            }
             worlds.put(name, new WorldConfig(cs));
         }
         // Populate the consumer config
@@ -105,22 +103,19 @@ public class Config {
         // TODO autoParamaters
         dumpClearedLog = config.getBoolean("clearlog.dumpClearedLog");
         // Rollback config
-        ignoredBlocks = (config.getIntegerList("rollback.ignoredBlocks") != null)
-                ? (ArrayList<Integer>) config.getIntegerList("rollback.ignoredBlocks") : new ArrayList<Integer>();
-        forcedBlocks = (config.getIntegerList("rollback.forcedBlocks") != null)
-                ? (ArrayList<Integer>) config.getIntegerList("rollback.forcedBlocks") : new ArrayList<Integer>();
+        ignoredBlocks = config.getIntegerList("rollback.ignoredBlocks") != null ? (ArrayList<Integer>)config.getIntegerList("rollback.ignoredBlocks") : new ArrayList<Integer>();
+        forcedBlocks = config.getIntegerList("rollback.forcedBlocks") != null ? (ArrayList<Integer>)config.getIntegerList("rollback.forcedBlocks") : new ArrayList<Integer>();
         // Permissions
-        ConfigurationSection permSection = config.getConfigurationSection("rollback.sizes");
-        for (String key : permSection.getKeys(false)) {
+        final ConfigurationSection permSection = config.getConfigurationSection("rollback.sizes");
+        for (final String key : permSection.getKeys(false))
             rollbackSizes.put(RollbackSize.valueOf(key), new RollbackSizes(permSection.getInt(key + ".maxArea"), permSection.getInt(key + ".maxTime")));
-        }
         // TODO Populate the tool config
         final Set<String> toolNames = config.getConfigurationSection("tools").getKeys(false);
         tools = new ArrayList<Tool>();
-        for (final String toolName : toolNames) {
+        for (final String toolName : toolNames)
             try {
                 final String path = "tools." + toolName;
-                final List<String> aliases = toStringList(config.getList(path + ".aliases", null));
+                final List<String> aliases = config.getStringList(path + ".aliases");
                 final ToolBehavior leftClickBehavior = ToolBehavior.valueOf(config.getString(path + ".leftClickBehavior").toUpperCase());
                 final ToolBehavior rightClickBehavior = ToolBehavior.valueOf(config.getString(path + ".rightClickBehavior").toUpperCase());
                 final boolean defaultEnabled = config.getBoolean(path + ".defaultEnabled", false);
@@ -136,40 +131,25 @@ public class Config {
             } catch (final Exception ex) {
                 BukkitUtils.warning("Error at parsing tool '" + toolName + "':)", ex);
             }
-        }
         toolsByName = new HashMap<String, Tool>();
         toolsByType = new HashMap<Integer, Tool>();
         for (final Tool tool : tools) {
             toolsByType.put(tool.item, tool);
             toolsByName.put(tool.name, tool);
-            for (final String alias : tool.aliases) {
+            for (final String alias : tool.aliases)
                 toolsByName.put(alias, tool);
-            }
         }
         // Materials
         materialDataManager = new MaterialData(new File(plugin.getDataFolder().getPath() + File.separator + "materials.yml"));
     }
 
-    public List<String> toStringList(List<?> list) {
-        if (list == null) {
-            return new ArrayList<String>();
-        }
-        final List<String> strs = new ArrayList<String>(list.size());
-        for (final Object obj : list) {
-            if (obj instanceof String) {
-                strs.add((String) obj);
-            } else {
-                strs.add(String.valueOf(obj));
-            }
-        }
-        return strs;
-    }
-
     public boolean isLogged(String world) {
-        return worlds.get(world).ignored;
+        final WorldConfig wcfg = worlds.get(world);
+        return wcfg != null ? !wcfg.isIgnored() : false;
     }
 
-    public boolean isIgnored(Player p) {
-        return worlds.get(p.getWorld().getName()).ignoredPlayers.contains(p.getName());
+    public boolean isLogging(Player p) {
+        final WorldConfig wcfg = worlds.get(p.getWorld());
+        return wcfg != null ? !wcfg.isIgnored(p) : false;
     }
 }

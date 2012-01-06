@@ -1,78 +1,42 @@
 package org.guardian.config;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
+import org.guardian.ActionType;
 
-public class WorldConfig {
+public class WorldConfig
+{
+    private final boolean[] actions = new boolean[ActionType.length];
+    private final boolean ignored;
+    private final Set<String> ignoredPlayers;
 
-    public boolean ignored;
-    public boolean blockBreak, blockBurn, blockDispense, blockFade, blockForm, blockFromTo,
-            blockLavaFlow, blockLavaFlowAsPlayer, blockWaterFlow, blockWaterFlowAsPlayer, blockIgnite,
-            blockPhysics, blockPiston, blockPlace, blockSpread, blockSignChange;
-    public boolean entityEndermanPickup, entityEndermanPlace, entityDeath, entityCreeperExplode,
-            entityCreeperExplodeAsPlayer, entityEnderdragonDestroy, entityGhastFireball,
-            entityOtherExplode, entityTntExplode, entityPaintingBreak, entityPaintingPlace;
-    public boolean playerChat, playerCommand, playerBedEnter, playerBedExit, playerBucketEmpty,
-            playerBucketFill, playerDeath, playerItemDrop, playerInteract, playerJoin, playerKick,
-            playerItemPickup, playerTeleport;
-    public boolean vehicleCreate, vehicleDestroy, vehicleEnter, vehicleExit;
-    public boolean worldPortalCreate, worldStructureGrow;
-    public ArrayList<String> ignoredPlayers = new ArrayList<String>();
+    public WorldConfig(final ConfigurationSection cfg) {
+        for (final ActionType action : ActionType.values())
+            if (!cfg.contains("logging." + action.toString()))
+                cfg.set("logging." + action.getConfigPath(), false);
+        if (!cfg.contains("ignored"))
+            cfg.set("ignored", false);
+        if (!cfg.contains("ignoredPlayers"))
+            cfg.set("ignoredPlayers", new ArrayList<String>());
 
-    public WorldConfig(final ConfigurationSection config) {
-        ignored = config.getBoolean("ignored");
-        // Block events
-        blockBreak = config.getBoolean("block-break");
-        blockBurn = config.getBoolean("block-burn");
-        blockDispense = config.getBoolean("block-dispense");
-        blockFade = config.getBoolean("block-fade");
-        blockForm = config.getBoolean("block-form");
-        blockFromTo = config.getBoolean("block-from-to");
-        blockLavaFlow = config.getBoolean("block-lava-flow");
-        blockLavaFlowAsPlayer = config.getBoolean("block-lava-flow-as-player");
-        blockWaterFlow = config.getBoolean("block-water-flow-as-player");
-        blockWaterFlowAsPlayer = config.getBoolean("block-water-flow-as-player");
-        blockIgnite = config.getBoolean("block-ignite");
-        blockPhysics = config.getBoolean("block-physics");
-        blockPiston = config.getBoolean("block-piston");
-        blockPlace = config.getBoolean("block-place");
-        blockSpread = config.getBoolean("block-spread");
-        blockSignChange = config.getBoolean("block-sign-change");
-        // Entity events
-        entityEndermanPickup = config.getBoolean("entity-endermen-pickup");
-        entityEndermanPlace = config.getBoolean("entity-endermen-place");
-        entityDeath = config.getBoolean("entity-death");
-        entityCreeperExplode = config.getBoolean("entity-creeper-explode");
-        entityCreeperExplodeAsPlayer = config.getBoolean("entity-creeper-explode-as-player");
-        entityEnderdragonDestroy = config.getBoolean("entity-enderdragon-destroy");
-        entityGhastFireball = config.getBoolean("entity-ghast-fireball");
-        entityOtherExplode = config.getBoolean("entity-other-explode");
-        entityTntExplode = config.getBoolean("entity-tnt-explode");
-        entityPaintingBreak = config.getBoolean("entity-painting-break");
-        entityPaintingPlace = config.getBoolean("entity-painting-place");
-        // Player events
-        playerChat = config.getBoolean("player-chat");
-        playerCommand = config.getBoolean("player-command");
-        playerBedEnter = config.getBoolean("player-bed-enter");
-        playerBedExit = config.getBoolean("player-bed-exit");
-        playerBucketEmpty = config.getBoolean("player-bucket-empty");
-        playerBucketFill = config.getBoolean("player-bucket-fill");
-        playerDeath = config.getBoolean("player-death");
-        playerItemDrop = config.getBoolean("player-item-drop");
-        playerInteract = config.getBoolean("player-interact");
-        playerJoin = config.getBoolean("player-join");
-        playerKick = config.getBoolean("player-kick");
-        playerItemPickup = config.getBoolean("player-item-pickup");
-        playerTeleport = config.getBoolean("player-teleport");
-        // vehicle events
-        vehicleCreate = config.getBoolean("vehicle-create");
-        vehicleDestroy = config.getBoolean("vehicle-destroy");
-        vehicleEnter = config.getBoolean("vehicle-enter");
-        vehicleExit = config.getBoolean("vehicle-exit");
-        // world events
-        worldPortalCreate = config.getBoolean("world-portal-create");
-        worldStructureGrow = config.getBoolean("world-structure-grow");
-        // player config
-        ignoredPlayers = (ArrayList<String>) config.getStringList("ignoredPlayers");
+        for (final ActionType action : ActionType.values())
+            actions[action.ordinal()] = cfg.getBoolean("logging." + action.getConfigPath());
+        ignored = cfg.getBoolean("ignored");
+        ignoredPlayers = new HashSet<String>(cfg.getStringList("ignoredPlayers"));
+    }
+
+    public boolean isIgnored() {
+        return ignored;
+    }
+
+    public boolean isIgnored(Player player) {
+        return ignoredPlayers.contains(player.getName().toLowerCase());
+    }
+
+    public boolean isLogging(ActionType action) {
+        return actions[action.ordinal()];
     }
 }
