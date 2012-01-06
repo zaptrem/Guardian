@@ -46,18 +46,6 @@ public class MonitorBlockListener extends BlockListener {
 
     @Override
     public void onBlockBreak(BlockBreakEvent event) {
-        World world = event.getBlock().getWorld();
-        if (!plugin.getConf().isLogged(world)) {
-            return;
-        }
-        String player = event.getPlayer().getName();
-        if (plugin.getConf().isIgnored(player)) {
-            return;
-        }
-        Location location = event.getBlock().getLocation();
-        int type = event.getBlock().getTypeId();
-        byte data = event.getBlock().getData();
-        // TODO Log the data
     }
 
     @Override
@@ -99,11 +87,11 @@ public class MonitorBlockListener extends BlockListener {
     @Override
     public void onBlockPlace(BlockPlaceEvent event) {
         World world = event.getBlock().getWorld();
-        if (!plugin.getConf().isLogged(world)) {
+        if (!plugin.getConf().isLogged(world.getName())) {
             return;
         }
         String player = event.getPlayer().getName();
-        if (plugin.getConf().isIgnored(player)) {
+        if (plugin.getConf().isIgnored(event.getPlayer())) {
             return;
         }
         Location location = event.getBlock().getLocation();

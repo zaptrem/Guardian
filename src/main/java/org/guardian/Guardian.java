@@ -16,15 +16,13 @@ import org.guardian.listeners.MonitorEntityListener;
 import org.guardian.listeners.MonitorPlayerListener;
 import org.guardian.listeners.MonitorVehicleListener;
 import org.guardian.listeners.NinjaPlayerListener;
-import org.guardian.listeners.ToolBlockListener;
 import org.guardian.listeners.ToolPlayerListener;
 import org.guardian.listeners.UtilPlayerListener;
 import org.guardian.params.QueryParams;
 import org.guardian.util.BukkitUtils;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
-public class Guardian extends JavaPlugin
-{
+public class Guardian extends JavaPlugin {
 
     // Plugins
     private static Guardian guardian;
@@ -52,13 +50,13 @@ public class Guardian extends JavaPlugin
         commandExecutor = new GuardianCommandExecutor();
         getCommand("guardian").setExecutor(commandExecutor);
         // Activate listeners
-        if (getConf().ninjaMode)
+        if (getConf().ninjaMode) {
             new NinjaPlayerListener();
+        }
         new MonitorBlockListener();
         new MonitorEntityListener();
         new MonitorPlayerListener();
         new MonitorVehicleListener();
-        new ToolBlockListener();
         new ToolPlayerListener();
         new UtilPlayerListener();
         // Check for Spout
@@ -74,7 +72,7 @@ public class Guardian extends JavaPlugin
         // Check for WorldEdit
         final Plugin wePlugin = getServer().getPluginManager().getPlugin("WorldEdit");
         if (wePlugin != null) {
-            worldEdit = (WorldEditPlugin)wePlugin;
+            worldEdit = (WorldEditPlugin) wePlugin;
             BukkitUtils.info("WorldEdit " + getWorldEdit().getDescription().getVersion() + " has been found, selection rollbacks enabled");
         }
         // Initialise the session manager
@@ -105,8 +103,9 @@ public class Guardian extends JavaPlugin
         }
         // Start the consumer
         consumerId = getServer().getScheduler().scheduleAsyncRepeatingTask(this, consumer, getConf().delayBetweenRuns * 20, getConf().delayBetweenRuns * 20);
-        if (consumerId <= 0)
+        if (consumerId <= 0) {
             fatalError("Failed to start the consumer");
+        }
         // It's all good!
         BukkitUtils.info("v" + getDescription().getVersion() + " enabled");
     }
