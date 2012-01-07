@@ -91,7 +91,7 @@ public class MonitorBlockListener extends BlockListener {
             return;
         }
         String player = event.getPlayer().getName();
-        if (plugin.getConf().isIgnored(event.getPlayer())) {
+        if (plugin.getConf().isLogging(event.getPlayer())) {
             return;
         }
         Location location = event.getBlock().getLocation();

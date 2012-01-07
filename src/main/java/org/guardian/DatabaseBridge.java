@@ -6,8 +6,8 @@ import java.util.List;
 import org.guardian.entries.Entry;
 import org.guardian.params.QueryParams;
 
-public interface DatabaseBridge extends Closeable
-{
+public interface DatabaseBridge extends Closeable {
+
     /**
      * Returns all log matching specified parameters. Database specific implementing of getLog()
      **/
@@ -57,5 +57,7 @@ public interface DatabaseBridge extends Closeable
     /**
      * Checks whether the underlying data structure is capable to log
      **/
-    boolean canLog(Logging logging);
+    boolean canLog(ActionType action);
+    
+    boolean executeSQL(String sql) throws SQLException;
 }

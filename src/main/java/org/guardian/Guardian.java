@@ -45,7 +45,6 @@ public class Guardian extends JavaPlugin {
     public void onEnable() {
         // Load config
         conf = new Config();
-        conf.load();
         // Initialise commands
         commandExecutor = new GuardianCommandExecutor();
         getCommand("guardian").setExecutor(commandExecutor);

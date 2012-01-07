@@ -22,7 +22,7 @@ import org.guardian.tools.ToolMode;
 import org.guardian.util.BukkitUtils;
 import org.guardian.util.Utils;
 
-public class Config
+public final class Config
 {
 
     // Main config
@@ -55,6 +55,10 @@ public class Config
     public MaterialData materialDataManager;
     // Other
     private final Guardian plugin = Guardian.getInstance();
+
+    public Config() {
+        load();
+    }
 
     public void load() {
         // Load the config
