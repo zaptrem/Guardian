@@ -9,6 +9,11 @@ import org.guardian.params.QueryParams;
 public interface DatabaseBridge extends Closeable {
 
     /**
+     * Checks whether the bridge is working. Can be implemented as ping.
+     **/
+    boolean init() throws SQLException;
+
+    /**
      * Returns all log matching specified parameters. Database specific implementing of getLog()
      **/
     List<Entry> getEntries(QueryParams params) throws SQLException;
@@ -43,16 +48,6 @@ public interface DatabaseBridge extends Closeable {
      * DataEntries to be modified. Id must be set.
      **/
     void setRollbacked(List<Entry> entries, boolean rollbacked) throws SQLException;
-
-    /**
-     * Checks whether the connection works. Can be implemented as ping.
-     **/
-    boolean test() throws SQLException;
-
-    /**
-     * Creates tables if necessary
-     **/
-    boolean checkTables() throws SQLException;
 
     /**
      * Checks whether the underlying data structure is capable to log

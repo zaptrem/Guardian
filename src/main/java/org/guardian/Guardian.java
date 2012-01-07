@@ -92,7 +92,7 @@ public class Guardian extends JavaPlugin {
         }
         // Check that the database is working
         try {
-            if (!database.test()) {
+            if (!database.init()) {
                 fatalError("The database bridge failed to verify itself");
                 return;
             }
