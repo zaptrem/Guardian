@@ -59,5 +59,4 @@ public interface DatabaseBridge extends Closeable {
      **/
     boolean canLog(ActionType action);
     
-    boolean executeSQL(String sql) throws SQLException;
 }
