@@ -1,3 +1,4 @@
+# The Guardian config
 debug: false
 checkVersion: true
 sendStatistics: true
@@ -5,13 +6,13 @@ logPlayerInfo: true
 ninjaMode: false
 motd: true
 bridge:
-    name: Guardian-MySQL-0.1-SNAPSHOT.jar
+    name: guardian-mysql-dev-SNAPSHOT.jar
     tablePrefix: gd_
     host: localhost
     port: 3306
-    database: guardian
+    database: minecraft
     username: root
-    password: 'password'
+    password: ''
     max-connections: 10
 worlds:
     global:

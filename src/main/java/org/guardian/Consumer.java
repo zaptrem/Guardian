@@ -1,6 +1,5 @@
 package org.guardian;
 
-import static org.guardian.util.BukkitUtils.severe;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,16 +10,13 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import org.guardian.config.Config;
 import org.guardian.entries.Entry;
+import org.guardian.util.BukkitUtils;
 
 public class Consumer implements Runnable
 {
-    private final Guardian guardian;
+    private final Guardian guardian = Guardian.getInstance();
     private final Queue<Entry> queue = new LinkedBlockingQueue<Entry>();
     private final Lock lock = new ReentrantLock();
-
-    private Consumer(Guardian guardian) {
-        this.guardian = guardian;
-    }
 
     public void queueEntry(Entry entry) {
         queue.add(entry);
@@ -45,7 +41,7 @@ public class Consumer implements Runnable
                 count++;
             }
         } catch (final Exception ex) {
-            severe("[Consumer] Exception: ", ex);
+            BukkitUtils.severe("[Consumer] Exception: ", ex);
         } finally {
             lock.unlock();
         }

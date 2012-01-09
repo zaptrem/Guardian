@@ -1,7 +1,6 @@
 package org.guardian.tools;
 
 import java.util.List;
-import org.bukkit.permissions.PermissionDefault;
 import org.guardian.params.QueryParams;
 
 public class Tool {
@@ -13,11 +12,10 @@ public class Tool {
     public final int item;
     public final QueryParams params;
     public final ToolMode mode;
-    public final PermissionDefault permissionDefault;
     public final boolean giveTool;
 
     public Tool(String name, List<String> aliases, ToolBehavior leftClickBehavior, ToolBehavior rightClickBehavior,
-            boolean defaultEnabled, int item, QueryParams params, ToolMode mode, PermissionDefault permissionDefault, Boolean giveTool) {
+            boolean defaultEnabled, int item, QueryParams params, ToolMode mode, Boolean giveTool) {
         this.name = name;
         this.aliases = aliases;
         this.leftClickBehavior = leftClickBehavior;
@@ -26,7 +24,6 @@ public class Tool {
         this.item = item;
         this.params = params;
         this.mode = mode;
-        this.permissionDefault = permissionDefault;
         this.giveTool = giveTool;
     }
 }

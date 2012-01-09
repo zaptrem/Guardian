@@ -60,7 +60,7 @@ public class Guardian extends JavaPlugin {
         new UtilPlayerListener();
         // Check for Spout
         final Plugin spoutPlugin = getServer().getPluginManager().getPlugin("Spout");
-        if (spoutPlugin.isEnabled()) {
+        if (spoutPlugin != null) {
             new ChestSpoutInventoryListener();
             new ChestSpoutPlayerListener();
             BukkitUtils.info("Spout " + spoutPlugin.getDescription().getVersion() + " has been found, accurate chest logging enabled");
@@ -77,12 +77,16 @@ public class Guardian extends JavaPlugin {
         // Initialise the session manager
         sessionMan = new SessionManager();
         // Lets get some bridge action going
-        final File file = new File(getDataFolder() + File.separator + "bridges" + File.separator + getConf().bridgeName);
+        final File file = new File(getDataFolder() + File.separator + getConf().bridgeName);
         file.getParentFile().mkdirs();
         if (!file.exists()) {
             BukkitUtils.severe("Could not find a valid bridge! Please check it is installed and present in config.yml");
             BukkitUtils.warning("Attempting to download the MySQL bridge for you");
             // TODO Actually download it
+        }
+        if (!file.exists()) {
+            fatalError(getConf().bridgeName + " can still not be found. Aborting");
+            return;
         }
         database = DatabaseLoader.loadBridge(file);
         // Something went wrong
@@ -101,12 +105,14 @@ public class Guardian extends JavaPlugin {
             return;
         }
         // Start the consumer
+        consumer = new Consumer();
         consumerId = getServer().getScheduler().scheduleAsyncRepeatingTask(this, consumer, getConf().delayBetweenRuns * 20, getConf().delayBetweenRuns * 20);
         if (consumerId <= 0) {
             fatalError("Failed to start the consumer");
+            return;
         }
         // It's all good!
-        BukkitUtils.info("v" + getDescription().getVersion() + " enabled");
+        BukkitUtils.info("version " + getDescription().getVersion() + " enabled");
     }
 
     @Override
@@ -116,12 +122,12 @@ public class Guardian extends JavaPlugin {
         // Cancel anything else that happens to be working for us
         getServer().getScheduler().cancelTasks(this);
         // I bid ye good day
-        BukkitUtils.info("v" + getDescription().getVersion() + " disabled");
+        BukkitUtils.info("version " + getDescription().getVersion() + " disabled");
     }
 
     public void fatalError(String error) {
         BukkitUtils.severe(error);
-        BukkitUtils.severe("Fatal error detected! v" + getDescription().getVersion() + " disabled");
+        BukkitUtils.severe("Fatal error detected! version " + getDescription().getVersion() + " disabled");
         getServer().getPluginManager().disablePlugin(this);
     }
 
@@ -161,45 +167,43 @@ public class Guardian extends JavaPlugin {
     }
 
     /**
-     * Returns all log matching specified parameters. Also intern methods should use this.
-     * 
-     * @param params
-     * the query paramaters to use
+     * Returns all log matching specified parameters. Also intern methods should
+     * use this.
+     *
+     * @param params the query paramaters to use
      * @return A list of all entries
-     * @throws SQLException
-     * when there is a database error
+     * @throws SQLException when there is a database error
      */
     public List<Entry> getLog(QueryParams params) throws SQLException {
         return database.getEntries(params);
     }
 
     /**
-     * Performs a rollback on all log matching specified parameters. Also intern methods should use this.
-     * 
-     * @param params
-     * the query paramaters to use
+     * Performs a rollback on all log matching specified parameters. Also intern
+     * methods should use this.
+     *
+     * @param params the query paramaters to use
      */
     public void rollback(QueryParams params) {
         // TODO
     }
 
     /**
-     * Redoes all changes matching parameters, basically a undo of a rollback. Internal methods should use this.
-     * 
-     * @param params
-     * the query paramaters to use
+     * Redoes all changes matching parameters, basically a undo of a rollback.
+     * Internal methods should use this.
+     *
+     * @param params the query paramaters to use
      */
     public void rebuild(QueryParams params) {
         // TODO
     }
 
     /**
-     * Deletes all log matching specified parameters. Also intern methods should use this.
-     * 
-     * @param params
-     * the query paramaters to use
-     * @throws SQLException
-     * when there is a database error
+     * Deletes all log matching specified parameters. Also intern methods should
+     * use this.
+     *
+     * @param params the query paramaters to use
+     * @throws SQLException when there is a database error
      */
     public void clearLog(QueryParams params) throws SQLException {
         database.removeEntries(params);

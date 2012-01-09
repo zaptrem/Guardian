@@ -19,13 +19,11 @@ public class MaterialData {
 
     public MaterialData(File file) {
         // Load the conf
+        plugin.saveResource("materials.yml", false);
         YamlConfiguration conf = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder().getPath() + File.separator + "materials.yml"));
-        conf.options().copyDefaults(true);
-        try {
-            conf.save(file);
-        } catch (IOException ex) {
-            BukkitUtils.warning("Unable to save material.yml:", ex);
-        }
+        YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(plugin.getResource("materials.yml"));
+        conf.setDefaults(defConfig);
+        save(conf, file);
         // Add all known materials
         for (final Material mat : Material.values()) {
             materialNames.put(mat.getId(), mat.toString().replace('_', ' ').toLowerCase());
@@ -60,7 +58,7 @@ public class MaterialData {
     }
 
     /**
-     * @param type 
+     * @param type
      * @return Name of the material, or if it's unknown, the id.
      */
     public String materialName(int type) {
@@ -68,9 +66,10 @@ public class MaterialData {
     }
 
     /**
-     * @param type 
-     * @param data 
-     * @return Name of the material regarding it's data, or if it's unknown, the basic name.
+     * @param type
+     * @param data
+     * @return Name of the material regarding it's data, or if it's unknown, the
+     * basic name.
      */
     public String materialName(int type, byte data) {
         final Map<Byte, String> dataNames = materialDataNames.get(type);
@@ -80,5 +79,13 @@ public class MaterialData {
             }
         }
         return materialName(type);
+    }
+
+    private static void save(YamlConfiguration conf, File file) {
+        try {
+            conf.save(file);
+        } catch (IOException ex) {
+            BukkitUtils.warning("Unable to save material.yml:", ex);
+        }
     }
 }

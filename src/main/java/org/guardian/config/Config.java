@@ -11,7 +11,6 @@ import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.permissions.PermissionDefault;
 import org.guardian.Guardian;
 import org.guardian.params.QueryParams;
 import org.guardian.permissions.RollbackSize;
@@ -22,8 +21,7 @@ import org.guardian.tools.ToolMode;
 import org.guardian.util.BukkitUtils;
 import org.guardian.util.Utils;
 
-public final class Config
-{
+public final class Config {
 
     // Main config
     public boolean debug, checkVersion, sendStatistics, logPlayerInfo, ninjaMode, motd;
@@ -81,16 +79,20 @@ public final class Config
         username = config.getString("bridge.username");
         password = config.getString("bridge.password");
         maxConnections = config.getInt("bridge.maxConnections");
+        url = "jdbc:mysql://" + host + ":" + port + "/" + database;
         // Populate the world config
         final ConfigurationSection globalSection = config.getConfigurationSection("worlds.global");
         for (final World world : Bukkit.getServer().getWorlds()) {
             final String name = world.getName();
-            if (name.equalsIgnoreCase("global"))
-                return;
-            final ConfigurationSection cs = config.getConfigurationSection("worlds." + world.getName());
-            for (final String key : globalSection.getKeys(false))
-                if (!cs.isSet(key))
+            ConfigurationSection cs = config.getConfigurationSection("worlds." + world.getName());
+            if (cs == null) {
+                cs = globalSection;
+            }
+            for (final String key : cs.getKeys(false)) {
+                if (key == null) {
                     cs.set(key, globalSection.get(key));
+                }
+            }
             worlds.put(name, new WorldConfig(cs));
         }
         // Populate the consumer config
@@ -107,16 +109,18 @@ public final class Config
         // TODO autoParamaters
         dumpClearedLog = config.getBoolean("clearlog.dumpClearedLog");
         // Rollback config
-        ignoredBlocks = config.getIntegerList("rollback.ignoredBlocks") != null ? (ArrayList<Integer>)config.getIntegerList("rollback.ignoredBlocks") : new ArrayList<Integer>();
-        forcedBlocks = config.getIntegerList("rollback.forcedBlocks") != null ? (ArrayList<Integer>)config.getIntegerList("rollback.forcedBlocks") : new ArrayList<Integer>();
+        ignoredBlocks = config.getIntegerList("rollback.ignoredBlocks") != null ? (ArrayList<Integer>) config.getIntegerList("rollback.ignoredBlocks") : new ArrayList<Integer>();
+        forcedBlocks = config.getIntegerList("rollback.forcedBlocks") != null ? (ArrayList<Integer>) config.getIntegerList("rollback.forcedBlocks") : new ArrayList<Integer>();
         // Permissions
         final ConfigurationSection permSection = config.getConfigurationSection("rollback.sizes");
-        for (final String key : permSection.getKeys(false))
+        for (String key : permSection.getKeys(false)) {
+            key = key.toUpperCase();
             rollbackSizes.put(RollbackSize.valueOf(key), new RollbackSizes(permSection.getInt(key + ".maxArea"), permSection.getInt(key + ".maxTime")));
+        }
         // TODO Populate the tool config
         final Set<String> toolNames = config.getConfigurationSection("tools").getKeys(false);
         tools = new ArrayList<Tool>();
-        for (final String toolName : toolNames)
+        for (final String toolName : toolNames) {
             try {
                 final String path = "tools." + toolName;
                 final List<String> aliases = config.getStringList(path + ".aliases");
@@ -129,19 +133,20 @@ public final class Config
                 // params.prepareToolQuery = true;
                 // params.parseArgs(Bukkit.getConsoleSender(), Arrays.asList(config.getString(path + ".params").split(" ")));
                 final ToolMode mode = ToolMode.valueOf(config.getString(path + ".mode").toUpperCase());
-                final PermissionDefault pdef = PermissionDefault.valueOf(config.getString(path + ".permissionDefault").toUpperCase());
                 final boolean giveTool = config.getBoolean(path + ".giveTool", true);
-                tools.add(new Tool(toolName, aliases, leftClickBehavior, rightClickBehavior, defaultEnabled, item, null, mode, pdef, giveTool));
+                tools.add(new Tool(toolName, aliases, leftClickBehavior, rightClickBehavior, defaultEnabled, item, null, mode, giveTool));
             } catch (final Exception ex) {
                 BukkitUtils.warning("Error at parsing tool '" + toolName + "':)", ex);
             }
+        }
         toolsByName = new HashMap<String, Tool>();
         toolsByType = new HashMap<Integer, Tool>();
         for (final Tool tool : tools) {
             toolsByType.put(tool.item, tool);
             toolsByName.put(tool.name, tool);
-            for (final String alias : tool.aliases)
+            for (final String alias : tool.aliases) {
                 toolsByName.put(alias, tool);
+            }
         }
         // Materials
         materialDataManager = new MaterialData(new File(plugin.getDataFolder().getPath() + File.separator + "materials.yml"));
@@ -153,7 +158,7 @@ public final class Config
     }
 
     public boolean isLogging(Player p) {
-        final WorldConfig wcfg = worlds.get(p.getWorld());
+        final WorldConfig wcfg = worlds.get(p.getWorld().getName());
         return wcfg != null ? !wcfg.isIgnored(p) : false;
     }
 }
