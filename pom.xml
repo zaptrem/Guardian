@@ -33,7 +33,7 @@
     
     <ciManagement>
         <system>jenkins</system>
-        <url>http://guardian.mossycobble.com:8080/jenkins/</url>
+        <url>http://guardian.mossycobble.com:8888</url>
     </ciManagement>
     
     <repositories>
@@ -47,7 +47,7 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.0.1-R2-SNAPSHOT</version>
+            <version>1.1-R1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
