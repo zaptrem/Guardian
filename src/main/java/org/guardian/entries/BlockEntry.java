@@ -6,57 +6,43 @@ import org.guardian.util.BukkitUtils;
 
 public class BlockEntry extends DataEntry {
 
-    private int typeBefore, typeAfter;
-    private byte dataBefore, dataAfter;
+    private int typeFrom, typeTo;
+    private byte dataFrom, dataTo;
 
     public int getTypeBefore() {
-        return typeBefore;
+        return typeFrom;
     }
 
     public void setTypeBefore(int typeBefore) {
-        this.typeBefore = typeBefore;
+        this.typeFrom = typeBefore;
     }
 
     public int getTypeAfter() {
-        return typeAfter;
+        return typeTo;
     }
 
     public void setTypeAfter(int typeAfter) {
-        this.typeAfter = typeAfter;
+        this.typeTo = typeAfter;
     }
 
     public byte getDataBefore() {
-        return dataBefore;
+        return dataFrom;
     }
 
     public void setDataBefore(byte dataBefore) {
-        this.dataBefore = dataBefore;
+        this.dataFrom = dataBefore;
     }
 
     public byte getDataAfter() {
-        return dataAfter;
+        return dataTo;
     }
 
-    public void setDataAfter(byte dataAfter) {
-        this.dataAfter = dataAfter;
-    }
-
-    @Override
-    public List<BlockState> getRollbackBlockStates() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public List<BlockState> getRebuildBlockStates() {
-        return null;
-    }
-
-    @Override
     /**
-     * Returns the human readable form of a block data entry in the following format:
-     * %DATE% %PLAYERNAME% destroyed %BLOCK% created %BLOCK% replaced %BLOCK% at %LOCATION%
+     * Returns the human readable form of a block data entry in the following
+     * format: %DATE% %PLAYERNAME% destroyed %BLOCK% created %BLOCK% replaced
+     * %BLOCK% at %LOCATION%
      */
+    @Override
     public String getMessage() {
         final StringBuilder msg = new StringBuilder();
         if (date > 0) {
@@ -67,18 +53,18 @@ public class BlockEntry extends DataEntry {
             msg.append(playerName);
             msg.append(" ");
         }
-        if (typeAfter == 0) {
+        if (typeTo == 0) {
             msg.append("destroyed ");
-            msg.append(BukkitUtils.materialName(typeBefore, dataBefore));
+            msg.append(BukkitUtils.materialName(typeFrom, dataFrom));
 
-        } else if (typeBefore == 0) {
+        } else if (typeFrom == 0) {
             msg.append("created ");
-            msg.append(BukkitUtils.materialName(typeAfter, dataAfter));
+            msg.append(BukkitUtils.materialName(typeTo, dataTo));
         } else {
             msg.append("replaced ");
-            msg.append(BukkitUtils.materialName(typeBefore, dataBefore));
+            msg.append(BukkitUtils.materialName(typeFrom, dataFrom));
             msg.append(" with ");
-            msg.append(BukkitUtils.materialName(typeAfter, dataAfter));
+            msg.append(BukkitUtils.materialName(typeTo, dataTo));
         }
         if (loc != null) {
             msg.append(" at ");
@@ -89,5 +75,15 @@ public class BlockEntry extends DataEntry {
             msg.append(loc.getBlockZ());
         }
         return msg.toString();
+    }
+
+    @Override
+    public List<BlockState> getRollbackBlockStates() {
+        throw new UnsupportedOperationException("Not supported yet."); //TODO
+    }
+
+    @Override
+    public List<BlockState> getRebuildBlockStates() {
+        throw new UnsupportedOperationException("Not supported yet."); //TODO
     }
 }
