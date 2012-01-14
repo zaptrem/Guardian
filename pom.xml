@@ -39,7 +39,7 @@
     <repositories>
         <repository>
             <id>guardian-repo</id>
-            <url>http://guardian.mossycobble.com:8080/repo/content/groups/public/</url>
+            <url>http://guardian.mossycobble.com:8080/nexus/content/groups/public/</url>
         </repository>
     </repositories>
 
