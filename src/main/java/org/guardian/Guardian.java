@@ -22,8 +22,8 @@ import org.guardian.params.QueryParams;
 import org.guardian.util.BukkitUtils;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 
-public class Guardian extends JavaPlugin {
-
+public class Guardian extends JavaPlugin
+{
     // Plugins
     private static Guardian guardian;
     private WorldEditPlugin worldEdit;
@@ -49,9 +49,8 @@ public class Guardian extends JavaPlugin {
         commandExecutor = new GuardianCommandExecutor();
         getCommand("guardian").setExecutor(commandExecutor);
         // Activate listeners
-        if (getConf().ninjaMode) {
+        if (getConf().ninjaMode)
             new NinjaPlayerListener();
-        }
         new MonitorBlockListener();
         new MonitorEntityListener();
         new MonitorPlayerListener();
@@ -71,7 +70,7 @@ public class Guardian extends JavaPlugin {
         // Check for WorldEdit
         final Plugin wePlugin = getServer().getPluginManager().getPlugin("WorldEdit");
         if (wePlugin != null) {
-            worldEdit = (WorldEditPlugin) wePlugin;
+            worldEdit = (WorldEditPlugin)wePlugin;
             BukkitUtils.info("WorldEdit " + getWorldEdit().getDescription().getVersion() + " has been found, selection rollbacks enabled");
         }
         // Initialise the session manager
@@ -167,43 +166,45 @@ public class Guardian extends JavaPlugin {
     }
 
     /**
-     * Returns all log matching specified parameters. Also intern methods should
-     * use this.
-     *
-     * @param params the query paramaters to use
+     * Returns all log matching specified parameters. Also intern methods should use this.
+     * 
+     * @param params
+     * the query paramaters to use
      * @return A list of all entries
-     * @throws SQLException when there is a database error
+     * @throws SQLException
+     * when there is a database error
      */
     public List<Entry> getLog(QueryParams params) throws SQLException {
         return database.getEntries(params);
     }
 
     /**
-     * Performs a rollback on all log matching specified parameters. Also intern
-     * methods should use this.
-     *
-     * @param params the query paramaters to use
+     * Performs a rollback on all log matching specified parameters. Also intern methods should use this.
+     * 
+     * @param params
+     * the query paramaters to use
      */
     public void rollback(QueryParams params) {
         // TODO
     }
 
     /**
-     * Redoes all changes matching parameters, basically a undo of a rollback.
-     * Internal methods should use this.
-     *
-     * @param params the query paramaters to use
+     * Redoes all changes matching parameters, basically a undo of a rollback. Internal methods should use this.
+     * 
+     * @param params
+     * the query paramaters to use
      */
     public void rebuild(QueryParams params) {
         // TODO
     }
 
     /**
-     * Deletes all log matching specified parameters. Also intern methods should
-     * use this.
-     *
-     * @param params the query paramaters to use
-     * @throws SQLException when there is a database error
+     * Deletes all log matching specified parameters. Also intern methods should use this.
+     * 
+     * @param params
+     * the query paramaters to use
+     * @throws SQLException
+     * when there is a database error
      */
     public void clearLog(QueryParams params) throws SQLException {
         database.removeEntries(params);
@@ -214,5 +215,9 @@ public class Guardian extends JavaPlugin {
      */
     public DatabaseBridge getDatabaseBridge() {
         return database;
+    }
+
+    public Consumer getConsumer() {
+        return consumer;
     }
 }

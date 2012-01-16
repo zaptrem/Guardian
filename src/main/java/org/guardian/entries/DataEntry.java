@@ -5,7 +5,8 @@ import java.util.List;
 import org.bukkit.Location;
 import org.guardian.ActionType;
 
-public abstract class DataEntry implements Entry, Rollbackable {
+public abstract class DataEntry implements Entry, Rollbackable
+{
 
     protected int id;
     protected long date;
@@ -17,6 +18,22 @@ public abstract class DataEntry implements Entry, Rollbackable {
     protected boolean rollbacked;
     protected String pluginName;
     protected List<DataEntry> children;
+
+    protected DataEntry(ActionType action, String playerName, Location loc, String worldName, long date, String pluginName) {
+        this(-1, date, action, playerName, worldName, loc, false, pluginName, null);
+    }
+
+    protected DataEntry(int id, long date, ActionType action, String playerName, String worldName, Location loc, boolean rollbacked, String pluginName, List<DataEntry> children) {
+        this.id = id;
+        this.date = date;
+        this.action = action;
+        this.playerName = playerName;
+        this.worldName = worldName;
+        this.loc = loc;
+        this.rollbacked = rollbacked;
+        this.pluginName = pluginName;
+        this.children = children;
+    }
 
     public int getId() {
         return id;
@@ -80,6 +97,10 @@ public abstract class DataEntry implements Entry, Rollbackable {
 
     public void setPluginName(String pluginName) {
         this.pluginName = pluginName;
+    }
+
+    public boolean hasChildren() {
+        return children != null && children.size() > 0;
     }
 
     public List<DataEntry> getChildren() {

@@ -11,6 +11,7 @@ import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.guardian.ActionType;
 import org.guardian.Guardian;
 import org.guardian.params.QueryParams;
 import org.guardian.permissions.RollbackSize;
@@ -21,7 +22,8 @@ import org.guardian.tools.ToolMode;
 import org.guardian.util.BukkitUtils;
 import org.guardian.util.Utils;
 
-public final class Config {
+public final class Config
+{
 
     // Main config
     public boolean debug, checkVersion, sendStatistics, logPlayerInfo, ninjaMode, motd;
@@ -85,14 +87,11 @@ public final class Config {
         for (final World world : Bukkit.getServer().getWorlds()) {
             final String name = world.getName();
             ConfigurationSection cs = config.getConfigurationSection("worlds." + world.getName());
-            if (cs == null) {
+            if (cs == null)
                 cs = globalSection;
-            }
-            for (final String key : cs.getKeys(false)) {
-                if (key == null) {
+            for (final String key : cs.getKeys(false))
+                if (key == null)
                     cs.set(key, globalSection.get(key));
-                }
-            }
             worlds.put(name, new WorldConfig(cs));
         }
         // Populate the consumer config
@@ -109,8 +108,8 @@ public final class Config {
         // TODO autoParamaters
         dumpClearedLog = config.getBoolean("clearlog.dumpClearedLog");
         // Rollback config
-        ignoredBlocks = config.getIntegerList("rollback.ignoredBlocks") != null ? (ArrayList<Integer>) config.getIntegerList("rollback.ignoredBlocks") : new ArrayList<Integer>();
-        forcedBlocks = config.getIntegerList("rollback.forcedBlocks") != null ? (ArrayList<Integer>) config.getIntegerList("rollback.forcedBlocks") : new ArrayList<Integer>();
+        ignoredBlocks = config.getIntegerList("rollback.ignoredBlocks") != null ? (ArrayList<Integer>)config.getIntegerList("rollback.ignoredBlocks") : new ArrayList<Integer>();
+        forcedBlocks = config.getIntegerList("rollback.forcedBlocks") != null ? (ArrayList<Integer>)config.getIntegerList("rollback.forcedBlocks") : new ArrayList<Integer>();
         // Permissions
         final ConfigurationSection permSection = config.getConfigurationSection("rollback.sizes");
         for (String key : permSection.getKeys(false)) {
@@ -120,7 +119,7 @@ public final class Config {
         // TODO Populate the tool config
         final Set<String> toolNames = config.getConfigurationSection("tools").getKeys(false);
         tools = new ArrayList<Tool>();
-        for (final String toolName : toolNames) {
+        for (final String toolName : toolNames)
             try {
                 final String path = "tools." + toolName;
                 final List<String> aliases = config.getStringList(path + ".aliases");
@@ -138,15 +137,13 @@ public final class Config {
             } catch (final Exception ex) {
                 BukkitUtils.warning("Error at parsing tool '" + toolName + "':)", ex);
             }
-        }
         toolsByName = new HashMap<String, Tool>();
         toolsByType = new HashMap<Integer, Tool>();
         for (final Tool tool : tools) {
             toolsByType.put(tool.item, tool);
             toolsByName.put(tool.name, tool);
-            for (final String alias : tool.aliases) {
+            for (final String alias : tool.aliases)
                 toolsByName.put(alias, tool);
-            }
         }
         // Materials
         materialDataManager = new MaterialData(new File(plugin.getDataFolder().getPath() + File.separator + "materials.yml"));
@@ -154,11 +151,21 @@ public final class Config {
 
     public boolean isLogged(String world) {
         final WorldConfig wcfg = worlds.get(world);
-        return wcfg != null ? !wcfg.isIgnored() : false;
+        return wcfg != null && !wcfg.isIgnored();
+    }
+
+    public boolean isLogged(String world, ActionType action) {
+        final WorldConfig wcfg = worlds.get(world);
+        return wcfg != null && !wcfg.isIgnored() && wcfg.isLogging(action);
     }
 
     public boolean isLogging(Player p) {
         final WorldConfig wcfg = worlds.get(p.getWorld().getName());
-        return wcfg != null ? !wcfg.isIgnored(p) : false;
+        return wcfg != null && !wcfg.isIgnored(p.getName());
+    }
+
+    public boolean isLogged(String world, ActionType action, String playerName) {
+        final WorldConfig wcfg = worlds.get(world);
+        return wcfg != null && !wcfg.isIgnored() && wcfg.isLogging(action) && wcfg.isIgnored(playerName);
     }
 }

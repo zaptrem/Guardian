@@ -1,20 +1,32 @@
 package org.guardian.entries;
 
 import java.util.List;
+import org.bukkit.Location;
 import org.bukkit.block.BlockState;
+import org.guardian.ActionType;
 import org.guardian.util.BukkitUtils;
 
-public class BlockEntry extends DataEntry {
+public class BlockEntry extends DataEntry
+{
 
     private int typeFrom, typeTo;
-    private byte dataFrom, dataTo;
+    private byte dataFrom;
+    private final byte dataTo;
+
+    public BlockEntry(ActionType action, String playerName, Location loc, long date, int typeFrom, byte dataFrom, int typeTo, byte dataTo, String pluginName) {
+        super(action, playerName, loc, loc.getWorld().getName(), date, pluginName);
+        this.typeFrom = typeFrom;
+        this.dataFrom = dataFrom;
+        this.typeTo = typeTo;
+        this.dataTo = dataTo;
+    }
 
     public int getTypeBefore() {
         return typeFrom;
     }
 
     public void setTypeBefore(int typeBefore) {
-        this.typeFrom = typeBefore;
+        typeFrom = typeBefore;
     }
 
     public int getTypeAfter() {
@@ -22,7 +34,7 @@ public class BlockEntry extends DataEntry {
     }
 
     public void setTypeAfter(int typeAfter) {
-        this.typeTo = typeAfter;
+        typeTo = typeAfter;
     }
 
     public byte getDataBefore() {
@@ -30,7 +42,7 @@ public class BlockEntry extends DataEntry {
     }
 
     public void setDataBefore(byte dataBefore) {
-        this.dataFrom = dataBefore;
+        dataFrom = dataBefore;
     }
 
     public byte getDataAfter() {
@@ -38,9 +50,7 @@ public class BlockEntry extends DataEntry {
     }
 
     /**
-     * Returns the human readable form of a block data entry in the following
-     * format: %DATE% %PLAYERNAME% destroyed %BLOCK% created %BLOCK% replaced
-     * %BLOCK% at %LOCATION%
+     * Returns the human readable form of a block data entry in the following format: %DATE% %PLAYERNAME% destroyed %BLOCK% created %BLOCK% replaced %BLOCK% at %LOCATION%
      */
     @Override
     public String getMessage() {
@@ -79,11 +89,11 @@ public class BlockEntry extends DataEntry {
 
     @Override
     public List<BlockState> getRollbackBlockStates() {
-        throw new UnsupportedOperationException("Not supported yet."); //TODO
+        throw new UnsupportedOperationException("Not supported yet."); // TODO
     }
 
     @Override
     public List<BlockState> getRebuildBlockStates() {
-        throw new UnsupportedOperationException("Not supported yet."); //TODO
+        throw new UnsupportedOperationException("Not supported yet."); // TODO
     }
 }

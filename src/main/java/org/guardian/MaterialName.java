@@ -11,7 +11,8 @@ import org.bukkit.material.MaterialData;
 import org.guardian.util.BukkitUtils;
 import org.guardian.util.Utils;
 
-public class MaterialName {
+public class MaterialName
+{
 
     private final Guardian plugin = Guardian.getInstance();
     private final Map<Integer, String> materialNames = new HashMap<Integer, String>();
@@ -19,9 +20,8 @@ public class MaterialName {
 
     public MaterialName() {
         // Add all known materials
-        for (final Material mat : Material.values()) {
+        for (final Material mat : Material.values())
             materialNames.put(mat.getId(), mat.toString().replace('_', ' ').toLowerCase());
-        }
         // Load config
         final File file = new File(plugin.getDataFolder(), "materials.yml");
         final YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
@@ -52,32 +52,26 @@ public class MaterialName {
                 BukkitUtils.warning("Unable to save material.yml: ", ex);
             }
         }
-        for (final String entry : cfg.getKeys(false)) {
+        for (final String entry : cfg.getKeys(false))
             if (Utils.isInt(entry)) {
-                if (cfg.isString(entry)) {
+                if (cfg.isString(entry))
                     materialNames.put(Integer.valueOf(entry), cfg.getString(entry));
-                } else if (cfg.isConfigurationSection(entry)) {
+                else if (cfg.isConfigurationSection(entry)) {
                     final Map<Byte, String> dataNames = new HashMap<Byte, String>();
                     materialDataNames.put(Integer.valueOf(entry), dataNames);
                     final ConfigurationSection sec = cfg.getConfigurationSection(entry);
-                    for (final String data : sec.getKeys(false)) {
+                    for (final String data : sec.getKeys(false))
                         if (Utils.isByte(data)) {
-                            if (sec.isString(data)) {
+                            if (sec.isString(data))
                                 dataNames.put(Byte.valueOf(data), sec.getString(data));
-                            } else {
+                            else
                                 BukkitUtils.warning("Parsing materials.yml: '" + data + "' is not a string.");
-                            }
-                        } else {
+                        } else
                             BukkitUtils.warning("Parsing materials.yml: '" + data + "' is no valid material data");
-                        }
-                    }
-                } else {
+                } else
                     BukkitUtils.warning("Parsing materials.yml: '" + entry + "' is neither a string nor a section.");
-                }
-            } else {
+            } else
                 BukkitUtils.warning("Parsing materials.yml: '" + entry + "' is no valid material id");
-            }
-        }
     }
 
     /**
@@ -95,15 +89,13 @@ public class MaterialName {
      */
     public String get(int type, byte data) {
         final Map<Byte, String> dataNames = materialDataNames.get(type);
-        if (dataNames != null) {
-            if (dataNames.containsKey(data)) {
+        if (dataNames != null)
+            if (dataNames.containsKey(data))
                 return dataNames.get(data);
-            }
-        }
         return get(type);
     }
 
-    private String toReadable(MaterialData matData) {
+    private static String toReadable(MaterialData matData) {
         return matData.toString().toLowerCase().replace('_', ' ').replaceAll("[^a-z ]", "");
     }
 }
