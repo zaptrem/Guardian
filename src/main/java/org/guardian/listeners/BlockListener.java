@@ -16,6 +16,7 @@ import org.guardian.entries.BlockEntry;
 public class BlockListener implements Listener {
 
     private final Guardian plugin = Guardian.getInstance();
+    private final Consumer consumer = plugin.getConsumer();
 
     public BlockListener() {
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
@@ -29,7 +30,7 @@ public class BlockListener implements Listener {
             final String playerName = event.getPlayer().getName();
             if (plugin.getConf().isLogged(loc.getWorld().getName(), ActionType.BLOCK_BREAK, playerName)) {
                 event.getPlayer().sendMessage("break");
-                plugin.getConsumer().queueEntry(new BlockEntry(ActionType.BLOCK_BREAK, playerName, loc, System.currentTimeMillis(), block.getTypeId(), block.getData(), 0, (byte) 0, "Guardian"));
+                consumer.queueEntry(new BlockEntry(ActionType.BLOCK_BREAK, playerName, loc, System.currentTimeMillis(), block.getTypeId(), block.getData(), 0, (byte) 0, "Guardian"));
             }
         }
     }
@@ -78,7 +79,7 @@ public class BlockListener implements Listener {
             final String playerName = event.getPlayer().getName();
             final BlockState before = event.getBlockReplacedState();
             if (plugin.getConf().isLogged(loc.getWorld().getName(), ActionType.BLOCK_PLACE, playerName)) {
-                plugin.getConsumer().queueEntry(new BlockEntry(ActionType.BLOCK_PLACE, playerName, loc, System.currentTimeMillis(), before.getTypeId(), before.getData().getData(), block.getTypeId(), block.getData(), "Guardian"));
+                consumer.queueEntry(new BlockEntry(ActionType.BLOCK_PLACE, playerName, loc, System.currentTimeMillis(), before.getTypeId(), before.getData().getData(), block.getTypeId(), block.getData(), "Guardian"));
             }
         }
     }

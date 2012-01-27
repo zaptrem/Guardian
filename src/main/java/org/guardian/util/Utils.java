@@ -1,58 +1,59 @@
 package org.guardian.util;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.logging.Logger;
 
 public class Utils {
 
     /**
      * Downloads a file from a url and gives progress messages.
+     *
+     * @param path
+     * @param file
      */
-    public static void download(Logger log, URL url, File file) throws IOException {
-        if (!file.getParentFile().exists()) {
-            file.getParentFile().mkdir();
-        }
-        if (file.exists()) {
-            file.delete();
-        }
-        file.createNewFile();
-        final int size = url.openConnection().getContentLength();
-        log.info("Downloading " + file.getName() + " (" + size / 1024 + "kb) ...");
-        final InputStream in = url.openStream();
-        final OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
-        final byte[] buffer = new byte[1024];
-        int len, downloaded = 0, msgs = 0;
-        final long start = System.currentTimeMillis();
-        while ((len = in.read(buffer)) >= 0) {
-            out.write(buffer, 0, len);
-            downloaded += len;
-            if ((int) ((System.currentTimeMillis() - start) / 500) > msgs) {
-                log.info((int) (downloaded / (double) size * 100d) + "%");
-                msgs++;
+    public static void download(String path, File file) {
+        try {
+            URL url = new URL(path);
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdir();
             }
+            if (file.exists()) {
+                file.delete();
+            }
+            file.createNewFile();
+            final int size = url.openConnection().getContentLength();
+            BukkitUtils.info("Downloading " + file.getName() + " (" + size / 1024 + "kb) ...");
+            final InputStream in = url.openStream();
+            final OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
+            final byte[] buffer = new byte[1024];
+            int len, downloaded = 0, msgs = 0;
+            final long start = System.currentTimeMillis();
+            while ((len = in.read(buffer)) >= 0) {
+                out.write(buffer, 0, len);
+                downloaded += len;
+                if ((int) ((System.currentTimeMillis() - start) / 500) > msgs) {
+                    BukkitUtils.info((int) (downloaded / (double) size * 100d) + "%");
+                    msgs++;
+                }
+            }
+            in.close();
+            out.close();
+            BukkitUtils.info("Download finished");
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
-        in.close();
-        out.close();
-        log.info("Download finished");
     }
 
     /**
      * Checks if inputted string is an integer
+     *
      * @param str String to check
-     * @return  whether the String is an int
+     * @return whether the String is an int
      */
     public static boolean isInt(String str) {
         try {
@@ -65,8 +66,9 @@ public class Utils {
 
     /**
      * Checks if inputted string is a byte
+     *
      * @param str String to check
-     * @return  whether the String is a byte
+     * @return whether the String is a byte
      */
     public static boolean isByte(String str) {
         try {
@@ -78,10 +80,12 @@ public class Utils {
     }
 
     /**
-     * Java version of PHP's join(array, delimiter). Takes any kind of collection (List, HashMap etc)
+     * Java version of PHP's join(array, delimiter). Takes any kind of
+     * collection (List, HashMap etc)
+     *
      * @param s
      * @param delimiter
-     * @return the joined collection 
+     * @return the joined collection
      */
     public static String join(Collection<?> s, String delimiter) {
         final StringBuffer buffer = new StringBuffer();
@@ -97,9 +101,10 @@ public class Utils {
 
     /**
      * Joins a string array
+     *
      * @param s
-     * @param delimiter 
-     * @return  
+     * @param delimiter
+     * @return
      */
     public static String join(String[] s, String delimiter) {
         if (s == null || s.length == 0) {
@@ -115,10 +120,11 @@ public class Utils {
 
     /**
      * Concatenate any number of arrays of the same type
+     *
      * @param <T>
      * @param first
      * @param rest
-     * @return  
+     * @return
      */
     public static <T> T[] concat(T[] first, T[]... rest) {
         // Read rest
@@ -138,8 +144,9 @@ public class Utils {
 
     /**
      * Returns a string of spaces
+     *
      * @param count
-     * @return  
+     * @return
      */
     public static String spaces(int count) {
         final StringBuilder filled = new StringBuilder(count);
@@ -151,9 +158,10 @@ public class Utils {
 
     /**
      * Returns the content of a web page as string.
+     *
      * @param url
-     * @return 
-     * @throws IOException  
+     * @return
+     * @throws IOException
      */
     public static String readURL(URL url) throws IOException {
         final StringBuilder content = new StringBuilder();
@@ -167,8 +175,10 @@ public class Utils {
     }
 
     /**
-     * Accepts following time formats: 1 day, 2 hours, 3 minutes, 1d2h3m, HH:mm:ss, dd.MM.yyyy and dd.MM.yyyy HH:mm:ss
-     * @param arg 
+     * Accepts following time formats: 1 day, 2 hours, 3 minutes, 1d2h3m,
+     * HH:mm:ss, dd.MM.yyyy and dd.MM.yyyy HH:mm:ss
+     *
+     * @param arg
      * @return Number of minutes, or -1 on error
      */
     public static int parseTimeSpec(String arg) {

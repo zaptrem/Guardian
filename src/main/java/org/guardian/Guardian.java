@@ -1,32 +1,26 @@
 package org.guardian;
 
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import java.io.File;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Logger;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.guardian.commands.GuardianCommandExecutor;
 import org.guardian.config.Config;
 import org.guardian.entries.Entry;
-import org.guardian.listeners.ChestPlayerListener;
-import org.guardian.listeners.ChestSpoutInventoryListener;
-import org.guardian.listeners.ChestSpoutPlayerListener;
-import org.guardian.listeners.BlockListener;
-import org.guardian.listeners.EntityListener;
-import org.guardian.listeners.PlayerListener;
-import org.guardian.listeners.VehicleListener;
-import org.guardian.listeners.NinjaListener;
-import org.guardian.listeners.ToolListener;
-import org.guardian.listeners.UtilListener;
+import org.guardian.listeners.*;
 import org.guardian.params.QueryParams;
 import org.guardian.util.BukkitUtils;
-import com.sk89q.worldedit.bukkit.WorldEditPlugin;
+import org.guardian.util.Utils;
 
-public class Guardian extends JavaPlugin
-{
+public class Guardian extends JavaPlugin {
+
     // Plugins
     private static Guardian guardian;
-    private WorldEditPlugin worldEdit;
+    private static WorldEditPlugin worldEdit;
     // Config and commands
     private Config conf;
     private GuardianCommandExecutor commandExecutor;
@@ -48,31 +42,6 @@ public class Guardian extends JavaPlugin
         // Initialise commands
         commandExecutor = new GuardianCommandExecutor();
         getCommand("guardian").setExecutor(commandExecutor);
-        // Activate listeners
-        if (getConf().ninjaMode)
-            new NinjaListener();
-        new BlockListener();
-        new EntityListener();
-        new PlayerListener();
-        new VehicleListener();
-        new ToolListener();
-        new UtilListener();
-        // Check for Spout
-        final Plugin spoutPlugin = getServer().getPluginManager().getPlugin("Spout");
-        if (spoutPlugin != null) {
-            new ChestSpoutInventoryListener();
-            new ChestSpoutPlayerListener();
-            BukkitUtils.info("Spout " + spoutPlugin.getDescription().getVersion() + " has been found, accurate chest logging enabled");
-        } else {
-            new ChestPlayerListener();
-            BukkitUtils.info("Spout has not been found, accurate chest logging disabled");
-        }
-        // Check for WorldEdit
-        final Plugin wePlugin = getServer().getPluginManager().getPlugin("WorldEdit");
-        if (wePlugin != null) {
-            worldEdit = (WorldEditPlugin)wePlugin;
-            BukkitUtils.info("WorldEdit " + getWorldEdit().getDescription().getVersion() + " has been found, selection rollbacks enabled");
-        }
         // Initialise the session manager
         sessionMan = new SessionManager();
         // Lets get some bridge action going
@@ -81,7 +50,7 @@ public class Guardian extends JavaPlugin
         if (!file.exists()) {
             BukkitUtils.severe("Could not find a valid bridge! Please check it is installed and present in config.yml");
             BukkitUtils.warning("Attempting to download the MySQL bridge for you");
-            // TODO Actually download it
+            Utils.download("http://goo.gl/eEg3Q", file);
         }
         if (!file.exists()) {
             fatalError(getConf().bridgeName + " can still not be found. Aborting");
@@ -109,6 +78,32 @@ public class Guardian extends JavaPlugin
         if (consumerId <= 0) {
             fatalError("Failed to start the consumer");
             return;
+        }
+        // Activate listeners
+        if (getConf().ninjaMode) {
+            new NinjaListener();
+        }
+        new BlockListener();
+        new EntityListener();
+        new PlayerListener();
+        new VehicleListener();
+        new ToolListener();
+        new UtilListener();
+        // Check for Spout
+        final Plugin spoutPlugin = getServer().getPluginManager().getPlugin("Spout");
+        if (spoutPlugin != null) {
+            new ChestSpoutInventoryListener();
+            new ChestSpoutPlayerListener();
+            BukkitUtils.info("Spout " + spoutPlugin.getDescription().getVersion() + " has been found, accurate chest logging enabled");
+        } else {
+            new ChestPlayerListener();
+            BukkitUtils.info("Spout has not been found, accurate chest logging disabled");
+        }
+        // Check for WorldEdit
+        final Plugin wePlugin = getServer().getPluginManager().getPlugin("WorldEdit");
+        if (wePlugin != null) {
+            worldEdit = (WorldEditPlugin) wePlugin;
+            BukkitUtils.info("WorldEdit " + getWorldEdit().getDescription().getVersion() + " has been found, selection rollbacks enabled");
         }
         // It's all good!
         BukkitUtils.info("version " + getDescription().getVersion() + " enabled");
@@ -166,45 +161,43 @@ public class Guardian extends JavaPlugin
     }
 
     /**
-     * Returns all log matching specified parameters. Also intern methods should use this.
+     * Returns all log matching specified parameters. Also intern methods should
+     * use this.
      *
-     * @param params
-     * the query paramaters to use
+     * @param params the query paramaters to use
      * @return A list of all entries
-     * @throws SQLException
-     * when there is a database error
+     * @throws SQLException when there is a database error
      */
     public List<Entry> getLog(QueryParams params) throws SQLException {
         return database.getEntries(params);
     }
 
     /**
-     * Performs a rollback on all log matching specified parameters. Also intern methods should use this.
+     * Performs a rollback on all log matching specified parameters. Also intern
+     * methods should use this.
      *
-     * @param params
-     * the query paramaters to use
+     * @param params the query paramaters to use
      */
     public void rollback(QueryParams params) {
         // TODO
     }
 
     /**
-     * Redoes all changes matching parameters, basically a undo of a rollback. Internal methods should use this.
+     * Redoes all changes matching parameters, basically a undo of a rollback.
+     * Internal methods should use this.
      *
-     * @param params
-     * the query paramaters to use
+     * @param params the query paramaters to use
      */
     public void rebuild(QueryParams params) {
         // TODO
     }
 
     /**
-     * Deletes all log matching specified parameters. Also intern methods should use this.
+     * Deletes all log matching specified parameters. Also intern methods should
+     * use this.
      *
-     * @param params
-     * the query paramaters to use
-     * @throws SQLException
-     * when there is a database error
+     * @param params the query paramaters to use
+     * @throws SQLException when there is a database error
      */
     public void clearLog(QueryParams params) throws SQLException {
         database.removeEntries(params);
