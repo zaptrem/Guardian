@@ -8,11 +8,11 @@ import org.bukkit.event.Event.Type;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.guardian.Guardian;
 
-public class UtilPlayerListener extends PlayerListener {
+public class UtilListener extends PlayerListener {
 
     private final Guardian plugin = Guardian.getInstance();
 
-    public UtilPlayerListener() {
+    public UtilListener() {
         Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_JOIN, this, Priority.Monitor, plugin);
         Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_QUIT, this, Priority.Monitor, plugin);
     }

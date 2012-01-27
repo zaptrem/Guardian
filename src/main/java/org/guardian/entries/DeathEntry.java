@@ -1,11 +1,17 @@
 package org.guardian.entries;
 
 import java.util.List;
+import org.bukkit.Location;
 import org.bukkit.block.BlockState;
+import org.guardian.ActionType;
 
 public class DeathEntry extends DataEntry {
 
     private String cause, killer;
+
+    public DeathEntry(ActionType action, String playerName, Location loc, String worldName, long date, String pluginName) {
+        super(action, playerName, loc, worldName, date, pluginName);
+    }
 
     public String getCause() {
         return cause;

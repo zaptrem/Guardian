@@ -166,6 +166,6 @@ public final class Config
 
     public boolean isLogged(String world, ActionType action, String playerName) {
         final WorldConfig wcfg = worlds.get(world);
-        return wcfg != null && !wcfg.isIgnored() && wcfg.isLogging(action) && wcfg.isIgnored(playerName);
+        return wcfg != null && !wcfg.isIgnored() && wcfg.isLogging(action) && !wcfg.isIgnored(playerName);
     }
 }

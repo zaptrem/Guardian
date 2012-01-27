@@ -11,13 +11,13 @@ import org.guardian.entries.Entry;
 import org.guardian.listeners.ChestPlayerListener;
 import org.guardian.listeners.ChestSpoutInventoryListener;
 import org.guardian.listeners.ChestSpoutPlayerListener;
-import org.guardian.listeners.MonitorBlockListener;
-import org.guardian.listeners.MonitorEntityListener;
-import org.guardian.listeners.MonitorPlayerListener;
-import org.guardian.listeners.MonitorVehicleListener;
-import org.guardian.listeners.NinjaPlayerListener;
-import org.guardian.listeners.ToolPlayerListener;
-import org.guardian.listeners.UtilPlayerListener;
+import org.guardian.listeners.BlockListener;
+import org.guardian.listeners.EntityListener;
+import org.guardian.listeners.PlayerListener;
+import org.guardian.listeners.VehicleListener;
+import org.guardian.listeners.NinjaListener;
+import org.guardian.listeners.ToolListener;
+import org.guardian.listeners.UtilListener;
 import org.guardian.params.QueryParams;
 import org.guardian.util.BukkitUtils;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
@@ -50,13 +50,13 @@ public class Guardian extends JavaPlugin
         getCommand("guardian").setExecutor(commandExecutor);
         // Activate listeners
         if (getConf().ninjaMode)
-            new NinjaPlayerListener();
-        new MonitorBlockListener();
-        new MonitorEntityListener();
-        new MonitorPlayerListener();
-        new MonitorVehicleListener();
-        new ToolPlayerListener();
-        new UtilPlayerListener();
+            new NinjaListener();
+        new BlockListener();
+        new EntityListener();
+        new PlayerListener();
+        new VehicleListener();
+        new ToolListener();
+        new UtilListener();
         // Check for Spout
         final Plugin spoutPlugin = getServer().getPluginManager().getPlugin("Spout");
         if (spoutPlugin != null) {
@@ -167,7 +167,7 @@ public class Guardian extends JavaPlugin
 
     /**
      * Returns all log matching specified parameters. Also intern methods should use this.
-     * 
+     *
      * @param params
      * the query paramaters to use
      * @return A list of all entries
@@ -180,7 +180,7 @@ public class Guardian extends JavaPlugin
 
     /**
      * Performs a rollback on all log matching specified parameters. Also intern methods should use this.
-     * 
+     *
      * @param params
      * the query paramaters to use
      */
@@ -190,7 +190,7 @@ public class Guardian extends JavaPlugin
 
     /**
      * Redoes all changes matching parameters, basically a undo of a rollback. Internal methods should use this.
-     * 
+     *
      * @param params
      * the query paramaters to use
      */
@@ -200,7 +200,7 @@ public class Guardian extends JavaPlugin
 
     /**
      * Deletes all log matching specified parameters. Also intern methods should use this.
-     * 
+     *
      * @param params
      * the query paramaters to use
      * @throws SQLException

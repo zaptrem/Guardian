@@ -6,142 +6,132 @@ logPlayerInfo: true
 ninjaMode: false
 motd: true
 bridge:
-    name: guardian-mysql-dev-SNAPSHOT.jar
-    tablePrefix: gd_
-    host: localhost
-    port: 3306
-    database: minecraft
-    username: root
-    password: ''
-    max-connections: 10
+  name: guardian-mysql-dev-SNAPSHOT.jar
+  tablePrefix: gd_
+  host: localhost
+  port: 3306
+  database: minecraft
+  username: root
+  password: ''
+  max-connections: 10
 worlds:
-    global:
-        ignored: true
-        # block events
-        block-break: true
-        block-burn: true
-        block-dispense: true
-        block-fade: true
-        block-form: true
-        block-from-to: true
-        block-lava-flow: true
-        block-lava-flow-as-player: false        
-        block-water-flow: true
-        block-water-flow-as-player: false
-        block-ignite: true
-        block-physics: true
-        block-piston: true
-        block-place: true
-        block-spread: true
-        block-sign-change: true
-        # entity events
-        entity-enderman-pickup: true
-        entity-enderman-place: true
-        entity-death: true
-        # explosion events
-        entity-creeper-explode: true
-        entity-creeper-explode-as-player: false
-        entity-enderdragon-destroy: true
-        entity-ghast-fireball: true
-        entity-other-explode: true
-        entity-tnt-explode: true
-        # paiting events
-        entity-painting-break: true
-        entity-paitning-place: true
-        # player events
-        player-chat: true
-        player-command: true
-        player-bed-enter: true
-        player-bed-exit: true
-        player-bucket-empty: true
-        player-bucket-fill: true
-        player-death: true
-        player-item-drop: true
-        player-interact: true
-        player-join: true
-        player-kick: true
-        player-item-pickup: true
-        player-teleport: true
-        # vehicle events
-        vehicle-create: true
-        vehicle-destroy: true
-        vehicle-enter: true
-        vehicle-exit: true   
-        # world events
-        world-portal-create: true
-        world-structure-grow: true
-        # other events
-        container-transaction: true
-        ignoredPlayers:
-            - Notch: true
-            - jeb_: true
-    world_nether:
-        lava-flow: false
+  global:
+    ignored: false
+    block-break: true
+    block-burn: true
+    block-dispense: true
+    block-fade: true
+    block-form: true
+    block-from-to: true
+    block-lava-flow: true
+    block-lava-flow-as-player: false
+    block-water-flow: true
+    block-water-flow-as-player: false
+    block-ignite: true
+    block-physics: true
+    block-piston: true
+    block-place: true
+    block-spread: true
+    block-sign-change: true
+    entity-enderman-pickup: true
+    entity-enderman-place: true
+    entity-death: true
+    entity-creeper-explode: true
+    entity-creeper-explode-as-player: false
+    entity-enderdragon-destroy: true
+    entity-ghast-fireball: true
+    entity-other-explode: true
+    entity-tnt-explode: true
+    entity-painting-break: true
+    entity-paitning-place: true
+    player-chat: true
+    player-command: true
+    player-bed-enter: true
+    player-bed-exit: true
+    player-bucket-empty: true
+    player-bucket-fill: true
+    player-death: true
+    player-item-drop: true
+    player-interact: true
+    player-join: true
+    player-kick: true
+    player-item-pickup: true
+    player-teleport: true
+    vehicle-create: true
+    vehicle-destroy: true
+    vehicle-enter: true
+    vehicle-exit: true
+    world-portal-create: true
+    world-structure-grow: true
+    container-transaction: true
+    ignoredPlayers:
+    - notch
+    - jeb_
+  world_nether:
+    lava-flow: false
 consumer:
-    maxTimePerRun: 200
-    forceToProcessAtLeast: 20
-    delayBetweenRuns: 6
+  maxTimePerRun: 200
+  forceToProcessAtLeast: 20
+  delayBetweenRuns: 6
 lookup:
-    linesLimit: 1500
-    defaultTime: 30m
-    defaultDistance: 20
-    linesPerPage: 15
+  linesLimit: 1500
+  defaultTime: 30m
+  defaultDistance: 20
+  linesPerPage: 15
 clearlog:
-    enableAutoClearLog: false
-    # TODO refine argument structure
-    autoParameters:
-    - world "world" before 365 days all
-    - world "world" player lavaflow waterflow leavesdecay before 7 days all
-    - world world_nether before 365 days all
-    - world world_nether player lavaflow before 7 days all
-    dumpClearedLog: false
+  enableAutoClearLog: false
+  autoParameters:
+  - world "world" before 365 days all
+  - world "world" player lavaflow waterflow leavesdecay before 7 days all
+  - world world_nether before 365 days all
+  - world world_nether player lavaflow before 7 days all
+  dumpClearedLog: false
 rollback:
-    ignoredBlocks:
-    - 10
-    - 11
-    - 46
-    - 51
-    forcedBlocks:
-    - 8
-    - 9
-    - 10
-    - 11
-    - 51
-    sizes:
-        xsmall:
-            maxArea: 50
-            maxTime: 2d
-        small:
-            maxArea: 100
-            maxTime: 4d
-        medium:
-           maxArea: 250
-           maxTime: 1w
-        large:
-            maxArea: 500
-            maxTime: 2w
-        xlarge:
-            maxArea: 1000
-            maxTime: 1M
-# TODO refine argument structure
+  ignoredBlocks:
+  - 10
+  - 11
+  - 46
+  - 51
+  forcedBlocks:
+  - 8
+  - 9
+  - 10
+  - 11
+  - 51
+  sizes:
+    xsmall:
+      maxArea: 50
+      maxTime: 2d
+    small:
+      maxArea: 100
+      maxTime: 4d
+    medium:
+      maxArea: 250
+      maxTime: 1w
+    large:
+      maxArea: 500
+      maxTime: 2w
+    xlarge:
+      maxArea: 1000
+      maxTime: 1M
 tools:
-    tool:
-        item: 270
-        leftClickBehavior: NONE
-        rightClickBehavior: TOOL
-        params: area 0 all sum none limit 15 desc silent
-        aliases:
-        - t
-        defaultEnabled: true
-        mode: LOOKUP
-        give: true
-    toolblock:
-        item: 17
-        leftClickBehavior: TOOL
-        rightClickBehavior: BLOCK
-        params: area 0 all sum none limit 15 desc silent
-        aliases:
-        - tb
-        defaultEnabled: true
-        mode: LOOKUP
-        give: true
+  tool:
+    item: 270
+    leftClickBehavior: NONE
+    rightClickBehavior: TOOL
+    params: area 0 all sum none limit 15 desc silent
+    aliases:
+    - t
+    defaultEnabled: true
+    mode: LOOKUP
+    give: true
+  toolblock:
+    item: 17
+    leftClickBehavior: TOOL
+    rightClickBehavior: BLOCK
+    params: area 0 all sum none limit 15 desc silent
+    aliases:
+    - tb
+    defaultEnabled: true
+    mode: LOOKUP
+    give: true

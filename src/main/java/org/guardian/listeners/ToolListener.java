@@ -16,12 +16,12 @@ import org.guardian.tools.Tool;
 import org.guardian.tools.ToolBehavior;
 import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
 
-public class ToolPlayerListener extends PlayerListener
+public class ToolListener extends PlayerListener
 {
 
     private final Guardian plugin = Guardian.getInstance();
 
-    public ToolPlayerListener() {
+    public ToolListener() {
         Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_INTERACT, this, Priority.Normal, plugin);
     }
 

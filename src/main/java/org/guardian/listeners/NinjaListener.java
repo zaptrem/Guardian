@@ -12,11 +12,11 @@ import org.bukkit.event.player.PlayerListener;
 import org.bukkit.plugin.Plugin;
 import org.guardian.Guardian;
 
-public class NinjaPlayerListener extends PlayerListener {
+public class NinjaListener extends PlayerListener {
 
     private final Guardian plugin = Guardian.getInstance();
 
-    public NinjaPlayerListener() {
+    public NinjaListener() {
         Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_COMMAND_PREPROCESS, this, Priority.Normal, plugin);
     }
 
