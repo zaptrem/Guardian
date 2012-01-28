@@ -1,5 +1,7 @@
 package org.guardian.entries;
 
+import org.guardian.ActionType;
+
 /*
  * Used for plugins and worlds -md_5
  */
@@ -18,6 +20,11 @@ public class KeyEntry implements Entry {
 
     @Override
     public String getMessage() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public ActionType getAction() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

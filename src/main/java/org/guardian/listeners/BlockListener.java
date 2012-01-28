@@ -7,7 +7,19 @@ import org.bukkit.block.BlockState;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.*;
+import org.bukkit.event.block.BlockBurnEvent;
+import org.bukkit.event.block.BlockDispenseEvent;
+import org.bukkit.event.block.BlockFadeEvent;
+import org.bukkit.event.block.BlockFormEvent;
+import org.bukkit.event.block.BlockFromToEvent;
+import org.bukkit.event.block.BlockIgniteEvent;
+import org.bukkit.event.block.BlockPhysicsEvent;
+import org.bukkit.event.block.BlockPistonExtendEvent;
+import org.bukkit.event.block.BlockPistonRetractEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.BlockSpreadEvent;
+import org.bukkit.event.block.LeavesDecayEvent;
+import org.bukkit.event.block.SignChangeEvent;
 import org.guardian.ActionType;
 import org.guardian.Consumer;
 import org.guardian.Guardian;
@@ -20,19 +32,6 @@ public class BlockListener implements Listener {
 
     public BlockListener() {
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onBlockBreak(BlockBreakEvent event) {
-        if (!event.isCancelled()) {
-            final Block block = event.getBlock();
-            final Location loc = block.getLocation();
-            final String playerName = event.getPlayer().getName();
-            if (plugin.getConf().isLogged(loc.getWorld().getName(), ActionType.BLOCK_BREAK, playerName)) {
-                event.getPlayer().sendMessage("break");
-                consumer.queueEntry(new BlockEntry(ActionType.BLOCK_BREAK, playerName, loc, System.currentTimeMillis(), block.getTypeId(), block.getData(), 0, (byte) 0, "Guardian"));
-            }
-        }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

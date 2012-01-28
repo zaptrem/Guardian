@@ -1,5 +1,7 @@
 package org.guardian.entries;
 
+import org.guardian.ActionType;
+
 public class PlayerEntry implements Entry {
 
     private int playerId;
@@ -11,7 +13,7 @@ public class PlayerEntry implements Entry {
     }
 
     public void setId(int id) {
-        this.playerId = id;
+        playerId = id;
     }
 
     public String getName() {
@@ -56,6 +58,11 @@ public class PlayerEntry implements Entry {
 
     @Override
     public String getMessage() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public ActionType getAction() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

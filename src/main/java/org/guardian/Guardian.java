@@ -83,7 +83,9 @@ public class Guardian extends JavaPlugin {
         if (getConf().ninjaMode) {
             new NinjaListener();
         }
-        new BlockListener();
+        if (conf.superWorldConfig.isLogging(ActionType.BLOCK_BREAK)) {
+            new BlockListener();
+        }
         new EntityListener();
         new PlayerListener();
         new VehicleListener();

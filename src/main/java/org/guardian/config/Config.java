@@ -35,6 +35,7 @@ public final class Config
     public String url;
     // World config
     public HashMap<String, WorldConfig> worlds = new HashMap<String, WorldConfig>();
+    public WorldConfig superWorldConfig;
     // Consumer config
     public int maxTimerPerRun, forceToProcessAtLeast, delayBetweenRuns;
     // Lookup config
@@ -87,13 +88,17 @@ public final class Config
         for (final World world : Bukkit.getServer().getWorlds()) {
             final String name = world.getName();
             ConfigurationSection cs = config.getConfigurationSection("worlds." + world.getName());
-            if (cs == null)
+            if (cs == null) {
                 cs = globalSection;
-            for (final String key : cs.getKeys(false))
-                if (key == null)
+            }
+            for (final String key : cs.getKeys(false)) {
+                if (key == null) {
                     cs.set(key, globalSection.get(key));
+                }
+            }
             worlds.put(name, new WorldConfig(cs));
         }
+        superWorldConfig = new WorldConfig(worlds.values());
         // Populate the consumer config
         maxTimerPerRun = config.getInt("consumer.maxTimePerRun");
         forceToProcessAtLeast = config.getInt("consumer.forceToProcessAtLeast");
@@ -119,7 +124,7 @@ public final class Config
         // TODO Populate the tool config
         final Set<String> toolNames = config.getConfigurationSection("tools").getKeys(false);
         tools = new ArrayList<Tool>();
-        for (final String toolName : toolNames)
+        for (final String toolName : toolNames) {
             try {
                 final String path = "tools." + toolName;
                 final List<String> aliases = config.getStringList(path + ".aliases");
@@ -137,13 +142,15 @@ public final class Config
             } catch (final Exception ex) {
                 BukkitUtils.warning("Error at parsing tool '" + toolName + "':)", ex);
             }
+        }
         toolsByName = new HashMap<String, Tool>();
         toolsByType = new HashMap<Integer, Tool>();
         for (final Tool tool : tools) {
             toolsByType.put(tool.item, tool);
             toolsByName.put(tool.name, tool);
-            for (final String alias : tool.aliases)
+            for (final String alias : tool.aliases) {
                 toolsByName.put(alias, tool);
+            }
         }
         // Materials
         materialDataManager = new MaterialData(new File(plugin.getDataFolder().getPath() + File.separator + "materials.yml"));
