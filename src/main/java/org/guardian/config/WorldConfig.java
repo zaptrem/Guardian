@@ -6,8 +6,7 @@ import java.util.Set;
 import org.bukkit.configuration.ConfigurationSection;
 import org.guardian.ActionType;
 
-public class WorldConfig
-{
+public class WorldConfig {
 
     private final boolean[] actions = new boolean[ActionType.length];
     private final boolean ignored;

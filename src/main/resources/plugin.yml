@@ -5,13 +5,13 @@ authors: [DiddiZ, md_5, oliverw92]
 website: https://github.com/Guardian-Security/Guardian
 
 main: org.guardian.Guardian
-softdepend: [Spout, WorldEdit]
+softdepend: [WorldEdit]
 
 commands:
     guardian:
         description: Access to the main Guardian command
         aliases: gd
-        permission: guardian.command 
+        permission: guardian.command
 
 permissions:
     guardian.clearlog:

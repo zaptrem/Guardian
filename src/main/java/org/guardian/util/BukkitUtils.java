@@ -43,12 +43,13 @@ public class BukkitUtils {
      */
     public static void sendMessage(CommandSender player, String msg) {
 
-        player.sendMessage(msg);
+        player.sendMessage(msg.replace('&', '§'));
         // TODO add in line-length checking, color wrapping etc
     }
 
     /**
      * Send an info level log message to console
+     * @param msg
      */
     public static void info(String msg) {
         final StringBuilder out = new StringBuilder();
@@ -59,6 +60,7 @@ public class BukkitUtils {
 
     /**
      * Send a warn level log message to console
+     * @param msg
      */
     public static void warning(String msg) {
         final StringBuilder out = new StringBuilder();
@@ -69,6 +71,8 @@ public class BukkitUtils {
 
     /**
      * Send a warn level stacktrace to console
+     * @param msg
+     * @param ex
      */
     public static void warning(String msg, Exception ex) {
         log.log(Level.WARNING, "[Guardian] " + msg + ":", ex);
@@ -76,6 +80,7 @@ public class BukkitUtils {
 
     /**
      * Send a severe level log message to console
+     * @param msg
      */
     public static void severe(String msg) {
         final StringBuilder out = new StringBuilder();
@@ -86,6 +91,8 @@ public class BukkitUtils {
 
     /**
      * Send a severe level stacktrace to console
+     * @param msg
+     * @param ex
      */
     public static void severe(String msg, Exception ex) {
         log.log(Level.SEVERE, "[Guardian] " + msg + ":", ex);
@@ -93,6 +100,7 @@ public class BukkitUtils {
 
     /**
      * Send an debug message to console if debug is enabled
+     * @param msg
      */
     public static void debug(String msg) {
         if (Guardian.getInstance().getConf().debug) {
@@ -102,7 +110,10 @@ public class BukkitUtils {
 
     /**
      * Returns the friendly bridgeName of an entity
-     **/
+     *
+     * @param entity
+     * @return
+     */
     public static String getEntityName(Entity entity) {
         if (entity instanceof Player) {
             return ((Player) entity).getName();
@@ -118,7 +129,11 @@ public class BukkitUtils {
 
     /**
      * Returns the distance between two Locations
-     **/
+     *
+     * @param from
+     * @param to
+     * @return
+     */
     public static double distance(Location from, Location to) {
         return Math.sqrt(Math.pow(from.getX() - to.getX(), 2) + Math.pow(from.getY() - to.getY(), 2) + Math.pow(from.getZ() - to.getZ(), 2));
     }

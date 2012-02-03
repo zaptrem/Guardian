@@ -2,16 +2,16 @@ package org.guardian;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import java.io.File;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Logger;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.guardian.commands.GuardianCommandExecutor;
 import org.guardian.config.Config;
 import org.guardian.entries.Entry;
 import org.guardian.listeners.*;
+import org.guardian.listeners.block.BlockBreak;
+import org.guardian.listeners.block.BlockPlace;
 import org.guardian.params.QueryParams;
 import org.guardian.util.BukkitUtils;
 import org.guardian.util.Utils;
@@ -73,8 +73,8 @@ public class Guardian extends JavaPlugin {
             return;
         }
         // Start the consumer
-        consumer = new Consumer();
-        consumerId = getServer().getScheduler().scheduleAsyncRepeatingTask(this, consumer, getConf().delayBetweenRuns * 20, getConf().delayBetweenRuns * 20);
+        consumer = database.getConsumer();
+        consumerId = getServer().getScheduler().scheduleAsyncRepeatingTask(this, consumer.getRunnable(), getConf().delayBetweenRuns * 20, getConf().delayBetweenRuns * 20);
         if (consumerId <= 0) {
             fatalError("Failed to start the consumer");
             return;
@@ -84,23 +84,16 @@ public class Guardian extends JavaPlugin {
             new NinjaListener();
         }
         if (conf.superWorldConfig.isLogging(ActionType.BLOCK_BREAK)) {
-            new BlockListener();
+            new BlockBreak();
+        }
+        if (conf.superWorldConfig.isLogging(ActionType.BLOCK_PLACE)) {
+            new BlockPlace();
         }
         new EntityListener();
         new PlayerListener();
         new VehicleListener();
         new ToolListener();
         new UtilListener();
-        // Check for Spout
-        final Plugin spoutPlugin = getServer().getPluginManager().getPlugin("Spout");
-        if (spoutPlugin != null) {
-            new ChestSpoutInventoryListener();
-            new ChestSpoutPlayerListener();
-            BukkitUtils.info("Spout " + spoutPlugin.getDescription().getVersion() + " has been found, accurate chest logging enabled");
-        } else {
-            new ChestPlayerListener();
-            BukkitUtils.info("Spout has not been found, accurate chest logging disabled");
-        }
         // Check for WorldEdit
         final Plugin wePlugin = getServer().getPluginManager().getPlugin("WorldEdit");
         if (wePlugin != null) {
@@ -118,7 +111,6 @@ public class Guardian extends JavaPlugin {
         // Cancel anything else that happens to be working for us
         getServer().getScheduler().cancelTasks(this);
         // I bid ye good day
-        BukkitUtils.info("version " + getDescription().getVersion() + " disabled");
     }
 
     public void fatalError(String error) {
@@ -212,6 +204,9 @@ public class Guardian extends JavaPlugin {
         return database;
     }
 
+    /**
+     * @return the currently used Consumer, part of the database bridge
+     */
     public Consumer getConsumer() {
         return consumer;
     }

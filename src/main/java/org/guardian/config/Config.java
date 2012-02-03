@@ -22,8 +22,7 @@ import org.guardian.tools.ToolMode;
 import org.guardian.util.BukkitUtils;
 import org.guardian.util.Utils;
 
-public final class Config
-{
+public final class Config {
 
     // Main config
     public boolean debug, checkVersion, sendStatistics, logPlayerInfo, ninjaMode, motd;
@@ -113,8 +112,8 @@ public final class Config
         // TODO autoParamaters
         dumpClearedLog = config.getBoolean("clearlog.dumpClearedLog");
         // Rollback config
-        ignoredBlocks = config.getIntegerList("rollback.ignoredBlocks") != null ? (ArrayList<Integer>)config.getIntegerList("rollback.ignoredBlocks") : new ArrayList<Integer>();
-        forcedBlocks = config.getIntegerList("rollback.forcedBlocks") != null ? (ArrayList<Integer>)config.getIntegerList("rollback.forcedBlocks") : new ArrayList<Integer>();
+        ignoredBlocks = config.getIntegerList("rollback.ignoredBlocks") != null ? (ArrayList<Integer>) config.getIntegerList("rollback.ignoredBlocks") : new ArrayList<Integer>();
+        forcedBlocks = config.getIntegerList("rollback.forcedBlocks") != null ? (ArrayList<Integer>) config.getIntegerList("rollback.forcedBlocks") : new ArrayList<Integer>();
         // Permissions
         final ConfigurationSection permSection = config.getConfigurationSection("rollback.sizes");
         for (String key : permSection.getKeys(false)) {

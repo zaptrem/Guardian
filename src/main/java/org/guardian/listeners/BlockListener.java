@@ -71,19 +71,6 @@ public class BlockListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onBlockPlace(BlockPlaceEvent event) {
-        if (!event.isCancelled()) {
-            final Block block = event.getBlock();
-            final Location loc = block.getLocation();
-            final String playerName = event.getPlayer().getName();
-            final BlockState before = event.getBlockReplacedState();
-            if (plugin.getConf().isLogged(loc.getWorld().getName(), ActionType.BLOCK_PLACE, playerName)) {
-                consumer.queueEntry(new BlockEntry(ActionType.BLOCK_PLACE, playerName, loc, System.currentTimeMillis(), before.getTypeId(), before.getData().getData(), block.getTypeId(), block.getData(), "Guardian"));
-            }
-        }
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
     public void onBlockSpread(BlockSpreadEvent event) {
     }
 
