@@ -5,8 +5,7 @@ import java.util.List;
 import org.bukkit.Location;
 import org.guardian.ActionType;
 
-public abstract class DataEntry implements Entry, Rollbackable
-{
+public abstract class DataEntry implements Entry, Rollbackable {
 
     protected int id;
     protected long date;
@@ -43,6 +42,7 @@ public abstract class DataEntry implements Entry, Rollbackable
         this.id = id;
     }
 
+    @Override
     public ActionType getAction() {
         return action;
     }
@@ -52,7 +52,7 @@ public abstract class DataEntry implements Entry, Rollbackable
     }
 
     public long getDate() {
-        return date;
+        return date / 1000L;
     }
 
     public void setDate(long date) {

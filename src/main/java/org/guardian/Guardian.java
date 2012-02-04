@@ -29,6 +29,7 @@ public class Guardian extends JavaPlugin {
     private DatabaseBridge database;
     private Consumer consumer;
     private int consumerId;
+    public final int pluginId = 1;
 
     @Override
     public void onLoad() {

@@ -8,8 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.guardian.Guardian;
-import org.guardian.util.Utils;
 import org.guardian.util.BukkitUtils;
+import org.guardian.util.Utils;
 
 public class MaterialData {
 
@@ -19,8 +19,10 @@ public class MaterialData {
 
     public MaterialData(File file) {
         // Load the conf
-        plugin.saveResource("materials.yml", false);
-        YamlConfiguration conf = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder().getPath() + File.separator + "materials.yml"));
+        if (!file.exists()) {
+            plugin.saveResource("materials.yml", false);
+        }
+        YamlConfiguration conf = YamlConfiguration.loadConfiguration(file);
         YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(plugin.getResource("materials.yml"));
         conf.setDefaults(defConfig);
         save(conf, file);
