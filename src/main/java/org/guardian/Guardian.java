@@ -90,9 +90,6 @@ public class Guardian extends JavaPlugin {
         if (conf.superWorldConfig.isLogging(ActionType.BLOCK_PLACE)) {
             new BlockPlace();
         }
-        new EntityListener();
-        new PlayerListener();
-        new VehicleListener();
         new ToolListener();
         new UtilListener();
         // Check for WorldEdit
