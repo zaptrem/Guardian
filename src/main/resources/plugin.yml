@@ -3,6 +3,7 @@ version: ${project.build.number}
 description: The future of griefer tracking and rollback for Bukkit
 authors: [DiddiZ, md_5, oliverw92]
 website: https://github.com/Guardian-Security/Guardian
+dev-url: http://dev.bukkit.org/server-mods/guardian
 
 main: org.guardian.Guardian
 softdepend: [WorldEdit]
