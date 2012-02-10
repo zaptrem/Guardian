@@ -1,5 +1,5 @@
 # The Guardian config
-debug: false
+debug: true
 checkVersion: true
 sendStatistics: true
 logPlayerInfo: true
@@ -72,7 +72,7 @@ worlds:
 consumer:
   maxTimePerRun: 200
   forceToProcessAtLeast: 20
-  delayBetweenRuns: 6
+  delayBetweenRuns: 4
 lookup:
   linesLimit: 1500
   defaultTime: 30m
