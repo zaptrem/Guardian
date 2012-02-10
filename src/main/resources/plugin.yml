@@ -14,6 +14,24 @@ commands:
         permission: guardian.command
 
 permissions:
+    guardian.*:
+        description: Gives you all Guardian permissions.
+        default: false
+        children:
+            guardian.clearlog: true
+            guardian.command: true
+            guardian.lookup: true
+            guardian.redo: true
+            guardian.rollback: true
+            guardian.see: true
+            guardian.undo: true
+            guardian.writelog: true
+            guardian.rollback.xsmall: true
+            guardian.rollback.small: true
+            guardian.rollback.medium: true
+            guardian.rollback.large: true
+            guardian.rollback.xlarge: true
+            guardian.rollback.any: true
     guardian.clearlog:
         description: The ability to clear Guardian logs
         default: op
