@@ -5,23 +5,22 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerListener;
 import org.bukkit.plugin.Plugin;
 import org.guardian.Guardian;
 
-public class NinjaListener extends PlayerListener {
+public class NinjaListener implements Listener {
 
     private final Guardian plugin = Guardian.getInstance();
 
     public NinjaListener() {
-        Bukkit.getServer().getPluginManager().registerEvent(Type.PLAYER_COMMAND_PREPROCESS, this, Priority.Normal, plugin);
+        Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @Override
-    public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event) {
         if (plugin.getConf().ninjaMode && !event.getPlayer().hasPermission("guardian.see")) {
             Player player = event.getPlayer();
             String[] split = event.getMessage().split("\\s+");
@@ -56,7 +55,6 @@ public class NinjaListener extends PlayerListener {
             if (command.equalsIgnoreCase("guardian") || command.equalsIgnoreCase("gd")) {
                 event.setCancelled(true);
                 player.sendMessage("Unknown command. Type \"help\" for help.");
-                return;
             }
         }
     }
