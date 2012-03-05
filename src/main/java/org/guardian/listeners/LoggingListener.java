@@ -8,7 +8,7 @@ import org.guardian.Guardian;
 public abstract class LoggingListener implements Listener {
 
     protected final Guardian guardian = Guardian.getInstance();
-    protected final Consumer consumer = guardian.getConsumer();
+    protected final Consumer consumer = Guardian.getInstance().getConsumer();
 
     protected LoggingListener() {
         Bukkit.getServer().getPluginManager().registerEvents(this, guardian);

@@ -6,22 +6,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.Plugin;
-import org.guardian.Guardian;
 
-public class NinjaListener implements Listener {
-
-    private final Guardian plugin = Guardian.getInstance();
-
-    public NinjaListener() {
-        Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
-    }
+public class NinjaListener extends LoggingListener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event) {
-        if (plugin.getConf().ninjaMode && !event.getPlayer().hasPermission("guardian.see")) {
+        if (guardian.getConf().ninjaMode && !event.getPlayer().hasPermission("guardian.see")) {
             Player player = event.getPlayer();
             String[] split = event.getMessage().split("\\s+");
             String command = split[0].substring(1);
