@@ -1,6 +1,6 @@
 name: Guardian
 version: ${project.build.number}
-description: The future of griefer tracking and rollback for Bukkit
+description: The future of griefer tracking and rollback for Bukkit. Proudly sponsored by mossycobble.com!
 authors: [DiddiZ, md_5, oliverw92]
 website: https://github.com/Guardian-Security/Guardian
 

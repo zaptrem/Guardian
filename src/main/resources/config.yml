@@ -27,9 +27,9 @@ worlds:
     block-lava-flow-as-player: false
     block-water-flow: true
     block-water-flow-as-player: false
-    block-ignite: true
-    block-physics: true
-    block-piston: true
+  # block-ignite: true
+  # block-physics: true
+  # block-piston: true
     block-place: true
     block-spread: true
     block-sign-change: true

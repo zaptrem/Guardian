@@ -9,9 +9,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.guardian.commands.GuardianCommandExecutor;
 import org.guardian.config.Config;
 import org.guardian.entries.Entry;
-import org.guardian.listeners.*;
-import org.guardian.listeners.block.BlockBreak;
-import org.guardian.listeners.block.BlockPlace;
+import org.guardian.listeners.NinjaListener;
+import org.guardian.listeners.ToolListener;
+import org.guardian.listeners.UtilListener;
+import org.guardian.listeners.block.*;
 import org.guardian.params.QueryParams;
 import org.guardian.util.BukkitUtils;
 import org.guardian.util.Utils;
@@ -81,11 +82,27 @@ public class Guardian extends JavaPlugin {
             return;
         }
         // Activate listeners
-        if (getConf().ninjaMode) {
+        if (conf.ninjaMode) {
             new NinjaListener();
         }
         if (conf.superWorldConfig.isLogging(ActionType.BLOCK_BREAK)) {
             new BlockBreak();
+        }
+        if (conf.superWorldConfig.isLogging(ActionType.BLOCK_BURN)) {
+            new BlockBurn();
+        }
+        if (conf.superWorldConfig.isLogging(ActionType.BLOCK_FADE)) {
+            new BlockFade();
+            new LeavesDecay();
+        }
+        if (conf.superWorldConfig.isLogging(ActionType.BLOCK_FORM)) {
+            new BlockForm();
+        }
+        if (conf.superWorldConfig.isLogging(ActionType.BLOCK_FROM_TO)) {
+            new BlockFromTo();
+        }
+        if (conf.superWorldConfig.isLogging(ActionType.BLOCK_SPREAD)) {
+            new BlockSpread();
         }
         if (conf.superWorldConfig.isLogging(ActionType.BLOCK_PLACE)) {
             new BlockPlace();
