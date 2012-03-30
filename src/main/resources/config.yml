@@ -43,7 +43,8 @@ worlds:
     entity-other-explode: true
     entity-tnt-explode: true
     entity-painting-break: true
-    entity-paitning-place: true
+    entity-painting-place: true
+    inventory-click: true
     player-chat: true
     player-command: true
     player-bed-enter: true

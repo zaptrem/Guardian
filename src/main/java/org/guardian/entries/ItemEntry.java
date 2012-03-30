@@ -11,8 +11,11 @@ public class ItemEntry extends DataEntry {
 
     private int typeId, data, enchId, enchPower, amount;
 
-    public ItemEntry(ActionType action, String playerName, Location loc, String worldName, long date, String pluginName) {
-        super(action, playerName, loc, worldName, date, pluginName);
+    public ItemEntry(ActionType action, String playerName, Location loc, long date, ItemStack item, String pluginName) {
+        super(action, playerName, loc, loc.getWorld().getName(), date, pluginName);
+        typeId = item.getTypeId();
+        data = item.getDurability();
+        amount = item.getAmount();
     }
 
     public int getTypeId() {

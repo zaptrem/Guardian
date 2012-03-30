@@ -13,6 +13,7 @@ import org.guardian.listeners.NinjaListener;
 import org.guardian.listeners.ToolListener;
 import org.guardian.listeners.UtilListener;
 import org.guardian.listeners.block.*;
+import org.guardian.listeners.inventory.*;
 import org.guardian.params.QueryParams;
 import org.guardian.util.BukkitUtils;
 import org.guardian.util.Utils;
@@ -106,6 +107,9 @@ public class Guardian extends JavaPlugin {
         }
         if (conf.superWorldConfig.isLogging(ActionType.BLOCK_PLACE)) {
             new BlockPlace();
+        }
+        if (conf.superWorldConfig.isLogging(ActionType.INVENTORY_CLICK)) {
+        	new InventoryClick();
         }
         new ToolListener();
         new UtilListener();
