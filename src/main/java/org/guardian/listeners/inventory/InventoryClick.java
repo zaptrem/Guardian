@@ -13,8 +13,6 @@ import org.guardian.ActionType;
 import org.guardian.entries.ItemEntry;
 import org.guardian.listeners.LoggingListener;
 
-import com.gmail.brkich.austin.InventoryListener.InventoryClick.InventoryClickState;
-
 public class InventoryClick extends LoggingListener {
 
 	private final Map<HumanEntity, InventoryClickState> containers = new HashMap<HumanEntity, InventoryClickState>();
