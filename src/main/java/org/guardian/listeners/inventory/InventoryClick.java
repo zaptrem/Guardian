@@ -13,26 +13,37 @@ import org.guardian.ActionType;
 import org.guardian.entries.ItemEntry;
 import org.guardian.listeners.LoggingListener;
 
+import com.gmail.brkich.austin.InventoryListener.InventoryClick.InventoryClickState;
+
 public class InventoryClick extends LoggingListener {
 
 	private final Map<HumanEntity, InventoryClickState> containers = new HashMap<HumanEntity, InventoryClickState>();
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onInventoryClick(final InventoryClickEvent event) {
+		InventoryClickState lastState = containers.get(event.getWhoClicked());
 		Block eventBlock = (Block) event.getInventory().getHolder();
 		if (event.getSlot() == event.getRawSlot()) {
 			// Clicked Top Inventory
-			if(containers.containsKey(event.getWhoClicked())) {
-				InventoryClickState lastState = containers.get(event.getWhoClicked());
-				if(lastState.rawSlot != lastState.slot) {
-					//Last Click Was Bottom Inventory
-					if(event.isLeftClick()) {
-						consumer.queueEntry(new ItemEntry(ActionType.INVENTORY_ADD, event.getWhoClicked().getName(), eventBlock.getLocation(), System.currentTimeMillis(), event.getCursor(), PLUGIN));
+			if (lastState != null) {
+				if (lastState.rawSlot != lastState.slot) {
+					// Last Click Was Bottom Inventory
+					if (event.isLeftClick()) {
+						consumer.queueEntry(new ItemEntry(ActionType.INVENTORY_ADD, event.getWhoClicked().getName(),
+								eventBlock.getLocation(), System.currentTimeMillis(), event.getCursor(), PLUGIN));
 					}
 				}
 			}
 		} else {
 			// Clicked Bottom Inventory
+			if (lastState != null) {
+				if (lastState.rawSlot == lastState.slot) {
+					if (event.isLeftClick() && (event.getCursor() != null)) {
+						consumer.queueEntry(new ItemEntry(ActionType.INVENTORY_TAKE, event.getWhoClicked().getName(),
+								eventBlock.getLocation(), System.currentTimeMillis(), event.getCursor(), PLUGIN));
+					}
+				}
+			}
 		}
 		containers.put(
 				event.getWhoClicked(),
