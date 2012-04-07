@@ -1,6 +1,8 @@
 package org.guardian.listeners;
 
 import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
+import com.sk89q.worldedit.bukkit.selections.Selection;
+
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -37,20 +39,20 @@ public class ToolListener implements Listener {
                     if (behavior != ToolBehavior.NONE && toolData.isEnabled()) {
                         final Block block = event.getClickedBlock();
                         final QueryParams params = toolData.getParams();
-                        params.setLocation(null);
-                        params.setSelection(null);
+                        params.loc = null;
+                        params.sel = null;
                         if (behavior == ToolBehavior.BLOCK) {
-                            params.setLocation(block.getRelative(event.getBlockFace()).getLocation());
-                        } else if (block.getTypeId() != 54 || tool.params.getRadius() != 0) {
-                            params.setLocation(block.getLocation());
+                            params.loc = block.getRelative(event.getBlockFace()).getLocation();
+                        } else if (block.getTypeId() != 54 || tool.params.radius != 0) {
+                            params.loc =block.getLocation();
                         } else {
                             for (final BlockFace face : new BlockFace[]{BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST}) {
                                 if (block.getRelative(face).getTypeId() == 54) {
-                                    params.setSelection(new CuboidSelection(event.getPlayer().getWorld(), block.getLocation(), block.getRelative(face).getLocation()));
+                                	params.sel = new CuboidSelection(event.getPlayer().getWorld(), block.getLocation(), block.getRelative(face).getLocation());
                                 }
                             }
-                            if (params.getSelection() == null) {
-                                params.setLocation(block.getLocation());
+                            if (params.sel == null) {
+                                params.sel = (Selection) block.getLocation();
                             }
                         }
 
