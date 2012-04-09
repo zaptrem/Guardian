@@ -33,7 +33,7 @@ public class QueryParamsFactory
                 case ACTION:
                     for (final String action : paramArgs)
                         try {
-                            params.getActions().add(ActionType.valueOf(action.toUpperCase()));
+                            params.actions.add(ActionType.valueOf(action.toUpperCase()));
                         } catch (final IllegalArgumentException ex) {
                             throw new IllegalArgumentException("There is no action '" + action + "'");
                         }
@@ -42,12 +42,12 @@ public class QueryParamsFactory
                     break;
                 case AREA:
                     if (sender instanceof Player) {
-                        params.setLocation(((Player)sender).getLocation());
-                        params.setSelection(null);
+                        params.loc = ((Player)sender).getLocation();
+                        params.sel = null;
                         if (paramArgs.isEmpty())
-                            params.setRadius(20); // TODO Get default value from config
+                            params.radius = 20; // TODO Get default value from config
                         else if (Utils.isInt(paramArgs.get(0)))
-                            params.setRadius(Integer.valueOf(paramArgs.get(0)));
+                            params.radius = Integer.valueOf(paramArgs.get(0));
                         else
                             throw new IllegalArgumentException("Not a number '" + paramArgs.get(0) + "'");
                     } else
@@ -57,9 +57,9 @@ public class QueryParamsFactory
                     if (sender instanceof Player) {
                         final Selection sel = plugin.getWorldEdit().getSelection((Player)sender);
                         if (sel != null && sel instanceof CuboidSelection) {
-                            params.setSelection(sel);
-                            params.setLocation(null);
-                            params.setRadius(-1);
+                            params.sel = sel;
+                            params.loc = null;
+                            params.radius = -1;
                         } else
                             throw new IllegalArgumentException("No selection defined ");
                     } else
@@ -69,7 +69,7 @@ public class QueryParamsFactory
                     for (final String block : paramArgs) {
                         final Material mat = Material.matchMaterial(block);
                         if (mat != null)
-                            params.getBlocks().add(mat.getId());
+                            params.blocks.add(mat.getId());
                         else
                             throw new IllegalArgumentException("There is no material '" + block + "'");
                     }
@@ -78,7 +78,7 @@ public class QueryParamsFactory
                     for (final String worldName : paramArgs) {
                         final World world = Bukkit.getServer().getWorld(worldName);
                         if (world != null)
-                            params.getWorlds().add(world);
+                            params.worlds.add(world);
                         else
                             throw new IllegalArgumentException("There is no world '" + worldName + "'");
                     }
@@ -87,7 +87,7 @@ public class QueryParamsFactory
                     final String since = Utils.join(paramArgs, " ");
                     final int minutessince = Utils.parseTimeSpec(since);
                     if (minutessince > 0)
-                        params.setSince(minutessince);
+                        params.since = minutessince;
                     else
                         throw new IllegalArgumentException("Not a valid time spec '" + since + "'");
                     break;
@@ -95,53 +95,53 @@ public class QueryParamsFactory
                     final String before = Utils.join(paramArgs, " ");
                     final int minutesbefore = Utils.parseTimeSpec(before);
                     if (minutesbefore > 0)
-                        params.setBefore(minutesbefore);
+                        params.before = minutesbefore;
                     else
                         throw new IllegalArgumentException("Not a valid time spec '" + before + "'");
                     break;
                 case SUM:
                     try {
-                        params.setSummarizationMode(SummarizationMode.valueOf(paramArgs.get(0).toUpperCase()));
+                        params.sum = SummarizationMode.valueOf(paramArgs.get(0).toUpperCase());
                     } catch (final IllegalArgumentException ex) {
                         throw new IllegalArgumentException("There is no summarization mode '" + paramArgs.get(0) + "'");
                     }
                     break;
                 case LIMIT:
                     if (Utils.isInt(paramArgs.get(0)))
-                        params.setLimit(Integer.valueOf(paramArgs.get(0)));
+                        params.limit = Integer.valueOf(paramArgs.get(0));
                     else
                         throw new IllegalArgumentException("Not a number '" + paramArgs.get(0) + "'");
                     break;
                 case SILENT:
-                    params.setSilent(true);
+                    params.silent = true;
                     break;
                 case COORDS:
-                    params.setNeedCoords(true);
+                    params.needCoords = true;
                     break;
                 case MATCH:
-                    params.setTextMatch(Utils.join(paramArgs, " "));
+                    params.textMatch = Utils.join(paramArgs, " ");
                     break;
                 case ASC:
-                    params.setOrder(Order.ASC);
+                    params.order = Order.ASC;
                     break;
                 case DESC:
-                    params.setOrder(Order.DESC);
+                    params.order = Order.DESC;
                     break;
                 case LAST:
                     // TODO Get last query params from session and use a close of it.
                     break;
                 case DESTROYED:
-                    params.getActions().clear();
-                    params.getActions().add(ActionType.BLOCK_BREAK);
+                    params.actions.clear();
+                    params.actions.add(ActionType.BLOCK_BREAK);
                     break;
                 case CREATED:
-                    params.getActions().clear();
-                    params.getActions().add(ActionType.BLOCK_PLACE);
+                    params.actions.clear();
+                    params.actions.add(ActionType.BLOCK_PLACE);
                     break;
             }
         }
-        if (params.getWorlds().isEmpty())
-            params.setWorlds(Bukkit.getServer().getWorlds());
+        if (params.worlds.isEmpty())
+            params.worlds = Bukkit.getServer().getWorlds();
         return params;
     }
 }

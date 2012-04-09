@@ -23,13 +23,12 @@ public class Guardian extends JavaPlugin {
     // Plugins
     private static Guardian guardian;
     private static WorldEditPlugin worldEdit;
-    // Config and commands
+    // Configuration and commands
     private Config conf;
     private GuardianCommandExecutor commandExecutor;
     // Database, consumer, sessions etc
     private SessionManager sessionMan;
     private DatabaseBridge database;
-    private Consumer consumer;
     private int consumerId;
     public final int pluginId = 1;
 
@@ -40,12 +39,12 @@ public class Guardian extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Load config
+        // Load configuration
         conf = new Config();
-        // Initialise commands
+        // Initialize commands
         commandExecutor = new GuardianCommandExecutor();
         getCommand("guardian").setExecutor(commandExecutor);
-        // Initialise the session manager
+        // Initialize the session manager
         sessionMan = new SessionManager();
         // Lets get some bridge action going
         final File file = new File(getDataFolder() + File.separator + getConf().bridgeName);
@@ -76,8 +75,7 @@ public class Guardian extends JavaPlugin {
             return;
         }
         // Start the consumer
-        consumer = database.getConsumer();
-        consumerId = getServer().getScheduler().scheduleAsyncRepeatingTask(this, consumer.getRunnable(), getConf().delayBetweenRuns * 20, getConf().delayBetweenRuns * 20);
+        consumerId = getServer().getScheduler().scheduleAsyncRepeatingTask(this, database.getConsumer(), getConf().delayBetweenRuns * 20, getConf().delayBetweenRuns * 20);
         if (consumerId <= 0) {
             fatalError("Failed to start the consumer");
             return;
@@ -182,7 +180,7 @@ public class Guardian extends JavaPlugin {
      * @throws SQLException when there is a database error
      */
     public List<Entry> getLog(QueryParams params) throws SQLException {
-        return database.getEntries(params);
+        return null;
     }
 
     /**
@@ -213,7 +211,7 @@ public class Guardian extends JavaPlugin {
      * @throws SQLException when there is a database error
      */
     public void clearLog(QueryParams params) throws SQLException {
-        database.removeEntries(params);
+        //database.removeEntries(params);
     }
 
     /**
@@ -221,12 +219,5 @@ public class Guardian extends JavaPlugin {
      */
     public DatabaseBridge getDatabaseBridge() {
         return database;
-    }
-
-    /**
-     * @return the currently used Consumer, part of the database bridge
-     */
-    public Consumer getConsumer() {
-        return consumer;
     }
 }
