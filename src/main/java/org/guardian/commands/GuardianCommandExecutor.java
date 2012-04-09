@@ -14,6 +14,7 @@ public class GuardianCommandExecutor implements CommandExecutor {
         //Register commands
         commands.add(new ExampleCommand());
         commands.add(new HelpCommand());
+        commands.add(new DebugCommand());
     }
 
     /**
@@ -23,7 +24,6 @@ public class GuardianCommandExecutor implements CommandExecutor {
      * @param label command name
      * @param args arguments
      */
-    @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //If no arg provided for guardian command, set to help by default
         if (args.length == 0) {
