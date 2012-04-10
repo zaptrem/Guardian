@@ -1,6 +1,8 @@
 package org.guardian.commands;
 
+import org.bukkit.ChatColor;
 import org.guardian.util.BukkitUtils;
+import org.guardian.util.Utils;
 
 public class PageCommand extends BaseCommand {
 
@@ -8,10 +10,16 @@ public class PageCommand extends BaseCommand {
         name = "page";
         usage = "<page> <- display a page from your last search";
         allowConsole = false;
+        minArgs = 1;
+        maxArgs = 1;
     }
 
     @Override
     public boolean execute() {
+        if (Utils.isInt(args.get(0)))
+            showPage(Integer.valueOf(args.get(0)));
+        else
+            sender.sendMessage(ChatColor.RED + "You have to specify a page");
         return true;
     }
 

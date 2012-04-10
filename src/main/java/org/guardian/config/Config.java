@@ -137,7 +137,7 @@ public final class Config {
                 // params.parseArgs(Bukkit.getConsoleSender(), Arrays.asList(config.getString(path + ".params").split(" ")));
                 final ToolMode mode = ToolMode.valueOf(config.getString(path + ".mode").toUpperCase());
                 final boolean giveTool = config.getBoolean(path + ".giveTool", true);
-                tools.add(new Tool(toolName, aliases, leftClickBehavior, rightClickBehavior, defaultEnabled, item, null, mode, giveTool));
+                tools.add(new Tool(toolName, aliases, leftClickBehavior, rightClickBehavior, defaultEnabled, item, new QueryParams(), mode, giveTool));
             } catch (final Exception ex) {
                 BukkitUtils.warning("Error at parsing tool '" + toolName + "':)", ex);
             }

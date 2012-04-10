@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.guardian.Guardian;
 import org.guardian.entries.Entry;
 import org.guardian.params.QueryParams;
 import org.guardian.params.QueryParamsFactory;
@@ -19,16 +20,17 @@ public class SearchCommand extends BaseCommand {
     @Override
     public boolean execute() {
         final QueryParams params = new QueryParamsFactory().create(sender, args);
+        session.setLastQuery(params);
+        
         Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
 
             public void run() {
                 BukkitUtils.sendMessage(sender, ChatColor.BLUE + "Searching for entries");
                 try {
                     List<Entry> results = plugin.getDatabaseBridge().getEntries(params);
+                    session.setEntryCache(results);
                     BukkitUtils.info("Found " + results.size() + " entries!");
-                    for (Entry tempEntry : results) {
-                        BukkitUtils.sendMessage(sender, ChatColor.RED + tempEntry.getMessage());
-                    }
+                    showPage(1);
                 } catch (SQLException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

@@ -13,18 +13,18 @@ import com.sk89q.worldedit.bukkit.selections.Selection;
 public class QueryParams implements Cloneable {
 	public List<ActionType> actions = new ArrayList<ActionType>();
 	public long before, since;
-	public List<Integer> blocks;
-	public boolean excludePlayersMode;
-	public int limit;
-	public Location loc;
+	public List<Integer> blocks = new ArrayList<Integer>();
+	public boolean excludePlayersMode = false;
+	public int limit = -1;
+	public Location loc = null;
 	public Order order = Order.ASC;
 	public List<String> players = new ArrayList<String>();
-	public int radius;
-	public Selection sel;
-	public boolean silent;
-	public SummarizationMode sum;
+	public int radius = 0;
+	public Selection sel = null;
+	public boolean silent = false;
+	public SummarizationMode sum = SummarizationMode.NONE;
 	public String textMatch;
-	public List<World> worlds;
+	public List<World> worlds = new ArrayList<World>();
 	public boolean needId = false, needDate = false, needPlayer = false, needCoords = false, needSubTableText = false,
 			needSubTableItem = false, needSubTableBlock = false, needSubTableDeath = false;
 
@@ -37,8 +37,7 @@ public class QueryParams implements Cloneable {
 
 	@Override
 	public QueryParams clone() {
-		// TODO
-		return null;
+		return this;
 	}
 
 }
