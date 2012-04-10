@@ -25,7 +25,7 @@ public class DebugCommand extends BaseCommand {
         test.needSubTableBlock = true;
         test.needPlayer = true;
         try {
-            List<Entry> temp = plugin.getDatabaseBridge().getEntries(test);
+            List<Entry> temp = plugin.getLog(test);
             BukkitUtils.info("Found " + temp.size() + " entries!");
             for (Entry tempEntry : temp) {
                 BukkitUtils.info(tempEntry.getMessage());

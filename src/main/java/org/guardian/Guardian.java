@@ -9,7 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.guardian.commands.GuardianCommandExecutor;
 import org.guardian.config.Config;
 import org.guardian.entries.Entry;
-import org.guardian.listeners.NinjaListener;
 import org.guardian.listeners.ToolListener;
 import org.guardian.listeners.UtilListener;
 import org.guardian.listeners.block.*;
@@ -81,9 +80,6 @@ public class Guardian extends JavaPlugin {
             return;
         }
         // Activate listeners
-        if (conf.ninjaMode) {
-            new NinjaListener();
-        }
         if (conf.superWorldConfig.isLogging(ActionType.BLOCK_BREAK)) {
             new BlockBreak();
         }
@@ -177,7 +173,7 @@ public class Guardian extends JavaPlugin {
      * @throws SQLException when there is a database error
      */
     public List<Entry> getLog(QueryParams params) throws SQLException {
-        return null;
+        return getDatabaseBridge().getEntries(params);
     }
 
     /**

@@ -24,7 +24,6 @@ permissions:
       guardian.lookup: true
       guardian.redo: true
       guardian.rollback: true
-      guardian.see: true
       guardian.undo: true
       guardian.writelog: true
       guardian.rollback.xsmall: true
@@ -47,9 +46,6 @@ permissions:
     default: op
   guardian.rollback:
     description: Allows the rollbacking of events
-    default: op
-  guardian.see:
-    description: The ability to sense Guardians presence when in ninja mode
     default: op
   guardian.undo:
     description: The ability to undo a rollback

@@ -3,7 +3,6 @@ debug: true
 checkVersion: true
 sendStatistics: true
 logPlayerInfo: true
-ninjaMode: false
 motd: true
 bridge:
   name: guardian-mysql-dev-SNAPSHOT.jar

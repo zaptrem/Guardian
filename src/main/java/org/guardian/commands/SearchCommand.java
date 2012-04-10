@@ -26,7 +26,7 @@ public class SearchCommand extends BaseCommand {
             public void run() {
                 BukkitUtils.sendMessage(sender, ChatColor.BLUE + "Searching for entries");
                 try {
-                    List<Entry> results = plugin.getDatabaseBridge().getEntries(params);
+                    List<Entry> results = plugin.getLog(params);
                     session.setEntryCache(results);
                     BukkitUtils.info("Found " + results.size() + " entries!");
                     showPage(1);
