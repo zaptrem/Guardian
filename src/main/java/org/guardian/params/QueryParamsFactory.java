@@ -20,7 +20,7 @@ public class QueryParamsFactory
     private final Guardian plugin = Guardian.getInstance();
     private final ParamsParser parser;
 
-    private QueryParamsFactory() {
+    public QueryParamsFactory() {
         parser = new LogBlockParamsParser(); // TODO This has to be selectable in config
     }
 

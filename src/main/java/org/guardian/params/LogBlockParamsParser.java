@@ -12,7 +12,7 @@ public class LogBlockParamsParser implements ParamsParser {
     private final Guardian plugin = Guardian.getInstance();
     private final Map<String, Param> keywords;
 
-    public LogBlockParamsParser() {
+    protected LogBlockParamsParser() {
         keywords = new HashMap<String, Param>();
         for (final Param param : Param.values()) {
             keywords.put(param.name().toLowerCase(), param);
