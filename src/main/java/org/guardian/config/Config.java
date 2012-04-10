@@ -46,8 +46,7 @@ public final class Config {
     // Rolback config
     public ArrayList<Integer> ignoredBlocks;
     public ArrayList<Integer> forcedBlocks;
-    public EnumMap<RollbackSize, RollbackSizes> rollbackSizes = new EnumMap<RollbackSize, RollbackSizes>(
-            RollbackSize.class);
+    public EnumMap<RollbackSize, RollbackSizes> rollbackSizes = new EnumMap<RollbackSize, RollbackSizes>(RollbackSize.class);
     // Tools
     public ArrayList<Tool> tools;
     public HashMap<String, Tool> toolsByName;
@@ -113,16 +112,13 @@ public final class Config {
         // TODO autoParamaters
         dumpClearedLog = config.getBoolean("clearlog.dumpClearedLog");
         // Rollback config
-        ignoredBlocks = config.getIntegerList("rollback.ignoredBlocks") != null ? (ArrayList<Integer>) config
-                .getIntegerList("rollback.ignoredBlocks") : new ArrayList<Integer>();
-        forcedBlocks = config.getIntegerList("rollback.forcedBlocks") != null ? (ArrayList<Integer>) config
-                .getIntegerList("rollback.forcedBlocks") : new ArrayList<Integer>();
+        ignoredBlocks = config.getIntegerList("rollback.ignoredBlocks") != null ? (ArrayList<Integer>) config.getIntegerList("rollback.ignoredBlocks") : new ArrayList<Integer>();
+        forcedBlocks = config.getIntegerList("rollback.forcedBlocks") != null ? (ArrayList<Integer>) config.getIntegerList("rollback.forcedBlocks") : new ArrayList<Integer>();
         // Permissions
         final ConfigurationSection permSection = config.getConfigurationSection("rollback.sizes");
         for (String key : permSection.getKeys(false)) {
             key = key.toUpperCase();
-            rollbackSizes.put(RollbackSize.valueOf(key), new RollbackSizes(permSection.getInt(key + ".maxArea"),
-                    permSection.getInt(key + ".maxTime")));
+            rollbackSizes.put(RollbackSize.valueOf(key), new RollbackSizes(permSection.getInt(key + ".maxArea"), permSection.getInt(key + ".maxTime")));
         }
         // TODO Populate the tool config
         final Set<String> toolNames = config.getConfigurationSection("tools").getKeys(false);
@@ -131,10 +127,8 @@ public final class Config {
             try {
                 final String path = "tools." + toolName;
                 final List<String> aliases = config.getStringList(path + ".aliases");
-                final ToolBehavior leftClickBehavior = ToolBehavior.valueOf(config.getString(
-                        path + ".leftClickBehavior").toUpperCase());
-                final ToolBehavior rightClickBehavior = ToolBehavior.valueOf(config.getString(
-                        path + ".rightClickBehavior").toUpperCase());
+                final ToolBehavior leftClickBehavior = ToolBehavior.valueOf(config.getString(path + ".leftClickBehavior").toUpperCase());
+                final ToolBehavior rightClickBehavior = ToolBehavior.valueOf(config.getString(path + ".rightClickBehavior").toUpperCase());
                 final boolean defaultEnabled = config.getBoolean(path + ".defaultEnabled", false);
                 final int item = config.getInt(path + ".item", 0);
                 // TODO
@@ -145,8 +139,7 @@ public final class Config {
                 // ".params").split(" ")));
                 final ToolMode mode = ToolMode.valueOf(config.getString(path + ".mode").toUpperCase());
                 final boolean giveTool = config.getBoolean(path + ".giveTool", true);
-                tools.add(new Tool(toolName, aliases, leftClickBehavior, rightClickBehavior, defaultEnabled, item,
-                        new QueryParams(), mode, giveTool));
+                tools.add(new Tool(toolName, aliases, leftClickBehavior, rightClickBehavior, defaultEnabled, item, new QueryParams(), mode, giveTool));
             } catch (final Exception ex) {
                 BukkitUtils.warning("Error at parsing tool '" + toolName + "':)", ex);
             }
@@ -161,8 +154,7 @@ public final class Config {
             }
         }
         // Materials
-        materialDataManager = new MaterialData(new File(plugin.getDataFolder().getPath() + File.separator
-                + "materials.yml"));
+        materialDataManager = new MaterialData(new File(plugin.getDataFolder().getPath() + File.separator + "materials.yml"));
     }
 
     public boolean isLogged(String world) {

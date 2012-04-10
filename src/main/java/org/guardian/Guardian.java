@@ -75,8 +75,7 @@ public class Guardian extends JavaPlugin {
             return;
         }
         // Start the consumer
-        consumerId = getServer().getScheduler().scheduleAsyncRepeatingTask(this, database.getConsumer(),
-                getConf().delayBetweenRuns * 20, getConf().delayBetweenRuns * 20);
+        consumerId = getServer().getScheduler().scheduleAsyncRepeatingTask(this, database.getConsumer(), getConf().delayBetweenRuns * 20, getConf().delayBetweenRuns * 20);
         if (consumerId <= 0) {
             fatalError("Failed to start the consumer");
             return;
@@ -116,8 +115,7 @@ public class Guardian extends JavaPlugin {
         Plugin wePlugin = getServer().getPluginManager().getPlugin("WorldEdit");
         if (wePlugin != null) {
             worldEdit = (WorldEditPlugin) wePlugin;
-            BukkitUtils.info("WorldEdit " + getWorldEdit().getDescription().getVersion()
-                    + " has been found, selection rollbacks enabled");
+            BukkitUtils.info("WorldEdit " + getWorldEdit().getDescription().getVersion() + " has been found, selection rollbacks enabled");
         }
     }
 
@@ -227,7 +225,7 @@ public class Guardian extends JavaPlugin {
     }
 
     /**
-     *
+     * 
      * @return Guardian's plugin Id
      */
     public int getPluginId() {

@@ -32,13 +32,10 @@ public class ToolListener implements Listener {
             final Tool tool = plugin.getConf().toolsByType.get(type);
             if (tool != null) {
                 final Player player = event.getPlayer();
-                if (plugin.getConf().worlds.containsKey(player.getWorld().getName())
-                        && player.hasPermission("guardian.tools." + tool.name)) {
+                if (plugin.getConf().worlds.containsKey(player.getWorld().getName()) && player.hasPermission("guardian.tools." + tool.name)) {
                     final Action action = event.getAction();
-                    final ToolBehavior behavior = action == Action.RIGHT_CLICK_BLOCK ? tool.rightClickBehavior
-                            : tool.leftClickBehavior;
-                    final SessionToolData toolData = plugin.getSessionManager().getSession(player).getToolDatas()
-                            .get(tool);
+                    final ToolBehavior behavior = action == Action.RIGHT_CLICK_BLOCK ? tool.rightClickBehavior : tool.leftClickBehavior;
+                    final SessionToolData toolData = plugin.getSessionManager().getSession(player).getToolDatas().get(tool);
                     if (behavior != ToolBehavior.NONE && toolData.isEnabled()) {
                         final Block block = event.getClickedBlock();
                         final QueryParams params = toolData.getParams();
@@ -49,11 +46,9 @@ public class ToolListener implements Listener {
                         } else if (block.getTypeId() != 54 || tool.params.radius != 0) {
                             params.loc = block.getLocation();
                         } else {
-                            for (final BlockFace face : new BlockFace[] { BlockFace.NORTH, BlockFace.SOUTH,
-                                    BlockFace.EAST, BlockFace.WEST }) {
+                            for (final BlockFace face : new BlockFace[] { BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST }) {
                                 if (block.getRelative(face).getTypeId() == 54) {
-                                    params.sel = new CuboidSelection(event.getPlayer().getWorld(), block.getLocation(),
-                                            block.getRelative(face).getLocation());
+                                    params.sel = new CuboidSelection(event.getPlayer().getWorld(), block.getLocation(), block.getRelative(face).getLocation());
                                 }
                             }
                             if (params.sel == null) {

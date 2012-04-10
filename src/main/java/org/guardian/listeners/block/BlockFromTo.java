@@ -17,8 +17,7 @@ public class BlockFromTo extends LoggingListener {
         final Block to = event.getToBlock();
         final Location loc = from.getLocation();
         if (guardian.getConf().isLogged(loc.getWorld().getName(), ActionType.BLOCK_FROM_TO, ENVIRONMENT)) {
-            consumer.queueEntry(new BlockEntry(ActionType.BLOCK_FROM_TO, ENVIRONMENT, loc, System.currentTimeMillis(),
-                    from.getTypeId(), from.getData(), to.getTypeId(), to.getData(), PLUGIN));
+            consumer.queueEntry(new BlockEntry(ActionType.BLOCK_FROM_TO, ENVIRONMENT, loc, System.currentTimeMillis(), from.getTypeId(), from.getData(), to.getTypeId(), to.getData(), PLUGIN));
         }
     }
 }

@@ -17,8 +17,7 @@ public class BlockBreak extends LoggingListener {
         final Location loc = block.getLocation();
         final String playerName = event.getPlayer().getName();
         if (guardian.getConf().isLogged(loc.getWorld().getName(), ActionType.BLOCK_BREAK, playerName)) {
-            consumer.queueEntry(new BlockEntry(ActionType.BLOCK_BREAK, playerName, loc, System.currentTimeMillis(),
-                    block.getTypeId(), block.getData(), 0, (byte) 0, PLUGIN));
+            consumer.queueEntry(new BlockEntry(ActionType.BLOCK_BREAK, playerName, loc, System.currentTimeMillis(), block.getTypeId(), block.getData(), 0, (byte) 0, PLUGIN));
         }
     }
 }

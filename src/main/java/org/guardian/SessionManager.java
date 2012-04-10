@@ -14,8 +14,7 @@ public class SessionManager {
 
     public SessionManager() {
         // Add console session
-        playerSessions.put(Bukkit.getServer().getConsoleSender().getName(), new PlayerSession(Bukkit.getServer()
-                .getConsoleSender()));
+        playerSessions.put(Bukkit.getServer().getConsoleSender().getName(), new PlayerSession(Bukkit.getServer().getConsoleSender()));
     }
 
     /**

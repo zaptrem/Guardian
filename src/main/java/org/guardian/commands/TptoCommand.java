@@ -17,8 +17,7 @@ public class TptoCommand extends BaseCommand {
     @Override
     public void moreHelp() {
         BukkitUtils.sendMessage(sender, "&cTakes you to the location of the data entry with the specified ID");
-        BukkitUtils.sendMessage(sender,
-                "&cThe ID can be found in either the DataLog interface or when you do a search command");
+        BukkitUtils.sendMessage(sender, "&cThe ID can be found in either the DataLog interface or when you do a search command");
     }
 
     @Override

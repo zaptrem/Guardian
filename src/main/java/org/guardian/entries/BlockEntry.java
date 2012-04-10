@@ -12,8 +12,7 @@ public class BlockEntry extends DataEntry {
     private byte dataFrom;
     private final byte dataTo;
 
-    public BlockEntry(ActionType action, String playerName, Location loc, long date, int typeFrom, byte dataFrom,
-            int typeTo, byte dataTo, String pluginName) {
+    public BlockEntry(ActionType action, String playerName, Location loc, long date, int typeFrom, byte dataFrom, int typeTo, byte dataTo, String pluginName) {
         super(action, playerName, loc, loc.getWorld().getName(), date, pluginName);
         this.typeFrom = typeFrom;
         this.dataFrom = dataFrom;

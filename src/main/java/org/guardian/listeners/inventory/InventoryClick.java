@@ -30,8 +30,7 @@ public class InventoryClick extends LoggingListener {
                 if (lastState.rawSlot != lastState.slot) {
                     // Last Click Was Bottom Inventory
                     if (event.isLeftClick()) {
-                        consumer.queueEntry(new ItemEntry(ActionType.INVENTORY_ADD, event.getWhoClicked().getName(),
-                                eventBlock.getLocation(), System.currentTimeMillis(), event.getCursor(), PLUGIN));
+                        consumer.queueEntry(new ItemEntry(ActionType.INVENTORY_ADD, event.getWhoClicked().getName(), eventBlock.getLocation(), System.currentTimeMillis(), event.getCursor(), PLUGIN));
                     }
                 }
             }
@@ -40,16 +39,12 @@ public class InventoryClick extends LoggingListener {
             if (lastState != null) {
                 if (lastState.rawSlot == lastState.slot) {
                     if (event.isLeftClick() && (event.getCursor() != null)) {
-                        consumer.queueEntry(new ItemEntry(ActionType.INVENTORY_TAKE, event.getWhoClicked().getName(),
-                                eventBlock.getLocation(), System.currentTimeMillis(), event.getCursor(), PLUGIN));
+                        consumer.queueEntry(new ItemEntry(ActionType.INVENTORY_TAKE, event.getWhoClicked().getName(), eventBlock.getLocation(), System.currentTimeMillis(), event.getCursor(), PLUGIN));
                     }
                 }
             }
         }
-        containers.put(
-                event.getWhoClicked(),
-                new InventoryClickState(event.getCurrentItem(), event.getCursor(), event.isLeftClick(), event
-                        .isRightClick(), event.isShiftClick(), event.getRawSlot(), event.getSlot()));
+        containers.put(event.getWhoClicked(), new InventoryClickState(event.getCurrentItem(), event.getCursor(), event.isLeftClick(), event.isRightClick(), event.isShiftClick(), event.getRawSlot(), event.getSlot()));
     }
 
     public static class InventoryClickState {
@@ -61,8 +56,7 @@ public class InventoryClick extends LoggingListener {
         public final int rawSlot;
         public final int slot;
 
-        private InventoryClickState(ItemStack paramCurrentItem, ItemStack paramCursorItem, boolean paramLeftClick,
-                boolean paramRightClick, boolean paramShiftClick, int paramRawSlot, int paramSlot) {
+        private InventoryClickState(ItemStack paramCurrentItem, ItemStack paramCursorItem, boolean paramLeftClick, boolean paramRightClick, boolean paramShiftClick, int paramRawSlot, int paramSlot) {
             currentItem = paramCurrentItem;
             cursorItem = paramCursorItem;
             leftClick = paramLeftClick;

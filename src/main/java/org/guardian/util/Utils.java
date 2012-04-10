@@ -243,8 +243,7 @@ public class Utils {
             timestamp = spec[0] + " " + spec[1];
         }
         try {
-            return (int) ((System.currentTimeMillis() - new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").parse(timestamp)
-                    .getTime()) / 60000);
+            return (int) ((System.currentTimeMillis() - new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").parse(timestamp).getTime()) / 60000);
         } catch (final ParseException ex) {
             return -1;
         }

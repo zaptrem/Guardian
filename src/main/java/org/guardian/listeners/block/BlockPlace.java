@@ -19,8 +19,7 @@ public class BlockPlace extends LoggingListener {
         final String playerName = event.getPlayer().getName();
         final BlockState before = event.getBlockReplacedState();
         if (guardian.getConf().isLogged(loc.getWorld().getName(), ActionType.BLOCK_PLACE, playerName)) {
-            consumer.queueEntry(new BlockEntry(ActionType.BLOCK_PLACE, playerName, loc, System.currentTimeMillis(),
-                    before.getTypeId(), before.getData().getData(), block.getTypeId(), block.getData(), PLUGIN));
+            consumer.queueEntry(new BlockEntry(ActionType.BLOCK_PLACE, playerName, loc, System.currentTimeMillis(), before.getTypeId(), before.getData().getData(), block.getTypeId(), block.getData(), PLUGIN));
         }
     }
 }

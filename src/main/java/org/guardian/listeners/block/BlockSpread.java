@@ -17,8 +17,7 @@ public class BlockSpread extends LoggingListener {
         final Location loc = block.getLocation();
 
         if (guardian.getConf().isLogged(loc.getWorld().getName(), ActionType.BLOCK_SPREAD, ENVIRONMENT)) {
-            consumer.queueEntry(new BlockEntry(ActionType.BLOCK_SPREAD, ENVIRONMENT, loc, System.currentTimeMillis(),
-                    0, (byte) 0, block.getTypeId(), block.getData(), PLUGIN));
+            consumer.queueEntry(new BlockEntry(ActionType.BLOCK_SPREAD, ENVIRONMENT, loc, System.currentTimeMillis(), 0, (byte) 0, block.getTypeId(), block.getData(), PLUGIN));
         }
     }
 }
