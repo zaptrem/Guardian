@@ -1,10 +1,13 @@
 package org.guardian.commands;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.guardian.ActionType;
+import org.guardian.entries.Entry;
 import org.guardian.params.QueryParams;
 import org.guardian.params.SummarizationMode;
+import org.guardian.util.BukkitUtils;
 
 public class DebugCommand extends BaseCommand {
 
@@ -23,7 +26,11 @@ public class DebugCommand extends BaseCommand {
         test.needSubTableBlock = true;
         test.needPlayer = true;
         try {
-            plugin.getDatabaseBridge().getEntries(test);
+            List<Entry> temp = plugin.getDatabaseBridge().getEntries(test);
+            BukkitUtils.info("Found " + temp.size() + " entries!");
+            for(Entry tempEntry : temp) {
+                BukkitUtils.info(tempEntry.getMessage());
+            }
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
