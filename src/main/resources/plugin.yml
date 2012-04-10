@@ -1,77 +1,77 @@
-name: Guardian
+name: ${project.name}
 version: ${build.number}
-description: The future of griefer tracking and rollback for Bukkit. Proudly sponsored by mossycobble.com!
+ddescription: ${project.description}
 authors: [DiddiZ, md_5, 7H3LaughingMan, oliverw92]
-website: https://github.com/Guardian-Security/Guardian
+website: ${project.url}
 dev-url: http://dev.bukkit.org/server-mods/guardian
 
 main: org.guardian.Guardian
 softdepend: [WorldEdit]
 
 commands:
-    guardian:
-        description: Access to the main Guardian command
-        aliases: gd
-        permission: guardian.command
+  guardian:
+    description: Access to the main Guardian command
+    aliases: gd
+    permission: guardian.command
 
 permissions:
-    guardian.*:
-        description: Gives you all Guardian permissions.
-        default: false
-        children:
-            guardian.clearlog: true
-            guardian.command: true
-            guardian.lookup: true
-            guardian.redo: true
-            guardian.rollback: true
-            guardian.see: true
-            guardian.undo: true
-            guardian.writelog: true
-            guardian.rollback.xsmall: true
-            guardian.rollback.small: true
-            guardian.rollback.medium: true
-            guardian.rollback.large: true
-            guardian.rollback.xlarge: true
-            guardian.rollback.any: true
-    guardian.clearlog:
-        description: The ability to clear Guardian logs
-        default: op
-    guardian.command:
-        description: Allows the user to see Guardian
-        default: true
-    guardian.lookup:
-        description: Allows the looking up of events
-        default: op
-    guardian.redo:
-        description: The ability to redo an undone rollback
-        default: op
-    guardian.rollback:
-        description: Allows the rollbacking of events
-        default: op
-    guardian.see:
-        description: The ability to sense Guardians presence when in ninja mode
-        default: op
-    guardian.undo:
-        description: The ability to undo a rollback
-        default: op
-    guardian.writelog:
-        description: The ability to write a log based on the previous rollback
-        default: op
-    guardian.rollback.xsmall:
-        description: The user is allowed to rollback xsmall griefs
-        default: false
-    guardian.rollback.small:
-        description: The user is allowed to rollback small griefs
-        default: false
-    guardian.rollback.medium:
-        description: The user is allowed to rollback medium griefs
-        default: false
-    guardian.rollback.large:
-        description: The user is allowed to rollback large griefs
-        default: false
-    guardian.rollback.xlarge:
-        description: The user is allowed to rollback xlarge griefs
-        default: false
-    guardian.rollback.any:
-        description: The user is allowed to rollback any size griefs
-        default: op
+  guardian.*:
+    description: Gives you all Guardian permissions.
+    default: false
+    children:
+      guardian.clearlog: true
+      guardian.command: true
+      guardian.lookup: true
+      guardian.redo: true
+      guardian.rollback: true
+      guardian.see: true
+      guardian.undo: true
+      guardian.writelog: true
+      guardian.rollback.xsmall: true
+      guardian.rollback.small: true
+      guardian.rollback.medium: true
+      guardian.rollback.large: true
+      guardian.rollback.xlarge: true
+      guardian.rollback.any: true
+  guardian.clearlog:
+    description: The ability to clear Guardian logs
+    default: op
+  guardian.command:
+    description: Allows the user to see Guardian
+    default: true
+  guardian.lookup:
+    description: Allows the looking up of events
+    default: op
+  guardian.redo:
+    description: The ability to redo an undone rollback
+    default: op
+  guardian.rollback:
+    description: Allows the rollbacking of events
+    default: op
+  guardian.see:
+    description: The ability to sense Guardians presence when in ninja mode
+    default: op
+  guardian.undo:
+    description: The ability to undo a rollback
+    default: op
+  guardian.writelog:
+    description: The ability to write a log based on the previous rollback
+    default: op
+  guardian.rollback.xsmall:
+    description: The user is allowed to rollback xsmall griefs
+    default: false
+  guardian.rollback.small:
+    description: The user is allowed to rollback small griefs
+    default: false
+  guardian.rollback.medium:
+    description: The user is allowed to rollback medium griefs
+    default: false
+  guardian.rollback.large:
+    description: The user is allowed to rollback large griefs
+    default: false
+  guardian.rollback.xlarge:
+    description: The user is allowed to rollback xlarge griefs
+    default: false
+  guardian.rollback.any:
+    description: The user is allowed to rollback any size griefs
+    default: op

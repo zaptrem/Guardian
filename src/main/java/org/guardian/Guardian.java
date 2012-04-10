@@ -13,7 +13,7 @@ import org.guardian.listeners.NinjaListener;
 import org.guardian.listeners.ToolListener;
 import org.guardian.listeners.UtilListener;
 import org.guardian.listeners.block.*;
-import org.guardian.listeners.inventory.*;
+import org.guardian.listeners.inventory.InventoryClick;
 import org.guardian.params.QueryParams;
 import org.guardian.util.BukkitUtils;
 import org.guardian.util.Utils;
@@ -30,7 +30,7 @@ public class Guardian extends JavaPlugin {
     private SessionManager sessionMan;
     private DatabaseBridge database;
     private int consumerId;
-    public final int pluginId = 1;
+    private final int pluginId = 1;
 
     @Override
     public void onLoad() {
@@ -107,18 +107,16 @@ public class Guardian extends JavaPlugin {
             new BlockPlace();
         }
         if (conf.superWorldConfig.isLogging(ActionType.INVENTORY_CLICK)) {
-        	new InventoryClick();
+            new InventoryClick();
         }
         new ToolListener();
         new UtilListener();
         // Check for WorldEdit
-        final Plugin wePlugin = getServer().getPluginManager().getPlugin("WorldEdit");
+        Plugin wePlugin = getServer().getPluginManager().getPlugin("WorldEdit");
         if (wePlugin != null) {
             worldEdit = (WorldEditPlugin) wePlugin;
             BukkitUtils.info("WorldEdit " + getWorldEdit().getDescription().getVersion() + " has been found, selection rollbacks enabled");
         }
-        // It's all good!
-        BukkitUtils.info("version " + getDescription().getVersion() + " enabled");
     }
 
     @Override
@@ -127,7 +125,6 @@ public class Guardian extends JavaPlugin {
         getServer().getScheduler().cancelTask(consumerId);
         // Cancel anything else that happens to be working for us
         getServer().getScheduler().cancelTasks(this);
-        // I bid ye good day
     }
 
     public void fatalError(String error) {
@@ -219,5 +216,13 @@ public class Guardian extends JavaPlugin {
      */
     public DatabaseBridge getDatabaseBridge() {
         return database;
+    }
+
+    /**
+     *
+     * @return Guardian's plugin Id
+     */
+    public int getPluginId() {
+        return pluginId;
     }
 }

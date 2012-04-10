@@ -9,6 +9,7 @@
     <packaging>jar</packaging>
 
     <name>Guardian</name>
+    <description>The future of griefer tracking and rollback for Bukkit. Proudly sponsored by mossycobble.com!</description>
     <url>https://github.com/Guardian-Security/Guardian</url>
 
     <properties>
@@ -20,7 +21,7 @@
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldedit</artifactId>
-            <version>5.0</version>
+            <version>5.1</version>
         </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
