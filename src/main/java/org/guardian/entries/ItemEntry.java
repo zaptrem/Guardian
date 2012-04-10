@@ -39,10 +39,10 @@ public class ItemEntry extends DataEntry {
     public Map<Enchantment, Integer> getEnchantments() {
         return enchantments;
     }
-    
+
     public ItemStack getItemStack() {
         ItemStack stack = new ItemStack(typeId, amount, (short) data);
-        //stack.addEnchantment(getEnchantment(), enchPower);
+        // stack.addEnchantment(getEnchantment(), enchPower);
         return stack;
     }
 

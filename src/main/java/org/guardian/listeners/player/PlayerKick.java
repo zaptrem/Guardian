@@ -6,7 +6,7 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.guardian.listeners.LoggingListener;
 
 public class PlayerKick extends LoggingListener {
-    
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerKick(final PlayerKickEvent event) {
     }

@@ -28,7 +28,7 @@ public class DebugCommand extends BaseCommand {
         try {
             List<Entry> temp = plugin.getDatabaseBridge().getEntries(test);
             BukkitUtils.info("Found " + temp.size() + " entries!");
-            for(Entry tempEntry : temp) {
+            for (Entry tempEntry : temp) {
                 BukkitUtils.info(tempEntry.getMessage());
             }
         } catch (SQLException e) {

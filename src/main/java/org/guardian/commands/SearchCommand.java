@@ -21,7 +21,7 @@ public class SearchCommand extends BaseCommand {
     public boolean execute() {
         final QueryParams params = new QueryParamsFactory().create(sender, args);
         session.setLastQuery(params);
-        
+
         Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable() {
 
             public void run() {
@@ -41,7 +41,7 @@ public class SearchCommand extends BaseCommand {
     }
 
     public void moreHelp() {
-        //TODO display help
+        // TODO display help
     }
 
     @Override

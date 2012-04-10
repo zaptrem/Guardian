@@ -27,7 +27,8 @@ public class DatabaseLoader {
             stream.close();
             jar.close();
             // Get a new classloader
-            URLClassLoader classLoader = new URLClassLoader(new URL[]{file.toURI().toURL()}, DatabaseBridge.class.getClassLoader());
+            URLClassLoader classLoader = new URLClassLoader(new URL[] { file.toURI().toURL() },
+                    DatabaseBridge.class.getClassLoader());
             // Load the class
             Class<?> clazz = classLoader.loadClass(main);
             // Construct it

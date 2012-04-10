@@ -36,8 +36,7 @@ public class NinjaListener extends LoggingListener {
                 return;
             }
 
-            if ((command.equalsIgnoreCase("version") || command.equalsIgnoreCase("ver"))
-                    && args.equals("Guardian")) {
+            if ((command.equalsIgnoreCase("version") || command.equalsIgnoreCase("ver")) && args.equals("Guardian")) {
                 event.setCancelled(true);
                 player.sendMessage("This server is not running any plugin by that name.");
                 player.sendMessage("Use /plugins to get a list of plugins.");

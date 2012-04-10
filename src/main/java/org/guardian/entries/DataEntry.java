@@ -18,11 +18,13 @@ public abstract class DataEntry implements Entry, Rollbackable {
     protected String pluginName;
     protected List<DataEntry> children;
 
-    protected DataEntry(ActionType action, String playerName, Location loc, String worldName, long date, String pluginName) {
+    protected DataEntry(ActionType action, String playerName, Location loc, String worldName, long date,
+            String pluginName) {
         this(-1, date, action, playerName, worldName, loc, false, pluginName, null);
     }
 
-    protected DataEntry(int id, long date, ActionType action, String playerName, String worldName, Location loc, boolean rollbacked, String pluginName, List<DataEntry> children) {
+    protected DataEntry(int id, long date, ActionType action, String playerName, String worldName, Location loc,
+            boolean rollbacked, String pluginName, List<DataEntry> children) {
         this.id = id;
         this.date = date;
         this.action = action;

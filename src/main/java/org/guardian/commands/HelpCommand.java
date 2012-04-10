@@ -13,7 +13,7 @@ public class HelpCommand extends BaseCommand {
 
     @Override
     public boolean execute() {
-        //General help
+        // General help
         if (args.isEmpty()) {
             BukkitUtils.sendMessage(sender, "---------------------- Guardian ----------------------");
             BukkitUtils.sendMessage(sender, "Type /guardian help <command> for more info on that command");
@@ -22,7 +22,7 @@ public class HelpCommand extends BaseCommand {
                     BukkitUtils.sendMessage(sender, "- /" + usedCommand + " " + cmd.name + " " + cmd.usage);
                 }
             }
-        } //Command-specific help
+        } // Command-specific help
         else {
             for (BaseCommand cmd : plugin.getCommandExecutor().getCommands().toArray(new BaseCommand[0])) {
                 if (cmd.permission() && cmd.name.equalsIgnoreCase(args.get(0))) {

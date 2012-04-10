@@ -7,8 +7,7 @@ import org.guardian.ActionType;
  * 
  * @author DiddiZ
  */
-public interface Entry
-{
+public interface Entry {
     public String getMessage();
 
     public ActionType getAction();

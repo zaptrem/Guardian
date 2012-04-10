@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 
 /**
  * Class for parsing managing player's {@PlayerSession}s
- *
+ * 
  */
 public class SessionManager {
 
@@ -14,7 +14,8 @@ public class SessionManager {
 
     public SessionManager() {
         // Add console session
-        playerSessions.put(Bukkit.getServer().getConsoleSender().getName(), new PlayerSession(Bukkit.getServer().getConsoleSender()));
+        playerSessions.put(Bukkit.getServer().getConsoleSender().getName(), new PlayerSession(Bukkit.getServer()
+                .getConsoleSender()));
     }
 
     /**
@@ -26,8 +27,9 @@ public class SessionManager {
     }
 
     /**
-     * Get a PlayerSession from the list, create a new session if the sender has no session
-     *
+     * Get a PlayerSession from the list, create a new session if the sender has
+     * no session
+     * 
      * @param player
      * @return
      */

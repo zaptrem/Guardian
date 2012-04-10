@@ -12,7 +12,7 @@ public class Utils {
 
     /**
      * Downloads a file from a url and gives progress messages.
-     *
+     * 
      * @param path
      * @param file
      */
@@ -51,8 +51,9 @@ public class Utils {
 
     /**
      * Checks if inputted string is an integer
-     *
-     * @param str String to check
+     * 
+     * @param str
+     *            String to check
      * @return whether the String is an int
      */
     public static boolean isInt(String str) {
@@ -66,8 +67,9 @@ public class Utils {
 
     /**
      * Checks if inputted string is a byte
-     *
-     * @param str String to check
+     * 
+     * @param str
+     *            String to check
      * @return whether the String is a byte
      */
     public static boolean isByte(String str) {
@@ -82,7 +84,7 @@ public class Utils {
     /**
      * Java version of PHP's join(array, delimiter). Takes any kind of
      * collection (List, HashMap etc)
-     *
+     * 
      * @param s
      * @param delimiter
      * @return the joined collection
@@ -101,7 +103,7 @@ public class Utils {
 
     /**
      * Joins a string array
-     *
+     * 
      * @param s
      * @param delimiter
      * @return
@@ -120,7 +122,7 @@ public class Utils {
 
     /**
      * Concatenate any number of arrays of the same type
-     *
+     * 
      * @param <T>
      * @param first
      * @param rest
@@ -144,7 +146,7 @@ public class Utils {
 
     /**
      * Returns a string of spaces
-     *
+     * 
      * @param count
      * @return
      */
@@ -158,7 +160,7 @@ public class Utils {
 
     /**
      * Returns the content of a web page as string.
-     *
+     * 
      * @param url
      * @return
      * @throws IOException
@@ -177,7 +179,7 @@ public class Utils {
     /**
      * Accepts following time formats: 1 day, 2 hours, 3 minutes, 1d2h3m,
      * HH:mm:ss, dd.MM.yyyy and dd.MM.yyyy HH:mm:ss
-     *
+     * 
      * @param arg
      * @return Number of minutes, or -1 on error
      */
@@ -241,7 +243,8 @@ public class Utils {
             timestamp = spec[0] + " " + spec[1];
         }
         try {
-            return (int) ((System.currentTimeMillis() - new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").parse(timestamp).getTime()) / 60000);
+            return (int) ((System.currentTimeMillis() - new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").parse(timestamp)
+                    .getTime()) / 60000);
         } catch (final ParseException ex) {
             return -1;
         }

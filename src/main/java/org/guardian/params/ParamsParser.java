@@ -6,15 +6,15 @@ import java.util.Map;
 /**
  * @author DiddiZ
  */
-public interface ParamsParser
-{
-	/**
-	 * Extracts all parameters with its arguments
-	 */
-	public Map<Param, List<String>> parse(List<String> args) throws IllegalArgumentException;
+public interface ParamsParser {
+    /**
+     * Extracts all parameters with its arguments
+     */
+    public Map<Param, List<String>> parse(List<String> args) throws IllegalArgumentException;
 
-	/**
-	 * @return Whether a words is just a misspelled command (/g rllback ...) or a lookup command (/g player diddiz)
-	 */
-	public boolean isKeyWord(String arg);
+    /**
+     * @return Whether a words is just a misspelled command (/g rllback ...) or
+     *         a lookup command (/g player diddiz)
+     */
+    public boolean isKeyWord(String arg);
 }

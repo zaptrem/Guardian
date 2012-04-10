@@ -11,8 +11,7 @@ import org.bukkit.material.MaterialData;
 import org.guardian.util.BukkitUtils;
 import org.guardian.util.Utils;
 
-public class MaterialName
-{
+public class MaterialName {
 
     private final Guardian plugin = Guardian.getInstance();
     private final Map<Integer, String> materialNames = new HashMap<Integer, String>();
@@ -85,7 +84,8 @@ public class MaterialName
     /**
      * @param type
      * @param data
-     * @return Name of the material regarding it's data, or if it's unknown, the basic name.
+     * @return Name of the material regarding it's data, or if it's unknown, the
+     *         basic name.
      */
     public String get(int type, byte data) {
         final Map<Byte, String> dataNames = materialDataNames.get(type);

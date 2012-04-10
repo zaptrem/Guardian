@@ -6,14 +6,14 @@ import org.bukkit.block.BlockState;
 import org.guardian.ActionType;
 import org.guardian.util.BukkitUtils;
 
-public class BlockEntry extends DataEntry
-{
+public class BlockEntry extends DataEntry {
 
     private int typeFrom, typeTo;
     private byte dataFrom;
     private final byte dataTo;
 
-    public BlockEntry(ActionType action, String playerName, Location loc, long date, int typeFrom, byte dataFrom, int typeTo, byte dataTo, String pluginName) {
+    public BlockEntry(ActionType action, String playerName, Location loc, long date, int typeFrom, byte dataFrom,
+            int typeTo, byte dataTo, String pluginName) {
         super(action, playerName, loc, loc.getWorld().getName(), date, pluginName);
         this.typeFrom = typeFrom;
         this.dataFrom = dataFrom;
@@ -50,7 +50,9 @@ public class BlockEntry extends DataEntry
     }
 
     /**
-     * Returns the human readable form of a block data entry in the following format: %DATE% %PLAYERNAME% destroyed %BLOCK% created %BLOCK% replaced %BLOCK% at %LOCATION%
+     * Returns the human readable form of a block data entry in the following
+     * format: %DATE% %PLAYERNAME% destroyed %BLOCK% created %BLOCK% replaced
+     * %BLOCK% at %LOCATION%
      */
     public String getMessage() {
         final StringBuilder msg = new StringBuilder();

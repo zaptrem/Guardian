@@ -16,8 +16,8 @@ public class BlockForm extends LoggingListener {
         final Block block = event.getBlock();
         final Location loc = block.getLocation();
         if (guardian.getConf().isLogged(loc.getWorld().getName(), ActionType.BLOCK_FORM, ENVIRONMENT)) {
-            consumer.queueEntry(new BlockEntry(ActionType.BLOCK_FORM, ENVIRONMENT, loc, System.currentTimeMillis(),
-                    0, (byte) 0, block.getTypeId(), block.getData(), PLUGIN));
+            consumer.queueEntry(new BlockEntry(ActionType.BLOCK_FORM, ENVIRONMENT, loc, System.currentTimeMillis(), 0,
+                    (byte) 0, block.getTypeId(), block.getData(), PLUGIN));
         }
     }
 }

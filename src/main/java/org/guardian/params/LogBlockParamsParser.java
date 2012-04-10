@@ -47,7 +47,9 @@ public class LogBlockParamsParser implements ParamsParser {
         {
             return new ArrayList<String>();
         }
-        if (minArgs > 0 && offset + minArgs > args.size()) // Param needs more arguments than given
+        if (minArgs > 0 && offset + minArgs > args.size()) // Param needs more
+                                                           // arguments than
+                                                           // given
         {
             throw new IndexOutOfBoundsException();
         }
@@ -55,9 +57,21 @@ public class LogBlockParamsParser implements ParamsParser {
         {
             return args.subList(offset, offset + maxArgs);
         }
-        final int len = maxArgs > 0 && offset + maxArgs + 1 < args.size() ? offset + maxArgs : args.size(); // Calculation max position out of available arguments and max required arguments.
+        final int len = maxArgs > 0 && offset + maxArgs + 1 < args.size() ? offset + maxArgs : args.size(); // Calculation
+                                                                                                            // max
+                                                                                                            // position
+                                                                                                            // out
+                                                                                                            // of
+                                                                                                            // available
+                                                                                                            // arguments
+                                                                                                            // and
+                                                                                                            // max
+                                                                                                            // required
+                                                                                                            // arguments.
         int i;
-        for (i = offset + minArgs; i < len; i++) // Searching for the next keyword after minimum arguments
+        for (i = offset + minArgs; i < len; i++) // Searching for the next
+                                                 // keyword after minimum
+                                                 // arguments
         {
             if (isKeyWord(args.get(i))) {
                 break;

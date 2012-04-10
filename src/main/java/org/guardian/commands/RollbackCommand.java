@@ -21,7 +21,7 @@ public class RollbackCommand extends BaseCommand {
 
     @Override
     public void moreHelp() {
-        //TODO display help
+        // TODO display help
 
     }
 

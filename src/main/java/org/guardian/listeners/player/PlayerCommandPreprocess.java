@@ -12,7 +12,7 @@ import org.bukkit.plugin.Plugin;
 import org.guardian.listeners.LoggingListener;
 
 public class PlayerCommandPreprocess extends LoggingListener {
-    
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerCommandPreprocess(final PlayerCommandPreprocessEvent event) {
         if (guardian.getConf().ninjaMode && !event.getPlayer().hasPermission("guardian.see")) {
@@ -38,8 +38,7 @@ public class PlayerCommandPreprocess extends LoggingListener {
                 return;
             }
 
-            if ((command.equalsIgnoreCase("version") || command.equalsIgnoreCase("ver"))
-                    && args.equals("Guardian")) {
+            if ((command.equalsIgnoreCase("version") || command.equalsIgnoreCase("ver")) && args.equals("Guardian")) {
                 event.setCancelled(true);
                 player.sendMessage("This server is not running any plugin by that name.");
                 player.sendMessage("Use /plugins to get a list of plugins.");

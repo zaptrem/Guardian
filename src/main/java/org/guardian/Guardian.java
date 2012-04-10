@@ -75,7 +75,8 @@ public class Guardian extends JavaPlugin {
             return;
         }
         // Start the consumer
-        consumerId = getServer().getScheduler().scheduleAsyncRepeatingTask(this, database.getConsumer(), getConf().delayBetweenRuns * 20, getConf().delayBetweenRuns * 20);
+        consumerId = getServer().getScheduler().scheduleAsyncRepeatingTask(this, database.getConsumer(),
+                getConf().delayBetweenRuns * 20, getConf().delayBetweenRuns * 20);
         if (consumerId <= 0) {
             fatalError("Failed to start the consumer");
             return;
@@ -107,7 +108,7 @@ public class Guardian extends JavaPlugin {
             new BlockPlace();
         }
         if (conf.superWorldConfig.isLogging(ActionType.INVENTORY_CLICK)) {
-        	new InventoryClick();
+            new InventoryClick();
         }
         new ToolListener();
         new UtilListener();
@@ -115,7 +116,8 @@ public class Guardian extends JavaPlugin {
         final Plugin wePlugin = getServer().getPluginManager().getPlugin("WorldEdit");
         if (wePlugin != null) {
             worldEdit = (WorldEditPlugin) wePlugin;
-            BukkitUtils.info("WorldEdit " + getWorldEdit().getDescription().getVersion() + " has been found, selection rollbacks enabled");
+            BukkitUtils.info("WorldEdit " + getWorldEdit().getDescription().getVersion()
+                    + " has been found, selection rollbacks enabled");
         }
         // It's all good!
         BukkitUtils.info("version " + getDescription().getVersion() + " enabled");
@@ -174,10 +176,12 @@ public class Guardian extends JavaPlugin {
     /**
      * Returns all log matching specified parameters. Also intern methods should
      * use this.
-     *
-     * @param params the query paramaters to use
+     * 
+     * @param params
+     *            the query paramaters to use
      * @return A list of all entries
-     * @throws SQLException when there is a database error
+     * @throws SQLException
+     *             when there is a database error
      */
     public List<Entry> getLog(QueryParams params) throws SQLException {
         return null;
@@ -186,8 +190,9 @@ public class Guardian extends JavaPlugin {
     /**
      * Performs a rollback on all log matching specified parameters. Also intern
      * methods should use this.
-     *
-     * @param params the query paramaters to use
+     * 
+     * @param params
+     *            the query paramaters to use
      */
     public void rollback(QueryParams params) {
         // TODO
@@ -196,8 +201,9 @@ public class Guardian extends JavaPlugin {
     /**
      * Redoes all changes matching parameters, basically a undo of a rollback.
      * Internal methods should use this.
-     *
-     * @param params the query paramaters to use
+     * 
+     * @param params
+     *            the query paramaters to use
      */
     public void rebuild(QueryParams params) {
         // TODO
@@ -206,12 +212,14 @@ public class Guardian extends JavaPlugin {
     /**
      * Deletes all log matching specified parameters. Also intern methods should
      * use this.
-     *
-     * @param params the query paramaters to use
-     * @throws SQLException when there is a database error
+     * 
+     * @param params
+     *            the query paramaters to use
+     * @throws SQLException
+     *             when there is a database error
      */
     public void clearLog(QueryParams params) throws SQLException {
-        //database.removeEntries(params);
+        // database.removeEntries(params);
     }
 
     /**

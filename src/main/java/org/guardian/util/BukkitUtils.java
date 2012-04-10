@@ -36,10 +36,13 @@ public class BukkitUtils {
     }
 
     /**
-     * Send a message to a CommandSender (can be a player or console).
-     * Has parsing built in for &a colours, as well as `n for new line
-     * @param player sender to send to
-     * @param msg message to send
+     * Send a message to a CommandSender (can be a player or console). Has
+     * parsing built in for &a colours, as well as `n for new line
+     * 
+     * @param player
+     *            sender to send to
+     * @param msg
+     *            message to send
      */
     public static void sendMessage(CommandSender player, String msg) {
 
@@ -49,6 +52,7 @@ public class BukkitUtils {
 
     /**
      * Send an info level log message to console
+     * 
      * @param msg
      */
     public static void info(String msg) {
@@ -60,6 +64,7 @@ public class BukkitUtils {
 
     /**
      * Send a warn level log message to console
+     * 
      * @param msg
      */
     public static void warning(String msg) {
@@ -71,6 +76,7 @@ public class BukkitUtils {
 
     /**
      * Send a warn level stacktrace to console
+     * 
      * @param msg
      * @param ex
      */
@@ -80,6 +86,7 @@ public class BukkitUtils {
 
     /**
      * Send a severe level log message to console
+     * 
      * @param msg
      */
     public static void severe(String msg) {
@@ -91,6 +98,7 @@ public class BukkitUtils {
 
     /**
      * Send a severe level stacktrace to console
+     * 
      * @param msg
      * @param ex
      */
@@ -100,6 +108,7 @@ public class BukkitUtils {
 
     /**
      * Send an debug message to console if debug is enabled
+     * 
      * @param msg
      */
     public static void debug(String msg) {
@@ -110,7 +119,7 @@ public class BukkitUtils {
 
     /**
      * Returns the friendly bridgeName of an entity
-     *
+     * 
      * @param entity
      * @return
      */
@@ -129,12 +138,13 @@ public class BukkitUtils {
 
     /**
      * Returns the distance between two Locations
-     *
+     * 
      * @param from
      * @param to
      * @return
      */
     public static double distance(Location from, Location to) {
-        return Math.sqrt(Math.pow(from.getX() - to.getX(), 2) + Math.pow(from.getY() - to.getY(), 2) + Math.pow(from.getZ() - to.getZ(), 2));
+        return Math.sqrt(Math.pow(from.getX() - to.getX(), 2) + Math.pow(from.getY() - to.getY(), 2)
+                + Math.pow(from.getZ() - to.getZ(), 2));
     }
 }
