@@ -52,7 +52,6 @@ public class BlockEntry extends DataEntry
     /**
      * Returns the human readable form of a block data entry in the following format: %DATE% %PLAYERNAME% destroyed %BLOCK% created %BLOCK% replaced %BLOCK% at %LOCATION%
      */
-    @Override
     public String getMessage() {
         final StringBuilder msg = new StringBuilder();
         if (date > 0) {
@@ -87,12 +86,10 @@ public class BlockEntry extends DataEntry
         return msg.toString();
     }
 
-    @Override
     public List<BlockState> getRollbackBlockStates() {
         throw new UnsupportedOperationException("Not supported yet."); // TODO
     }
 
-    @Override
     public List<BlockState> getRebuildBlockStates() {
         throw new UnsupportedOperationException("Not supported yet."); // TODO
     }
