@@ -1,10 +1,6 @@
 package org.guardian.params;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import org.guardian.Guardian;
 
 public class LogBlockParamsParser implements ParamsParser {
@@ -24,12 +20,12 @@ public class LogBlockParamsParser implements ParamsParser {
 
     @Override
     public boolean isKeyWord(String arg) {
-        return keywords.containsKey(arg.toLowerCase().hashCode());
+        return keywords.containsKey(arg.toLowerCase());
     }
 
     @Override
     public Map<Param, List<String>> parse(List<String> args) throws IllegalArgumentException {
-        final Map<Param, List<String>> params = new LinkedHashMap<Param, List<String>>();
+        final Map<Param, List<String>> params = new EnumMap<Param, List<String>>(Param.class);
         for (int i = 0; i < args.size(); i++) {
             final Param param = keywords.get(args.get(i).toLowerCase());
             if (param == null) // Not a keyword
@@ -48,8 +44,8 @@ public class LogBlockParamsParser implements ParamsParser {
             return new ArrayList<String>();
         }
         if (minArgs > 0 && offset + minArgs > args.size()) // Param needs more
-                                                           // arguments than
-                                                           // given
+        // arguments than
+        // given
         {
             throw new IndexOutOfBoundsException();
         }
@@ -58,20 +54,20 @@ public class LogBlockParamsParser implements ParamsParser {
             return args.subList(offset, offset + maxArgs);
         }
         final int len = maxArgs > 0 && offset + maxArgs + 1 < args.size() ? offset + maxArgs : args.size(); // Calculation
-                                                                                                            // max
-                                                                                                            // position
-                                                                                                            // out
-                                                                                                            // of
-                                                                                                            // available
-                                                                                                            // arguments
-                                                                                                            // and
-                                                                                                            // max
-                                                                                                            // required
-                                                                                                            // arguments.
+        // max
+        // position
+        // out
+        // of
+        // available
+        // arguments
+        // and
+        // max
+        // required
+        // arguments.
         int i;
         for (i = offset + minArgs; i < len; i++) // Searching for the next
-                                                 // keyword after minimum
-                                                 // arguments
+        // keyword after minimum
+        // arguments
         {
             if (isKeyWord(args.get(i))) {
                 break;

@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.guardian.Guardian;
 import org.guardian.entries.Entry;
 import org.guardian.params.QueryParams;
 import org.guardian.params.QueryParamsFactory;

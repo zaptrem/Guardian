@@ -3,6 +3,7 @@ package org.guardian.commands;
 import org.guardian.util.BukkitUtils;
 
 public class PreviewCommand extends BaseCommand {
+
     public PreviewCommand() {
         name = "preview";
         usage = "<parameters> <- preview rollback changes";

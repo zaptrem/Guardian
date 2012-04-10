@@ -171,12 +171,10 @@ public class Guardian extends JavaPlugin {
     /**
      * Returns all log matching specified parameters. Also intern methods should
      * use this.
-     * 
-     * @param params
-     *            the query paramaters to use
+     *
+     * @param params the query paramaters to use
      * @return A list of all entries
-     * @throws SQLException
-     *             when there is a database error
+     * @throws SQLException when there is a database error
      */
     public List<Entry> getLog(QueryParams params) throws SQLException {
         return null;
@@ -185,9 +183,8 @@ public class Guardian extends JavaPlugin {
     /**
      * Performs a rollback on all log matching specified parameters. Also intern
      * methods should use this.
-     * 
-     * @param params
-     *            the query paramaters to use
+     *
+     * @param params the query paramaters to use
      */
     public void rollback(QueryParams params) {
         // TODO
@@ -196,9 +193,8 @@ public class Guardian extends JavaPlugin {
     /**
      * Redoes all changes matching parameters, basically a undo of a rollback.
      * Internal methods should use this.
-     * 
-     * @param params
-     *            the query paramaters to use
+     *
+     * @param params the query paramaters to use
      */
     public void rebuild(QueryParams params) {
         // TODO
@@ -207,11 +203,9 @@ public class Guardian extends JavaPlugin {
     /**
      * Deletes all log matching specified parameters. Also intern methods should
      * use this.
-     * 
-     * @param params
-     *            the query paramaters to use
-     * @throws SQLException
-     *             when there is a database error
+     *
+     * @param params the query paramaters to use
+     * @throws SQLException when there is a database error
      */
     public void clearLog(QueryParams params) throws SQLException {
         // database.removeEntries(params);
@@ -225,7 +219,7 @@ public class Guardian extends JavaPlugin {
     }
 
     /**
-     * 
+     *
      * @return Guardian's plugin Id
      */
     public int getPluginId() {

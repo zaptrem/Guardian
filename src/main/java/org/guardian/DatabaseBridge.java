@@ -4,7 +4,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
 import org.guardian.entries.Entry;
 import org.guardian.params.QueryParams;
 

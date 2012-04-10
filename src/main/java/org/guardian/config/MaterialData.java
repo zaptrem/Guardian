@@ -71,7 +71,7 @@ public class MaterialData {
      * @param type
      * @param data
      * @return Name of the material regarding it's data, or if it's unknown, the
-     *         basic name.
+     * basic name.
      */
     public String materialName(int type, byte data) {
         final Map<Byte, String> dataNames = materialDataNames.get(type);

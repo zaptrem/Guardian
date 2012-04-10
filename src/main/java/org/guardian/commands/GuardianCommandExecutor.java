@@ -21,24 +21,21 @@ public class GuardianCommandExecutor implements CommandExecutor {
 
     /**
      * Command manager for Guardian
-     * 
-     * @param sender
-     *            - {@link CommandSender}
-     * @param command
-     *            - {@link Command}
-     * @param label
-     *            command name
-     * @param args
-     *            arguments
+     *
+     * @param sender - {@link CommandSender}
+     * @param command - {@link Command}
+     * @param label command name
+     * @param args arguments
      */
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         // If no arg provided for guardian command, set to help by default
         if (args.length == 0) {
-            args = new String[] { "help" };
+            args = new String[]{"help"};
         }
 
         // Loop through commands to find match. Supports sub-commands
-        outer: for (BaseCommand guardCmd : getCommands().toArray(new BaseCommand[0])) {
+        outer:
+        for (BaseCommand guardCmd : getCommands().toArray(new BaseCommand[0])) {
             String[] cmds = guardCmd.name.split(" ");
             for (int i = 0; i < cmds.length; i++) {
                 if (i >= args.length || !cmds[i].equalsIgnoreCase(args[i])) {

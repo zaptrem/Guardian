@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.guardian.params.QueryParams;
 
 public class SessionToolData {
+
     private boolean enabled;
     private ToolMode mode;
     private QueryParams params;

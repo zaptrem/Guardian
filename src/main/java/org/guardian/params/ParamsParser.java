@@ -3,10 +3,8 @@ package org.guardian.params;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author DiddiZ
- */
 public interface ParamsParser {
+
     /**
      * Extracts all parameters with its arguments
      */
@@ -14,7 +12,7 @@ public interface ParamsParser {
 
     /**
      * @return Whether a words is just a misspelled command (/g rllback ...) or
-     *         a lookup command (/g player diddiz)
+     * a lookup command (/g player diddiz)
      */
     public boolean isKeyWord(String arg);
 }

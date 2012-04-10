@@ -1,9 +1,7 @@
 package org.guardian.entries;
 
-import java.sql.Blob;
 import java.util.List;
 import java.util.Map;
-
 import org.bukkit.Location;
 import org.bukkit.block.BlockState;
 import org.bukkit.enchantments.Enchantment;

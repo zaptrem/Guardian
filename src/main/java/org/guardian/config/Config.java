@@ -1,11 +1,7 @@
 package org.guardian.config;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
@@ -44,8 +40,8 @@ public final class Config {
     public ArrayList<QueryParams> autoParameters = new ArrayList<QueryParams>();
     public boolean dumpClearedLog;
     // Rolback config
-    public ArrayList<Integer> ignoredBlocks;
-    public ArrayList<Integer> forcedBlocks;
+    public List<Integer> ignoredBlocks;
+    public List<Integer> forcedBlocks;
     public EnumMap<RollbackSize, RollbackSizes> rollbackSizes = new EnumMap<RollbackSize, RollbackSizes>(RollbackSize.class);
     // Tools
     public ArrayList<Tool> tools;
@@ -112,8 +108,10 @@ public final class Config {
         // TODO autoParamaters
         dumpClearedLog = config.getBoolean("clearlog.dumpClearedLog");
         // Rollback config
-        ignoredBlocks = config.getIntegerList("rollback.ignoredBlocks") != null ? (ArrayList<Integer>) config.getIntegerList("rollback.ignoredBlocks") : new ArrayList<Integer>();
-        forcedBlocks = config.getIntegerList("rollback.forcedBlocks") != null ? (ArrayList<Integer>) config.getIntegerList("rollback.forcedBlocks") : new ArrayList<Integer>();
+        ignoredBlocks = config.getIntegerList("rollback.ignoredBlocks") != null
+                ? config.getIntegerList("rollback.ignoredBlocks") : new ArrayList<Integer>();
+        forcedBlocks = config.getIntegerList("rollback.forcedBlocks") != null
+                ? config.getIntegerList("rollback.forcedBlocks") : new ArrayList<Integer>();
         // Permissions
         final ConfigurationSection permSection = config.getConfigurationSection("rollback.sizes");
         for (String key : permSection.getKeys(false)) {

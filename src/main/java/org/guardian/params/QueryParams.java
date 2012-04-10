@@ -7,10 +7,8 @@ import org.bukkit.World;
 import org.guardian.ActionType;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 
-/**
- * @author DiddiZ
- */
 public class QueryParams implements Cloneable {
+
     public List<ActionType> actions = new ArrayList<ActionType>();
     public long before, since;
     public List<Integer> blocks = new ArrayList<Integer>();
@@ -39,5 +37,4 @@ public class QueryParams implements Cloneable {
     public QueryParams clone() {
         return this;
     }
-
 }

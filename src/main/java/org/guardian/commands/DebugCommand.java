@@ -2,7 +2,6 @@ package org.guardian.commands;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import org.guardian.ActionType;
 import org.guardian.entries.Entry;
 import org.guardian.params.QueryParams;
@@ -47,7 +46,5 @@ public class DebugCommand extends BaseCommand {
     @Override
     public void moreHelp() {
         // TODO Auto-generated method stub
-
     }
-
 }

@@ -1,8 +1,8 @@
 package org.guardian.commands;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,7 +14,7 @@ import org.guardian.util.BukkitUtils;
  * Abstract class representing a command. When run by the command manager (
  * {@link Guardian}), it pre-processes all the data into more useful forms.
  * Extending classes should adjust required fields in their constructor
- * 
+ *
  */
 public abstract class BaseCommand {
 
@@ -35,15 +35,13 @@ public abstract class BaseCommand {
      * Method called by the command manager in {@link Guardian} to run the
      * command. Arguments are processed into a list for easier manipulating.
      * Argument lengths, permissions and sender types are all handled.
-     * 
+     *
      * @param csender
      *            {@link CommandSender} to send data to
-     * @param preArgs
-     *            arguments to be processed
-     * @param cmd
-     *            command being executed
+     * @param preArgs arguments to be processed
+     * @param cmd command being executed
      * @return true on success, false if there is an error in the checks or if
-     *         the extending command returns false
+     * the extending command returns false
      */
     public boolean run(CommandSender csender, String[] preArgs, String cmd) {
         sender = csender;
@@ -51,9 +49,7 @@ public abstract class BaseCommand {
         usedCommand = cmd;
         // Sort out arguments
         args.clear();
-        for (String arg : preArgs) {
-            args.add(arg);
-        }
+        args.addAll(Arrays.asList(preArgs));
         // Remove commands from arguments
         for (int i = 0; i < name.split(" ").length && i < args.size(); i++) {
             args.remove(0);
@@ -83,14 +79,14 @@ public abstract class BaseCommand {
     /**
      * Runs the extending command. Should only be run by the BaseCommand after
      * all pre-processing is done
-     * 
+     *
      * @return true on success, false otherwise
      */
     public abstract boolean execute();
 
     /**
      * Performs the extending command's permission check.
-     * 
+     *
      * @return true if the user has permission, false if not
      */
     public abstract boolean permission();
@@ -113,10 +109,12 @@ public abstract class BaseCommand {
             if (page > 0 && startpos <= session.getEntryCache().size() - 1) {
                 final int stoppos = startpos + plugin.getConf().linesPerPage >= session.getEntryCache().size() ? session.getEntryCache().size() - 1 : startpos + plugin.getConf().linesPerPage - 1;
                 final int numberOfPages = (int) Math.ceil(session.getEntryCache().size() / (double) plugin.getConf().linesPerPage);
-                if (numberOfPages != 1)
+                if (numberOfPages != 1) {
                     sender.sendMessage(ChatColor.DARK_AQUA + "Page " + page + "/" + numberOfPages);
-                for (int i = startpos; i <= stoppos; i++)
+                }
+                for (int i = startpos; i <= stoppos; i++) {
                     sender.sendMessage(ChatColor.GOLD + session.getEntryCache().get(i).getMessage());
+                }
             } else {
                 sender.sendMessage(ChatColor.RED + "There isn't a page '" + page + "'");
             }
