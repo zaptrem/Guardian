@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -20,7 +21,9 @@ public class InventoryClick extends LoggingListener {
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onInventoryClick(final InventoryClickEvent event) {
 		InventoryClickState lastState = containers.get(event.getWhoClicked());
-		Block eventBlock = (Block) event.getInventory().getHolder();
+		if (!(event.getInventory().getHolder() instanceof BlockState))
+		    return;
+		BlockState eventBlock = (BlockState) event.getInventory().getHolder();
 		if (event.getSlot() == event.getRawSlot()) {
 			// Clicked Top Inventory
 			if (lastState != null) {
