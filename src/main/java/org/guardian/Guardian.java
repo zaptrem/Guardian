@@ -51,7 +51,7 @@ public class Guardian extends JavaPlugin {
         if (!file.exists()) {
             BukkitUtils.severe("Could not find a valid bridge! Please check it is installed and present in config.yml");
             BukkitUtils.warning("Attempting to download the MySQL bridge for you");
-            Utils.download("http://goo.gl/eEg3Q", file);
+            Utils.download("http://goo.gl/XMK7A", file);
         }
         if (!file.exists()) {
             fatalError(getConf().bridgeName + " can still not be found. Aborting");
