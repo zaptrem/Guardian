@@ -157,4 +157,8 @@ public class QueryParamsFactory {
         }
         return params;
     }
+
+    public String parse(QueryParams params) {
+        return null;
+    }
 }

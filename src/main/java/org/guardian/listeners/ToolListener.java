@@ -12,6 +12,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.guardian.Guardian;
 import org.guardian.params.QueryParams;
+import org.guardian.params.QueryParamsFactory;
 import org.guardian.tools.SessionToolData;
 import org.guardian.tools.Tool;
 import org.guardian.tools.ToolBehavior;
@@ -25,19 +26,19 @@ public class ToolListener implements Listener {
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onPlayerInteract(final PlayerInteractEvent event) {
+    public void onPlayerInteract(PlayerInteractEvent event) {
         if (!event.isCancelled() && event.hasBlock() && event.getMaterial() != null) {
-            final int type = event.getMaterial().getId();
-            final Tool tool = plugin.getConf().toolsByType.get(type);
+            int type = event.getMaterial().getId();
+            Tool tool = plugin.getConf().toolsByType.get(type);
             if (tool != null) {
-                final Player player = event.getPlayer();
+                Player player = event.getPlayer();
                 if (plugin.getConf().worlds.containsKey(player.getWorld().getName()) && player.hasPermission("guardian.tools." + tool.name)) {
-                    final Action action = event.getAction();
-                    final ToolBehavior behavior = action == Action.RIGHT_CLICK_BLOCK ? tool.rightClickBehavior : tool.leftClickBehavior;
-                    final SessionToolData toolData = plugin.getSessionManager().getSession(player).getToolDatas().get(tool);
+                    Action action = event.getAction();
+                    ToolBehavior behavior = action == Action.RIGHT_CLICK_BLOCK ? tool.rightClickBehavior : tool.leftClickBehavior;
+                    SessionToolData toolData = plugin.getSessionManager().getSession(player).getToolDatas().get(tool);
                     if (behavior != ToolBehavior.NONE && toolData.isEnabled()) {
-                        final Block block = event.getClickedBlock();
-                        final QueryParams params = toolData.getParams();
+                        Block block = event.getClickedBlock();
+                        QueryParams params = toolData.getParams();
                         params.loc = null;
                         params.sel = null;
                         if (behavior == ToolBehavior.BLOCK) {
@@ -45,7 +46,7 @@ public class ToolListener implements Listener {
                         } else if (block.getTypeId() != 54 || tool.params.radius != 0) {
                             params.loc = block.getLocation();
                         } else {
-                            for (final BlockFace face : new BlockFace[]{BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST}) {
+                            for (BlockFace face : new BlockFace[]{BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST}) {
                                 if (block.getRelative(face).getTypeId() == 54) {
                                     params.sel = new CuboidSelection(event.getPlayer().getWorld(), block.getLocation(), block.getRelative(face).getLocation());
                                 }
@@ -54,8 +55,7 @@ public class ToolListener implements Listener {
                                 params.sel = (Selection) block.getLocation();
                             }
                         }
-
-                        // TODO Execute command
+                        player.chat(new QueryParamsFactory().parse(params));
                         event.setCancelled(true);
                     }
                 }
