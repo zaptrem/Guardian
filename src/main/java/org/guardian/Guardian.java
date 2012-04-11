@@ -41,6 +41,7 @@ public class Guardian extends JavaPlugin {
         // Load configuration
         conf = new Config();
         // Initialize commands
+        // Testing Rebase
         commandExecutor = new GuardianCommandExecutor();
         getCommand("guardian").setExecutor(commandExecutor);
         // Initialize the session manager
