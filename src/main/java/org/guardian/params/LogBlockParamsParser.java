@@ -28,11 +28,8 @@ public class LogBlockParamsParser implements ParamsParser {
         final Map<Param, List<String>> params = new EnumMap<Param, List<String>>(Param.class);
         for (int i = 0; i < args.size(); i++) {
             final Param param = keywords.get(args.get(i).toLowerCase());
-            if (param == null) // Not a keyword
-            {
-                throw new IllegalArgumentException("Not a valid parameter: '" + param + "'");
-            }
-            params.put(param, getValues(param, args, i + 1));
+            if (param != null) // Is a Keyword
+                params.put(param, getValues(param, args, i + 1));
         }
         return params;
     }
