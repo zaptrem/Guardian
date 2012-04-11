@@ -55,7 +55,7 @@ public class ToolListener implements Listener {
                                 params.sel = (Selection) block.getLocation();
                             }
                         }
-                        player.chat(new QueryParamsFactory().parse(params));
+                        player.chat("/guardian search " + new QueryParamsFactory().parse(params));
                         event.setCancelled(true);
                     }
                 }

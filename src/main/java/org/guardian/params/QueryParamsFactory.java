@@ -162,36 +162,36 @@ public class QueryParamsFactory {
     public String parse(QueryParams params) {
         StringBuilder out = new StringBuilder();
         if (!params.actions.isEmpty()) {
-            out.append("ACTION");
+            out.append("ACTION ");
             for (ActionType a : params.actions) {
-                out.append(a.name());
+                out.append(a.name() + " ");
             }
         }
         if (!params.actions.isEmpty()) {
-            out.append("PLAYER");
+            out.append("PLAYER ");
             for (String s : params.players) {
-                out.append(s);
+                out.append(s + " ");
             }
         }
         if (!params.blocks.isEmpty()) {
-            out.append("BLOCK");
+            out.append("BLOCK ");
             for (int b : params.blocks) {
-                out.append(b);
+                out.append(b + " ");
             }
         }
         if (!params.worlds.isEmpty()) {
-            out.append("WORLD");
+            out.append("WORLD ");
             for (World w : params.worlds) {
-                out.append(w.getName());
+                out.append(w.getName() + " ");
             }
         }
         if (params.since != 0) {
-            out.append("SINCE");
-            out.append(params.since);
+            out.append("SINCE ");
+            out.append(params.since + " ");
         }
         if (params.before != 0) {
-            out.append("BEFORE");
-            out.append(params.before);
+            out.append("BEFORE ");
+            out.append(params.before + " ");
         }
         return out.toString();
     }

@@ -1,11 +1,11 @@
 package org.guardian.params;
 
+import com.sk89q.worldedit.bukkit.selections.Selection;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.guardian.ActionType;
-import com.sk89q.worldedit.bukkit.selections.Selection;
 
 public class QueryParams implements Cloneable {
 
