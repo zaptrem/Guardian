@@ -15,7 +15,7 @@ public class QueryParams implements Cloneable {
     public boolean excludePlayersMode = false;
     public int limit = -1;
     public Location loc = null;
-    public Order order = Order.ASC;
+    public Order order = Order.DESC;
     public List<String> players = new ArrayList<String>();
     public int radius = 0;
     public Selection sel = null;
