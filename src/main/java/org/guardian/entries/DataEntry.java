@@ -5,7 +5,7 @@ import java.util.List;
 import org.bukkit.Location;
 import org.guardian.ActionType;
 
-public abstract class DataEntry implements Entry, Rollbackable {
+public abstract class DataEntry implements Entry {
 
     protected int id;
     protected long date;

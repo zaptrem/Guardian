@@ -5,31 +5,30 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 import org.bukkit.Bukkit;
 import org.bukkit.block.BlockState;
-import org.guardian.entries.DataEntry;
+import org.guardian.entries.Entry;
 
 public class Rollback implements Runnable {
 
-    private final Queue<DataEntry> entries;
+    private final Queue<Entry> entries;
     private final int taskId;
 
-    Rollback(List<DataEntry> entries) {
-        this.entries = new LinkedBlockingQueue<DataEntry>(entries);
-        taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Guardian.getInstance(), this, 20, 20);
+    Rollback(List<Entry> entries) {
+        this.entries = new LinkedBlockingQueue<Entry>(entries);
+        taskId = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Guardian.getInstance(), this, 20, 20);
     }
 
     @Override
     public void run() {
-        final int counter = 0;
+        int counter = 0;
         while (!entries.isEmpty() && counter < 1000) {
-            final DataEntry entry = entries.poll();
+            final Entry entry = entries.poll();
             if (!entry.isRollbacked()) {
-                for (final BlockState state : entry.getRollbackBlockStates()) {
+                for (BlockState state : entry.getRollbackBlockStates()) {
                     state.update();
                 }
             }
+            counter++;
         }
-        if (entries.isEmpty()) {
-            Bukkit.getScheduler().cancelTask(taskId);
-        }
+        Bukkit.getServer().getScheduler().cancelTask(taskId);
     }
 }
