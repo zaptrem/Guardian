@@ -20,7 +20,6 @@ import org.guardian.util.Utils;
 public class Guardian extends JavaPlugin {
 
     // Plugins
-    // Testing Rebase
     private static Guardian guardian;
     private static WorldEditPlugin worldEdit;
     // Configuration and commands
