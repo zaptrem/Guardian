@@ -11,6 +11,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.guardian.Guardian;
+import org.guardian.commands.BaseCommand;
+import org.guardian.commands.SearchCommand;
+import org.guardian.commands.SearchCommand.CommandSearch;
 import org.guardian.params.QueryParams;
 import org.guardian.params.QueryParamsFactory;
 import org.guardian.tools.SessionToolData;
@@ -55,7 +58,14 @@ public class ToolListener implements Listener {
                                 params.sel = (Selection) block.getLocation();
                             }
                         }
-                        player.chat("/guardian search " + new QueryParamsFactory().parse(params));
+                        try {
+                            for (BaseCommand guardCmd : plugin.getCommandExecutor().getCommands().toArray(new BaseCommand[0]))
+                                if(guardCmd instanceof SearchCommand)
+                                    ((SearchCommand)guardCmd).new CommandSearch(player, params, true);
+                        } catch (Exception e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
                         event.setCancelled(true);
                     }
                 }

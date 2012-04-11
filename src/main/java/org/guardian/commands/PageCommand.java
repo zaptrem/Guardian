@@ -17,7 +17,7 @@ public class PageCommand extends BaseCommand {
     @Override
     public boolean execute() {
         if (Utils.isInt(args.get(0))) {
-            showPage(Integer.valueOf(args.get(0)));
+            showPage(sender, Integer.valueOf(args.get(0)));
         } else {
             sender.sendMessage(ChatColor.RED + "You have to specify a page");
         }

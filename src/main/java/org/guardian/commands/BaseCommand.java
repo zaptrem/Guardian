@@ -103,7 +103,9 @@ public abstract class BaseCommand {
         BukkitUtils.sendMessage(sender, ChatColor.RED + "/" + usedCommand + " " + name + " " + usage);
     }
 
-    public void showPage(int page) {
+    public static void showPage(CommandSender sender, int page) {
+        Guardian plugin = Guardian.getInstance();
+        PlayerSession session = plugin.getSessionManager().getSession(sender);
         if (session.getEntryCache() != null && session.getEntryCache().size() > 0) {
             final int startpos = (page - 1) * plugin.getConf().linesPerPage;
             if (page > 0 && startpos <= session.getEntryCache().size() - 1) {
