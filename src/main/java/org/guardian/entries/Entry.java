@@ -5,7 +5,7 @@ import org.guardian.ActionType;
 /**
  * Interface for basic Entry methods
  */
-public interface Entry {
+public interface Entry extends Rollbackable {
 
     public String getMessage();
 

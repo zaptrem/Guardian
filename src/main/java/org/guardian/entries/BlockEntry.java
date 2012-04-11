@@ -1,5 +1,6 @@
 package org.guardian.entries;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.block.BlockState;
@@ -88,10 +89,18 @@ public class BlockEntry extends DataEntry {
     }
 
     public List<BlockState> getRollbackBlockStates() {
-        throw new UnsupportedOperationException("Not supported yet."); // TODO
+        List<BlockState> blocks = new ArrayList<BlockState>(); // TODO why are these Collections?
+        BlockState state = loc.getBlock().getState();
+        state.setTypeId(typeFrom);
+        state.setRawData(dataFrom);
+        return blocks;
     }
 
     public List<BlockState> getRebuildBlockStates() {
-        throw new UnsupportedOperationException("Not supported yet."); // TODO
+        List<BlockState> blocks = new ArrayList<BlockState>();
+        BlockState state = loc.getBlock().getState();
+        state.setTypeId(typeTo);
+        state.setRawData(dataTo);
+        return blocks;
     }
 }

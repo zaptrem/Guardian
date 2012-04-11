@@ -8,4 +8,6 @@ public interface Rollbackable {
     public List<BlockState> getRollbackBlockStates();
 
     public List<BlockState> getRebuildBlockStates();
+
+    public boolean isRollbacked();
 }

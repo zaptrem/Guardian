@@ -182,8 +182,12 @@ public class Guardian extends JavaPlugin {
      *
      * @param params the query paramaters to use
      */
-    public void rollback(QueryParams params) {
-        // TODO
+    public void rollback(QueryParams params) throws SQLException {
+        rollback(getLog(params));
+    }
+
+    public void rollback(List<Entry> entries) {
+        new Rollback(entries); // TODO add active rollbacks
     }
 
     /**
