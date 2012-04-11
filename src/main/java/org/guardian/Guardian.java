@@ -23,7 +23,6 @@ public class Guardian extends JavaPlugin {
     private static Guardian guardian;
     private static WorldEditPlugin worldEdit;
     // Configuration and commands
-    // Testing Shit Out
     private Config conf;
     private GuardianCommandExecutor commandExecutor;
     // Database, consumer, sessions etc

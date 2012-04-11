@@ -7,10 +7,11 @@ import org.bukkit.block.BlockState;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.guardian.ActionType;
+import org.guardian.util.BukkitUtils;
 
 public class ItemEntry extends DataEntry {
 
-    private int typeId, data, enchId, enchPower, amount;
+    private int typeId, data, amount;
     private Map<Enchantment, Integer> enchantments;
 
     public ItemEntry(ActionType action, String playerName, Location loc, long date, ItemStack item, String pluginName) {
@@ -40,21 +41,42 @@ public class ItemEntry extends DataEntry {
 
     public ItemStack getItemStack() {
         ItemStack stack = new ItemStack(typeId, amount, (short) data);
-        // stack.addEnchantment(getEnchantment(), enchPower);
+        stack.addEnchantments(enchantments);
         return stack;
     }
 
-    @Override
     public String getMessage() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        final StringBuilder msg = new StringBuilder();
+        if (date > 0) {
+            msg.append(dateFormat.format(date));
+            msg.append(" ");
+        }
+        if (playerName != null) {
+            msg.append(playerName);
+            msg.append(" ");
+        }
+        if (action == ActionType.INVENTORY_TAKE) {
+            msg.append("took " + amount + "x " + BukkitUtils.materialName(typeId, (byte) data));
+            msg.append(" ");
+        } else {
+            msg.append("put in " + amount + "x " + BukkitUtils.materialName(typeId, (byte) data));
+            msg.append(" ");
+        }
+        if (loc != null) {
+            msg.append(" at ");
+            msg.append(loc.getBlockX());
+            msg.append(":");
+            msg.append(loc.getBlockY());
+            msg.append(":");
+            msg.append(loc.getBlockZ());
+        }
+        return msg.toString();
     }
 
-    @Override
     public List<BlockState> getRollbackBlockStates() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
     public List<BlockState> getRebuildBlockStates() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
