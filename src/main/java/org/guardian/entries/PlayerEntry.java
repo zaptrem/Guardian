@@ -1,5 +1,7 @@
 package org.guardian.entries;
 
+import java.util.List;
+import org.bukkit.block.BlockState;
 import org.guardian.ActionType;
 
 public class PlayerEntry implements Entry {
@@ -63,6 +65,18 @@ public class PlayerEntry implements Entry {
 
     @Override
     public ActionType getAction() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public List<BlockState> getRollbackBlockStates() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public List<BlockState> getRebuildBlockStates() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean isRollbacked() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }
