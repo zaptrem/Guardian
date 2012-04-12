@@ -1,5 +1,6 @@
 package org.guardian.commands;
 
+import org.bukkit.ChatColor;
 import org.guardian.util.BukkitUtils;
 
 public class HelpCommand extends BaseCommand {
@@ -15,11 +16,11 @@ public class HelpCommand extends BaseCommand {
     public boolean execute() {
         // General help
         if (args.isEmpty()) {
-            BukkitUtils.sendMessage(sender, "---------------------- Guardian ----------------------");
+            BukkitUtils.sendMessage(sender, ChatColor.AQUA + "---------------------- Guardian ----------------------");
             BukkitUtils.sendMessage(sender, "Type /guardian help <command> for more info on that command");
             for (BaseCommand cmd : plugin.getCommandExecutor().getCommands().toArray(new BaseCommand[0])) {
                 if (cmd.permission()) {
-                    BukkitUtils.sendMessage(sender, "- /" + usedCommand + " " + cmd.name + " " + cmd.usage);
+                    BukkitUtils.sendMessage(sender, "- " + ChatColor.GREEN + "/" + usedCommand + " " + cmd.name + ChatColor.GREEN + " " + cmd.usage);
                 }
             }
         } // Command-specific help
@@ -27,7 +28,7 @@ public class HelpCommand extends BaseCommand {
             for (BaseCommand cmd : plugin.getCommandExecutor().getCommands().toArray(new BaseCommand[0])) {
                 if (cmd.permission() && cmd.name.equalsIgnoreCase(args.get(0))) {
                     BukkitUtils.sendMessage(sender, "---------------------- Guardian - " + cmd.name);
-                    BukkitUtils.sendMessage(sender, "- /" + usedCommand + " " + cmd.name + " " + cmd.usage);
+                    BukkitUtils.sendMessage(sender, "- " + ChatColor.GREEN + "/" + usedCommand + " " + cmd.name + ChatColor.GREEN + " " + cmd.usage);
                     cmd.sender = sender;
                     cmd.moreHelp();
                     return true;
@@ -40,8 +41,8 @@ public class HelpCommand extends BaseCommand {
 
     @Override
     public void moreHelp() {
-        BukkitUtils.sendMessage(sender, "&cShows all Guardian commands");
-        BukkitUtils.sendMessage(sender, "&cType &7/guardian help <command>&c for help on that command");
+        BukkitUtils.sendMessage(sender, ChatColor.AQUA + "Shows all Guardian commands");
+        BukkitUtils.sendMessage(sender, ChatColor.RED + "Type " + ChatColor.GRAY + "/guardian help <command>" + ChatColor.RED + " for help on that command");
     }
 
     @Override

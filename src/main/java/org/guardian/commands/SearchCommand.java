@@ -6,21 +6,17 @@ import org.bukkit.command.CommandSender;
 import org.guardian.entries.Entry;
 import org.guardian.params.QueryParams;
 import org.guardian.params.QueryParamsFactory;
-import org.guardian.util.BukkitUtils;
 
 public class SearchCommand extends BaseCommand {
 
     public SearchCommand() {
         name = "search";
         usage = "<parameters> <- search Guardian database";
+        minArgs = 1;
     }
 
     @Override
     public boolean execute() {
-        if (args.isEmpty()) {
-            BukkitUtils.sendMessage(sender, ChatColor.RED + "Please enter search paramaters after the search command");
-            return false;
-        }
         final QueryParams params = new QueryParamsFactory().create(sender, args);
         session.setLastQuery(params);
         try {
