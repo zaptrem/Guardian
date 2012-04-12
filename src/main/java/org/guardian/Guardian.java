@@ -2,8 +2,11 @@ package org.guardian;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -112,6 +115,13 @@ public class Guardian extends JavaPlugin {
         if (wePlugin != null) {
             worldEdit = (WorldEditPlugin) wePlugin;
             BukkitUtils.info("WorldEdit " + getWorldEdit().getDescription().getVersion() + " has been found, selection rollbacks enabled");
+        }
+        BukkitUtils.info("Activating Metrics");
+        try {
+            Metrics metrics = new Metrics(this);
+            metrics.start();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 
