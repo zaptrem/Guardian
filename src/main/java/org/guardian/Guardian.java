@@ -10,7 +10,6 @@ import org.guardian.commands.GuardianCommandExecutor;
 import org.guardian.config.Config;
 import org.guardian.entries.Entry;
 import org.guardian.listeners.ToolListener;
-import org.guardian.listeners.UtilListener;
 import org.guardian.listeners.block.*;
 import org.guardian.listeners.inventory.InventoryClick;
 import org.guardian.params.QueryParams;
@@ -107,7 +106,6 @@ public class Guardian extends JavaPlugin {
             new InventoryClick();
         }
         new ToolListener();
-        new UtilListener();
         // Check for WorldEdit
         Plugin wePlugin = getServer().getPluginManager().getPlugin("WorldEdit");
         if (wePlugin != null) {

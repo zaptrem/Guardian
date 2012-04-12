@@ -15,7 +15,6 @@ import org.guardian.commands.BaseCommand;
 import org.guardian.commands.SearchCommand;
 import org.guardian.commands.SearchCommand.CommandSearch;
 import org.guardian.params.QueryParams;
-import org.guardian.params.QueryParamsFactory;
 import org.guardian.tools.SessionToolData;
 import org.guardian.tools.Tool;
 import org.guardian.tools.ToolBehavior;
@@ -30,7 +29,7 @@ public class ToolListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (!event.isCancelled() && event.hasBlock() && event.getMaterial() != null) {
+        if (event.hasBlock() && event.getMaterial() != null && plugin.getSessionManager().getSession(event.getPlayer()).toolsEnabled) {
             int type = event.getMaterial().getId();
             Tool tool = plugin.getConf().toolsByType.get(type);
             if (tool != null) {
@@ -59,9 +58,11 @@ public class ToolListener implements Listener {
                             }
                         }
                         try {
-                            for (BaseCommand guardCmd : plugin.getCommandExecutor().getCommands().toArray(new BaseCommand[0]))
-                                if(guardCmd instanceof SearchCommand)
-                                    ((SearchCommand)guardCmd).new CommandSearch(player, params, true);
+                            for (BaseCommand guardCmd : plugin.getCommandExecutor().getCommands().toArray(new BaseCommand[0])) {
+                                if (guardCmd instanceof SearchCommand) {
+                                    ((SearchCommand) guardCmd).new CommandSearch(player, params, true);
+                                }
+                            }
                         } catch (Exception e) {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
