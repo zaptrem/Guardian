@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.guardian.Rollback;
 import org.guardian.entries.Entry;
 import org.guardian.params.QueryParams;
 import org.guardian.params.QueryParamsFactory;
@@ -26,8 +25,8 @@ public class RollbackCommand extends BaseCommand {
                 BukkitUtils.sendMessage(sender, ChatColor.BLUE + "Searching for entries");
                 try {
                     List<Entry> results = plugin.getLog(params);
-                    BukkitUtils.info("Found " + results.size() + " entries!");
-                    plugin.rollback(results);
+                    BukkitUtils.sendMessage(sender, ChatColor.GREEN + "Found " + results.size() + " entries!");
+                    plugin.rollback(results, sender);
                 } catch (SQLException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

@@ -93,6 +93,7 @@ public class BlockEntry extends DataEntry {
         BlockState state = loc.getBlock().getState();
         state.setTypeId(typeFrom);
         state.setRawData(dataFrom);
+        blocks.add(state);
         return blocks;
     }
 
@@ -101,6 +102,7 @@ public class BlockEntry extends DataEntry {
         BlockState state = loc.getBlock().getState();
         state.setTypeId(typeTo);
         state.setRawData(dataTo);
+        blocks.add(state);
         return blocks;
     }
 }

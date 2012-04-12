@@ -8,7 +8,7 @@ public class PageCommand extends BaseCommand {
 
     public PageCommand() {
         name = "page";
-        usage = "<page> <- display a page from your last search";
+        usage = "<page> <- view a page from your search";
         allowConsole = false;
         minArgs = 1;
         maxArgs = 1;

@@ -4,6 +4,7 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.guardian.commands.GuardianCommandExecutor;
@@ -182,11 +183,11 @@ public class Guardian extends JavaPlugin {
      * @param params the query paramaters to use
      */
     public void rollback(QueryParams params) throws SQLException {
-        rollback(getLog(params));
+        rollback(getLog(params), null);
     }
 
-    public void rollback(List<Entry> entries) {
-        new Rollback(entries); // TODO add active rollbacks
+    public void rollback(List<Entry> entries, CommandSender sender) {
+        new Rollback(entries, sender); // TODO add active rollbacks
     }
 
     /**

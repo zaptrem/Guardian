@@ -8,6 +8,7 @@ public class ToolCommand extends BaseCommand {
 
     public ToolCommand() {
         name = "tool";
+        usage = "<- <enable/disable> toggle all your tools";
         minArgs = 0;
         maxArgs = 1;
     }
@@ -23,7 +24,7 @@ public class ToolCommand extends BaseCommand {
             }
         }
         session.toolsEnabled = !session.toolsEnabled;
-        BukkitUtils.sendMessage(sender, ChatColor.GREEN + "Your tools are now" + ((session.toolsEnabled) ? "enabled" : "disabled"));
+        BukkitUtils.sendMessage(sender, ChatColor.GREEN + "Your tools are now " + ChatColor.GOLD + ((session.toolsEnabled) ? "enabled" : "disabled"));
         return true;
     }
 

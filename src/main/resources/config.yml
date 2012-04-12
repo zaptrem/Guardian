@@ -123,7 +123,7 @@ tools:
     mode: LOOKUP
     give: true
   toolblock:
-    item: 17
+    item: 19
     leftClickBehavior: TOOL
     rightClickBehavior: BLOCK
     params: area 0 all sum none limit 15 desc silent

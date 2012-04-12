@@ -16,7 +16,7 @@ public class HelpCommand extends BaseCommand {
     public boolean execute() {
         // General help
         if (args.isEmpty()) {
-            BukkitUtils.sendMessage(sender, ChatColor.AQUA + "---------------------- Guardian ----------------------");
+            BukkitUtils.sendMessage(sender, ChatColor.AQUA + "---------------------- Guardian v" + plugin.getDescription().getVersion() + "----------------------");
             BukkitUtils.sendMessage(sender, "Type /guardian help <command> for more info on that command");
             for (BaseCommand cmd : plugin.getCommandExecutor().getCommands().toArray(new BaseCommand[0])) {
                 if (cmd.permission()) {

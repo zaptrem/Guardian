@@ -43,8 +43,9 @@ public class BukkitUtils {
      * @param msg message to send
      */
     public static void sendMessage(CommandSender player, String msg) {
-
-        player.sendMessage(msg.replace('&', '§'));
+        if (player != null) {
+            player.sendMessage(msg.replace('&', '§'));
+        }
         // TODO add in line-length checking, color wrapping etc
     }
 

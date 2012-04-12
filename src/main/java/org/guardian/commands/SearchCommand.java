@@ -6,18 +6,19 @@ import org.bukkit.command.CommandSender;
 import org.guardian.entries.Entry;
 import org.guardian.params.QueryParams;
 import org.guardian.params.QueryParamsFactory;
+import org.guardian.util.BukkitUtils;
 
 public class SearchCommand extends BaseCommand {
 
     public SearchCommand() {
         name = "search";
-        usage = "<parameters> <- search Guardian database";
+        usage = "<params> <- search the database";
         minArgs = 1;
     }
 
     @Override
     public boolean execute() {
-        final QueryParams params = new QueryParamsFactory().create(sender, args);
+        QueryParams params = new QueryParamsFactory().create(sender, args);
         session.setLastQuery(params);
         try {
             new CommandSearch(sender, params, true);
@@ -45,6 +46,9 @@ public class SearchCommand extends BaseCommand {
 
         public void run() {
             try {
+                if (!params.silent) {
+                    BukkitUtils.sendMessage(sender, ChatColor.GREEN + "Searching for entries");
+                }
                 List<Entry> results = plugin.getLog(params);
                 if (results.size() > 0) {
                     plugin.getSessionManager().getSession(this.sender).setEntryCache(results);

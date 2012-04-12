@@ -13,7 +13,6 @@ public class GuardianCommandExecutor implements CommandExecutor {
     public GuardianCommandExecutor() {
         // Register commands
         commands.add(new HelpCommand());
-        commands.add(new DebugCommand());
         commands.add(new SearchCommand());
         commands.add(new PageCommand());
         commands.add(new RollbackCommand());
