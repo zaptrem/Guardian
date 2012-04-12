@@ -26,9 +26,6 @@ worlds:
     block-lava-flow-as-player: false
     block-water-flow: true
     block-water-flow-as-player: false
-  # block-ignite: true
-  # block-physics: true
-  # block-piston: true
     block-place: true
     block-spread: true
     block-sign-change: true
@@ -70,8 +67,8 @@ worlds:
   world_nether:
     lava-flow: false
 consumer:
-  maxTimePerRun: 200
-  forceToProcessAtLeast: 20
+  maxTimePerRun: 1000
+  forceToProcessAtLeast: 200
   delayBetweenRuns: 4
 lookup:
   linesLimit: 1500

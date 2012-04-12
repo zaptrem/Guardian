@@ -1,8 +1,6 @@
 package org.guardian.commands;
 
-import java.sql.SQLException;
 import java.util.List;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.guardian.entries.Entry;
@@ -19,6 +17,10 @@ public class SearchCommand extends BaseCommand {
 
     @Override
     public boolean execute() {
+        if (args.isEmpty()) {
+            BukkitUtils.sendMessage(sender, ChatColor.RED + "Please enter search paramaters after the search command");
+            return false;
+        }
         final QueryParams params = new QueryParamsFactory().create(sender, args);
         session.setLastQuery(params);
         try {
@@ -38,9 +40,9 @@ public class SearchCommand extends BaseCommand {
     public boolean permission() {
         return true;
     }
-    
+
     public class CommandSearch extends AbstractCommand {
-        
+
         public CommandSearch(CommandSender sender, QueryParams params, boolean async) throws Exception {
             super(sender, params, async);
         }
@@ -48,7 +50,7 @@ public class SearchCommand extends BaseCommand {
         public void run() {
             try {
                 List<Entry> results = plugin.getLog(params);
-                if(results.size() > 0) {
+                if (results.size() > 0) {
                     plugin.getSessionManager().getSession(this.sender).setEntryCache(results);
                     showPage(sender, 1);
                 } else {

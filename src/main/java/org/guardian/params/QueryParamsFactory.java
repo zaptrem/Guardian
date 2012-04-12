@@ -40,7 +40,9 @@ public class QueryParamsFactory {
                     }
                     break;
                 case PLAYER:
-                    // TODO
+                    for (String player : paramArgs) {
+                        params.players.add(player);
+                    }
                     break;
                 case AREA:
                     if (sender instanceof Player) {
