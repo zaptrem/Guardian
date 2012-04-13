@@ -30,4 +30,10 @@ public class UndoCommand extends BaseCommand {
         // TODO Auto-generated method stub
         return true;
     }
+
+    @Override
+    public BaseCommand newInstance() {
+        // TODO Auto-generated method stub
+        return new UndoCommand();
+    }
 }

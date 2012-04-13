@@ -67,4 +67,10 @@ public class SearchCommand extends BaseCommand {
     public boolean permission(CommandSender csender) {
         return csender.hasPermission("guardian.lookup");
     }
+
+    @Override
+    public BaseCommand newInstance() {
+        // TODO Auto-generated method stub
+        return new SearchCommand();
+    }
 }

@@ -15,6 +15,7 @@ public class RollbackCommand extends BaseCommand {
     public RollbackCommand() {
         name = "rollback";
         usage = "<parameters> <- rollback changes";
+        minArgs = 1;
     }
 
     @Override
@@ -50,5 +51,11 @@ public class RollbackCommand extends BaseCommand {
     @Override
     public boolean permission(CommandSender csender) {
         return csender.hasPermission("guardian.rollback");
+    }
+
+    @Override
+    public BaseCommand newInstance() {
+        // TODO Auto-generated method stub
+        return new RollbackCommand();
     }
 }

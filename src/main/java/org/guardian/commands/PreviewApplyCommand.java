@@ -32,4 +32,9 @@ public class PreviewApplyCommand extends BaseCommand {
         // TODO Auto-generated method stub
         return true;
     }
+
+    @Override
+    public BaseCommand newInstance() {
+        return new PreviewApplyCommand();
+    }
 }

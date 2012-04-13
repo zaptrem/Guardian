@@ -92,6 +92,8 @@ public abstract class BaseCommand {
     public abstract boolean permission();
     
     public abstract boolean permission(CommandSender csender);
+    
+    public abstract BaseCommand newInstance();
 
     /**
      * Sends advanced help to the sender

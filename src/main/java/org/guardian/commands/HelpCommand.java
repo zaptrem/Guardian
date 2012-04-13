@@ -55,4 +55,9 @@ public class HelpCommand extends BaseCommand {
     public boolean permission(CommandSender csender) {
         return true;
     }
+
+    @Override
+    public BaseCommand newInstance() {
+        return new HelpCommand();
+    }
 }
