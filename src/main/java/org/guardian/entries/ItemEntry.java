@@ -1,5 +1,6 @@
 package org.guardian.entries;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.bukkit.Location;
@@ -35,8 +36,24 @@ public class ItemEntry extends DataEntry {
 
     }
 
-    public Map<Enchantment, Integer> getEnchantments() {
+    /*public Map<Enchantment, Integer> getEnchantments() {
         return enchantments;
+    }*/
+    
+    public Map<String, Integer> getEnchantments() {
+        Map<String, Integer> tempMap = new HashMap<String, Integer>();
+        for(Enchantment tempEnchant : enchantments.keySet()) {
+            tempMap.put(tempEnchant.getName(), enchantments.get(tempEnchant));
+        }
+        return tempMap;
+    }
+    
+    public void setEnchantments(Map<String, Integer> paramMap) {
+        Map<Enchantment, Integer> tempMap = new HashMap<Enchantment, Integer>();
+        for(String tempString : paramMap.keySet()) {
+            tempMap.put(Enchantment.getByName(tempString), paramMap.get(tempString));
+        }
+        enchantments = tempMap;
     }
 
     public ItemStack getItemStack() {
