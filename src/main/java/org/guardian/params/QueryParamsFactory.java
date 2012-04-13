@@ -62,6 +62,9 @@ public class QueryParamsFactory {
                     break;
                 case SELECTION:
                     if (sender instanceof Player) {
+                        if (!plugin.getServer().getPluginManager().isPluginEnabled("WorldEdit")) {
+                            throw new IllegalArgumentException("WorldEdit is not loaded");
+                        }
                         final Selection sel = plugin.getWorldEdit().getSelection((Player) sender);
                         if (sel != null && sel instanceof CuboidSelection) {
                             params.sel = sel;
