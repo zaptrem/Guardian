@@ -35,7 +35,7 @@ public class SearchCommand extends BaseCommand {
 
     @Override
     public boolean permission() {
-        return sender.hasPermission("guardian.search");
+        return sender.hasPermission("guardian.lookup");
     }
 
     public class CommandSearch extends AbstractCommand {
