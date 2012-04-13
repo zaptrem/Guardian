@@ -1,6 +1,7 @@
 package org.guardian.commands;
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.guardian.util.BukkitUtils;
 
 public class HelpCommand extends BaseCommand {
@@ -19,14 +20,14 @@ public class HelpCommand extends BaseCommand {
             BukkitUtils.sendMessage(sender, ChatColor.AQUA + "---------------------- Guardian v" + plugin.getDescription().getVersion() + "----------------------");
             BukkitUtils.sendMessage(sender, "Type /guardian help <command> for more info on that command");
             for (BaseCommand cmd : plugin.getCommandExecutor().getCommands().toArray(new BaseCommand[0])) {
-                if (cmd.permission()) {
+                if (cmd.permission(sender)) {
                     BukkitUtils.sendMessage(sender, "- " + ChatColor.GREEN + "/" + usedCommand + " " + cmd.name + ChatColor.GREEN + " " + cmd.usage);
                 }
             }
         } // Command-specific help
         else {
             for (BaseCommand cmd : plugin.getCommandExecutor().getCommands().toArray(new BaseCommand[0])) {
-                if (cmd.permission() && cmd.name.equalsIgnoreCase(args.get(0))) {
+                if (cmd.permission(sender) && cmd.name.equalsIgnoreCase(args.get(0))) {
                     BukkitUtils.sendMessage(sender, "---------------------- Guardian - " + cmd.name);
                     BukkitUtils.sendMessage(sender, "- " + ChatColor.GREEN + "/" + usedCommand + " " + cmd.name + ChatColor.GREEN + " " + cmd.usage);
                     cmd.sender = sender;
@@ -47,6 +48,11 @@ public class HelpCommand extends BaseCommand {
 
     @Override
     public boolean permission() {
+        return true;
+    }
+
+    @Override
+    public boolean permission(CommandSender csender) {
         return true;
     }
 }

@@ -42,7 +42,17 @@ public class GuardianCommandExecutor implements CommandExecutor {
                     continue outer;
                 }
             }
-            return guardCmd.run(sender, args, label);
+            // TODO We need to implement something here that is creating new instances, we don't need instances in memory to have variables set
+            if(guardCmd instanceof HelpCommand)
+                return new HelpCommand().run(sender, args, label);
+            if(guardCmd instanceof SearchCommand)
+                return new SearchCommand().run(sender, args, label);
+            if(guardCmd instanceof PageCommand)
+                return new PageCommand().run(sender, args, label);
+            if(guardCmd instanceof RollbackCommand)
+                return new RollbackCommand().run(sender, args, label);
+            if(guardCmd instanceof ToolCommand)
+                return new RollbackCommand().run(sender, args, label);
         }
 
         // If no matches, just send help

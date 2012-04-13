@@ -1,5 +1,6 @@
 package org.guardian.commands;
 
+import org.bukkit.command.CommandSender;
 import org.guardian.util.BukkitUtils;
 
 public class UndoCommand extends BaseCommand {
@@ -21,6 +22,12 @@ public class UndoCommand extends BaseCommand {
 
     @Override
     public boolean permission() {
+        return true;
+    }
+
+    @Override
+    public boolean permission(CommandSender csender) {
+        // TODO Auto-generated method stub
         return true;
     }
 }

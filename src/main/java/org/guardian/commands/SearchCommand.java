@@ -62,4 +62,9 @@ public class SearchCommand extends BaseCommand {
             }
         }
     }
+
+    @Override
+    public boolean permission(CommandSender csender) {
+        return csender.hasPermission("guardian.lookup");
+    }
 }

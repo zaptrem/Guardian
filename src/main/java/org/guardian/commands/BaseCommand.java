@@ -90,6 +90,8 @@ public abstract class BaseCommand {
      * @return true if the user has permission, false if not
      */
     public abstract boolean permission();
+    
+    public abstract boolean permission(CommandSender csender);
 
     /**
      * Sends advanced help to the sender

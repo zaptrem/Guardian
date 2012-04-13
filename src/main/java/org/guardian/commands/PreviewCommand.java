@@ -1,5 +1,6 @@
 package org.guardian.commands;
 
+import org.bukkit.command.CommandSender;
 import org.guardian.util.BukkitUtils;
 
 public class PreviewCommand extends BaseCommand {
@@ -24,6 +25,12 @@ public class PreviewCommand extends BaseCommand {
 
     @Override
     public boolean permission() {
+        return true;
+    }
+
+    @Override
+    public boolean permission(CommandSender csender) {
+        // TODO Auto-generated method stub
         return true;
     }
 }
