@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.guardian.ActionType;
 import org.guardian.Guardian;
 import org.guardian.params.QueryParams;
+import org.guardian.params.QueryParamsFactory;
 import org.guardian.permissions.RollbackSize;
 import org.guardian.permissions.RollbackSizes;
 import org.guardian.tools.Tool;
@@ -50,7 +51,7 @@ public final class Config {
     // Materials
     public MaterialData materialDataManager;
     // Other
-    private final Guardian plugin = Guardian.getInstance();
+    private Guardian plugin = Guardian.getInstance();
 
     public Config() {
         load();
@@ -58,7 +59,7 @@ public final class Config {
 
     public void load() {
         // Load the config
-        final FileConfiguration config = plugin.getConfig();
+        FileConfiguration config = plugin.getConfig();
         config.options().copyDefaults(true);
         plugin.saveConfig();
         // Populate main config
@@ -79,14 +80,14 @@ public final class Config {
         maxConnections = config.getInt("bridge.maxConnections");
         url = "jdbc:mysql://" + host + ":" + port + "/" + database;
         // Populate the world config
-        final ConfigurationSection globalSection = config.getConfigurationSection("worlds.global");
-        for (final World world : Bukkit.getServer().getWorlds()) {
-            final String name = world.getName();
+        ConfigurationSection globalSection = config.getConfigurationSection("worlds.global");
+        for (World world : Bukkit.getServer().getWorlds()) {
+            String name = world.getName();
             ConfigurationSection cs = config.getConfigurationSection("worlds." + world.getName());
             if (cs == null) {
                 cs = globalSection;
             }
-            for (final String key : cs.getKeys(false)) {
+            for (String key : cs.getKeys(false)) {
                 if (key == null) {
                     cs.set(key, globalSection.get(key));
                 }
@@ -113,41 +114,36 @@ public final class Config {
         forcedBlocks = config.getIntegerList("rollback.forcedBlocks") != null
                 ? config.getIntegerList("rollback.forcedBlocks") : new ArrayList<Integer>();
         // Permissions
-        final ConfigurationSection permSection = config.getConfigurationSection("rollback.sizes");
+        ConfigurationSection permSection = config.getConfigurationSection("rollback.sizes");
         for (String key : permSection.getKeys(false)) {
             key = key.toUpperCase();
             rollbackSizes.put(RollbackSize.valueOf(key), new RollbackSizes(permSection.getInt(key + ".maxArea"), permSection.getInt(key + ".maxTime")));
         }
         // TODO Populate the tool config
-        final Set<String> toolNames = config.getConfigurationSection("tools").getKeys(false);
+        Set<String> toolNames = config.getConfigurationSection("tools").getKeys(false);
         tools = new ArrayList<Tool>();
-        for (final String toolName : toolNames) {
+        for (String toolName : toolNames) {
             try {
-                final String path = "tools." + toolName;
-                final List<String> aliases = config.getStringList(path + ".aliases");
-                final ToolBehavior leftClickBehavior = ToolBehavior.valueOf(config.getString(path + ".leftClickBehavior").toUpperCase());
-                final ToolBehavior rightClickBehavior = ToolBehavior.valueOf(config.getString(path + ".rightClickBehavior").toUpperCase());
-                final boolean defaultEnabled = config.getBoolean(path + ".defaultEnabled", false);
-                final int item = config.getInt(path + ".item", 0);
-                // TODO
-                // final QueryParams params = new QueryParams();
-                // params.prepareToolQuery = true;
-                // params.parseArgs(Bukkit.getConsoleSender(),
-                // Arrays.asList(config.getString(path +
-                // ".params").split(" ")));
-                final ToolMode mode = ToolMode.valueOf(config.getString(path + ".mode").toUpperCase());
-                final boolean giveTool = config.getBoolean(path + ".giveTool", true);
-                tools.add(new Tool(toolName, aliases, leftClickBehavior, rightClickBehavior, defaultEnabled, item, new QueryParams(), mode, giveTool));
-            } catch (final Exception ex) {
+                String path = "tools." + toolName;
+                List<String> aliases = config.getStringList(path + ".aliases");
+                ToolBehavior leftClickBehavior = ToolBehavior.valueOf(config.getString(path + ".leftClickBehavior").toUpperCase());
+                ToolBehavior rightClickBehavior = ToolBehavior.valueOf(config.getString(path + ".rightClickBehavior").toUpperCase());
+                boolean defaultEnabled = config.getBoolean(path + ".defaultEnabled", false);
+                int item = config.getInt(path + ".item", 0);
+                QueryParams params = new QueryParamsFactory().create(Bukkit.getConsoleSender(), Arrays.asList(config.getString(path + ".params").split(" ")));
+                ToolMode mode = ToolMode.valueOf(config.getString(path + ".mode").toUpperCase());
+                boolean giveTool = config.getBoolean(path + ".giveTool", true);
+                tools.add(new Tool(toolName, aliases, leftClickBehavior, rightClickBehavior, defaultEnabled, item, params, mode, giveTool));
+            } catch (Exception ex) {
                 BukkitUtils.warning("Error at parsing tool '" + toolName + "':)", ex);
             }
         }
         toolsByName = new HashMap<String, Tool>();
         toolsByType = new HashMap<Integer, Tool>();
-        for (final Tool tool : tools) {
+        for (Tool tool : tools) {
             toolsByType.put(tool.item, tool);
             toolsByName.put(tool.name, tool);
-            for (final String alias : tool.aliases) {
+            for (String alias : tool.aliases) {
                 toolsByName.put(alias, tool);
             }
         }
