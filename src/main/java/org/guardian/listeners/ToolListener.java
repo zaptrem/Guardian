@@ -1,10 +1,7 @@
 package org.guardian.listeners;
 
-import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
-import com.sk89q.worldedit.bukkit.selections.Selection;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -47,15 +44,6 @@ public class ToolListener implements Listener {
                             params.loc = block.getRelative(event.getBlockFace()).getLocation();
                         } else if (block.getTypeId() != 54 || tool.params.radius != 0) {
                             params.loc = block.getLocation();
-                        } else {
-                            for (BlockFace face : new BlockFace[]{BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST}) {
-                                if (block.getRelative(face).getTypeId() == 54) {
-                                    params.sel = new CuboidSelection(event.getPlayer().getWorld(), block.getLocation(), block.getRelative(face).getLocation());
-                                }
-                            }
-                            if (params.sel == null) {
-                                params.sel = (Selection) block.getLocation();
-                            }
                         }
                         try {
                             for (BaseCommand guardCmd : plugin.getCommandExecutor().getCommands().toArray(new BaseCommand[0])) {
