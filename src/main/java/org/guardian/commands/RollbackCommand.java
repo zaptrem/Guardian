@@ -43,6 +43,6 @@ public class RollbackCommand extends BaseCommand {
 
     @Override
     public boolean permission() {
-        return true;
+        return sender.hasPermission("guardian.rollback");
     }
 }
