@@ -1,10 +1,14 @@
 package org.guardian.commands;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import org.apache.commons.lang.ArrayUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.guardian.util.BukkitUtils;
 
 public class GuardianCommandExecutor implements CommandExecutor {
 
@@ -34,22 +38,30 @@ public class GuardianCommandExecutor implements CommandExecutor {
         }
 
         // Loop through commands to find match. Supports sub-commands
-        outer:
-        for (BaseCommand guardCmd : getCommands().toArray(new BaseCommand[0])) {
-            String[] cmds = guardCmd.name.split(" ");
-            for (int i = 0; i < cmds.length; i++) {
-                if (i >= args.length || !cmds[i].equalsIgnoreCase(args[i])) {
-                    continue outer;
+        BaseCommand guardCmd;
+        BaseCommand[] guardCmdArray = commands.toArray(new BaseCommand[0]);
+        int index = 0;
+        String[] tempArgs = args;
+        
+        while (index < guardCmdArray.length && tempArgs.length > 0) {
+            BukkitUtils.info(Arrays.toString(tempArgs));
+            guardCmd = guardCmdArray[index];
+            if(tempArgs[0].equalsIgnoreCase(guardCmd.name)) {
+                if(guardCmd.subCommands.size() > 0 && tempArgs.length > 1) {
+                    guardCmdArray = guardCmd.subCommands.toArray(new BaseCommand[0]);
+                    index = 0;
+                    tempArgs = (String[]) ArrayUtils.remove(tempArgs, 0);
+                } else {
+                    tempArgs = (String[]) ArrayUtils.remove(tempArgs, 0);
+                    return guardCmd.newInstance().run(sender, tempArgs, label);
                 }
+            } else {
+                index++;
             }
-            // TODO We need to implement something here that is creating new instances, we don't need instances in memory to have variables set
-            return guardCmd.newInstance().run(sender, args, label);
         }
-
-        // If no matches, just send help
+        
         new HelpCommand().run(sender, args, label);
         return true;
-
     }
 
     /**

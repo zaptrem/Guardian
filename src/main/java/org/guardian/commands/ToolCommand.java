@@ -14,21 +14,15 @@ public class ToolCommand extends BaseCommand {
     public ToolCommand() {
         name = "tool";
         usage = "<- <name> toggle the specified tool";
-        minArgs = 1;
-        maxArgs = 1;
         allowConsole = false;
+        for (String toolName : plugin.getConf().toolsByName.keySet()) {
+            subCommands.add(new SubToolCommand(toolName));
+        }
     }
 
     @Override
     public boolean execute() {
-        PlayerSession session = plugin.getSessionManager().getSession(sender);
-        Tool byname = plugin.getConf().toolsByName.get(args.get(0));
-        SessionToolData data = session.getToolDatas().get(byname);
-        data.setEnabled(!data.isEnabled());
-        if (data.isEnabled()) {
-            ((Player) sender).getInventory().addItem(new ItemStack(byname.item, 1));
-        }
-        BukkitUtils.sendMessage(sender, ChatColor.GREEN + "Your tool is now " + ChatColor.GOLD + ((data.isEnabled()) ? "enabled" : "disabled"));
+        sendUsage();
         return true;
     }
 
@@ -39,16 +33,45 @@ public class ToolCommand extends BaseCommand {
 
     @Override
     public boolean permission(CommandSender csender) {
-        if (args.isEmpty()) {
-            return true;
-        } else {
-            return csender.hasPermission("guardian.tools." + args.get(0));
-        }
+        return true;
     }
 
     @Override
     public BaseCommand newInstance() {
-        // TODO Auto-generated method stub
         return new ToolCommand();
+    }
+    
+    public class SubToolCommand extends SubCommand {
+        
+        public SubToolCommand(String paramName) {
+            name = paramName;
+            minArgs = 1;
+            maxArgs = 1;
+            allowConsole = false;
+        }
+
+        @Override
+        public boolean execute() {
+            PlayerSession session = plugin.getSessionManager().getSession(sender);
+            Tool byname = plugin.getConf().toolsByName.get(name);
+            SessionToolData data = session.getToolDatas().get(byname);
+            data.setEnabled(!data.isEnabled());
+            if (data.isEnabled()) {
+                ((Player) sender).getInventory().addItem(new ItemStack(byname.item, 1));
+            }
+            BukkitUtils.sendMessage(sender, ChatColor.GREEN + "Your tool is now " + ChatColor.GOLD + ((data.isEnabled()) ? "enabled" : "disabled"));
+            return true;
+        }
+
+        @Override
+        public boolean permission(CommandSender csender) {
+            return csender.hasPermission("guardian.tools." + name);
+        }
+
+        @Override
+        public BaseCommand newInstance() {
+            return new SubToolCommand(name);
+        }
+        
     }
 }

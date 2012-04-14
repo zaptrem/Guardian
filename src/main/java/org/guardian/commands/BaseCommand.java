@@ -29,7 +29,9 @@ public abstract class BaseCommand {
     public int minArgs = -1;
     public int maxArgs = -1;
     public boolean allowConsole = true;
+    public boolean commandPassThrough = false;
     public String usage;
+    public List<SubCommand> subCommands = new ArrayList<SubCommand>();
 
     /**
      * Method called by the command manager in {@link Guardian} to run the
@@ -50,10 +52,6 @@ public abstract class BaseCommand {
         // Sort out arguments
         args.clear();
         args.addAll(Arrays.asList(preArgs));
-        // Remove commands from arguments
-        for (int i = 0; i < name.split(" ").length && i < args.size(); i++) {
-            args.remove(0);
-        }
         // Check arg lengths
         if (minArgs > -1 && args.size() < minArgs || maxArgs > -1 && args.size() > maxArgs) {
             BukkitUtils.sendMessage(sender, ChatColor.RED + "Wrong arguments supplied!");
@@ -109,26 +107,5 @@ public abstract class BaseCommand {
     public void sendUsage() {
         BukkitUtils.sendMessage(sender, ChatColor.RED + "/" + usedCommand + " " + name + " " + usage);
     }
-
-    public static void showPage(CommandSender sender, int page) {
-        Guardian plugin = Guardian.getInstance();
-        PlayerSession session = plugin.getSessionManager().getSession(sender);
-        if (session.getEntryCache() != null && session.getEntryCache().size() > 0) {
-            final int startpos = (page - 1) * plugin.getConf().linesPerPage;
-            if (page > 0 && startpos <= session.getEntryCache().size() - 1) {
-                final int stoppos = startpos + plugin.getConf().linesPerPage >= session.getEntryCache().size() ? session.getEntryCache().size() - 1 : startpos + plugin.getConf().linesPerPage - 1;
-                final int numberOfPages = (int) Math.ceil(session.getEntryCache().size() / (double) plugin.getConf().linesPerPage);
-                if (numberOfPages != 1) {
-                    sender.sendMessage(ChatColor.DARK_AQUA + "Page " + page + "/" + numberOfPages);
-                }
-                for (int i = startpos; i <= stoppos; i++) {
-                    sender.sendMessage(ChatColor.GOLD + session.getEntryCache().get(i).getMessage());
-                }
-            } else {
-                sender.sendMessage(ChatColor.RED + "There isn't a page '" + page + "'");
-            }
-        } else {
-            sender.sendMessage(ChatColor.RED + "No blocks in lookup cache");
-        }
-    }
+    
 }
