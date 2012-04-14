@@ -113,7 +113,7 @@ rollback:
       maxTime: 1M
 tools:
   tool:
-    item: 270
+    item: 369
     leftClickBehavior: NONE
     rightClickBehavior: TOOL
     params: area 0 all sum none limit 15 desc silent

@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 
 public class SessionToolData {
 
-    private boolean enabled = true;
+    private boolean enabled = false;
     private ToolMode mode;
     private List<String> params;
 
