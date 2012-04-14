@@ -1,5 +1,7 @@
 package org.guardian.tools;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.entity.Player;
 import org.guardian.params.QueryParams;
 
@@ -7,11 +9,11 @@ public class SessionToolData {
 
     private boolean enabled;
     private ToolMode mode;
-    private QueryParams params;
+    private List<String> params;
 
     public SessionToolData(Tool tool, Player player) {
         enabled = tool.defaultEnabled && player.hasPermission("guardian.tools." + tool.name);
-        params = tool.params.clone();
+        params = new ArrayList<String>(tool.params);
         mode = tool.mode;
     }
 
@@ -19,7 +21,7 @@ public class SessionToolData {
         return mode;
     }
 
-    public QueryParams getParams() {
+    public List<String> getParams() {
         return params;
     }
 
@@ -35,7 +37,7 @@ public class SessionToolData {
         this.mode = mode;
     }
 
-    public void setParams(QueryParams params) {
+    public void setParams(List<String> params) {
         this.params = params;
     }
 }

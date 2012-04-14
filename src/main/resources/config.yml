@@ -19,7 +19,7 @@ worlds:
     block-break: true
     block-burn: true
     block-dispense: true
-    block-fade: true
+    block-fade: false
     block-form: true
     block-from-to: true
     block-lava-flow: true
@@ -69,7 +69,7 @@ worlds:
 consumer:
   maxTimePerRun: 1000
   forceToProcessAtLeast: 200
-  delayBetweenRuns: 4
+  delayBetweenRuns: 2
 lookup:
   linesLimit: 1500
   defaultTime: 30m

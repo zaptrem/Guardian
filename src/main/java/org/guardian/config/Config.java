@@ -7,6 +7,8 @@ import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 import org.guardian.ActionType;
 import org.guardian.Guardian;
 import org.guardian.params.QueryParams;
@@ -130,10 +132,11 @@ public final class Config {
                 ToolBehavior rightClickBehavior = ToolBehavior.valueOf(config.getString(path + ".rightClickBehavior").toUpperCase());
                 boolean defaultEnabled = config.getBoolean(path + ".defaultEnabled", false);
                 int item = config.getInt(path + ".item", 0);
-                QueryParams params = new QueryParamsFactory().create(Bukkit.getConsoleSender(), Arrays.asList(config.getString(path + ".params").split(" ")));
                 ToolMode mode = ToolMode.valueOf(config.getString(path + ".mode").toUpperCase());
                 boolean giveTool = config.getBoolean(path + ".giveTool", true);
+                List<String> params = Arrays.asList(config.getString(path + ".params").split(" "));
                 tools.add(new Tool(toolName, aliases, leftClickBehavior, rightClickBehavior, defaultEnabled, item, params, mode, giveTool));
+                Bukkit.getServer().getPluginManager().addPermission(new Permission("guardian.tools." + toolName, PermissionDefault.TRUE));
             } catch (Exception ex) {
                 BukkitUtils.warning("Error at parsing tool '" + toolName + "':)", ex);
             }

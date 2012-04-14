@@ -12,6 +12,7 @@ import org.guardian.commands.BaseCommand;
 import org.guardian.commands.SearchCommand;
 import org.guardian.commands.SearchCommand.CommandSearch;
 import org.guardian.params.QueryParams;
+import org.guardian.params.QueryParamsFactory;
 import org.guardian.tools.SessionToolData;
 import org.guardian.tools.Tool;
 import org.guardian.tools.ToolBehavior;
@@ -37,12 +38,14 @@ public class ToolListener implements Listener {
                     SessionToolData toolData = plugin.getSessionManager().getSession(player).getToolDatas().get(tool);
                     if (behavior != ToolBehavior.NONE && toolData.isEnabled()) {
                         Block block = event.getClickedBlock();
-                        QueryParams params = toolData.getParams();
+                        QueryParams params = new QueryParamsFactory().create(player, toolData.getParams());
                         params.loc = null;
                         params.sel = null;
                         if (behavior == ToolBehavior.BLOCK) {
                             params.loc = block.getRelative(event.getBlockFace()).getLocation();
-                        } else if (block.getTypeId() != 54 || tool.params.radius != 0) {
+                        } else if (behavior == ToolBehavior.TOOL) {
+                            params.loc = event.getClickedBlock().getLocation();
+                        } else if (params.radius != 0) {
                             params.loc = block.getLocation();
                         }
                         try {
