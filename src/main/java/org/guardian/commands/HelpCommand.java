@@ -17,7 +17,7 @@ public class HelpCommand extends BaseCommand {
     public boolean execute() {
         // General help
         if (args.isEmpty()) {
-            BukkitUtils.sendMessage(sender, ChatColor.AQUA + "---------------------- Guardian v" + plugin.getDescription().getVersion() + "----------------------");
+            BukkitUtils.sendMessage(sender, ChatColor.AQUA + cleanTitle("Guardian v" + plugin.getDescription().getVersion(), "="));
             BukkitUtils.sendMessage(sender, "Type /guardian help <command> for more info on that command");
             for (BaseCommand cmd : plugin.getCommandExecutor().getCommands().toArray(new BaseCommand[0])) {
                 if (cmd.permission(sender)) {
@@ -54,5 +54,20 @@ public class HelpCommand extends BaseCommand {
     @Override
     public BaseCommand newInstance() {
         return new HelpCommand();
+    }
+    
+    public String cleanTitle(String title, String fill) { // Formats a string with a provided title and padding and centers title
+        int chatWidthMax = 53; // Vanilla client line character max
+        int titleWidth = title.length() + 2; // Title's character width with 2 spaces padding
+        int fillWidth = (int) ((chatWidthMax - titleWidth) / 2D); // Fill string calculation for padding either side
+        String cleanTitle = "";
+        
+        for(int i = 0; i < fillWidth; i++)
+            cleanTitle += fill;
+        cleanTitle += " " + title + " ";
+        for(int i = 0; i < fillWidth; i++)
+            cleanTitle += fill;
+        
+        return cleanTitle;
     }
 }
