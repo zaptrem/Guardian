@@ -1,7 +1,6 @@
 package org.guardian.commands;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -14,7 +13,7 @@ public class ToolCommand extends BaseCommand {
 
     public ToolCommand() {
         name = "tool";
-        usage = "<- <enable/disable> toggle the specified tool";
+        usage = "<- <name> toggle the specified tool";
         minArgs = 1;
         maxArgs = 1;
         allowConsole = false;
