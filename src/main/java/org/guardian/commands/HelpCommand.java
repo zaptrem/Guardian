@@ -47,11 +47,6 @@ public class HelpCommand extends BaseCommand {
     }
 
     @Override
-    public boolean permission() {
-        return true;
-    }
-
-    @Override
     public boolean permission(CommandSender csender) {
         return true;
     }

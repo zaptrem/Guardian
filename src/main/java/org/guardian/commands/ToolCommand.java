@@ -33,12 +33,6 @@ public class ToolCommand extends BaseCommand {
     }
 
     @Override
-    public boolean permission() {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
-    @Override
     public void moreHelp() {
         // TODO Auto-generated method stub
     }
@@ -48,7 +42,7 @@ public class ToolCommand extends BaseCommand {
         if (args.isEmpty()) {
             return true;
         } else {
-            return sender.hasPermission("guardian.tools." + args.get(0));
+            return csender.hasPermission("guardian.tools." + args.get(0));
         }
     }
 

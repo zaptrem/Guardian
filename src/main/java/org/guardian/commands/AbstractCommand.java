@@ -5,6 +5,7 @@ import org.guardian.Guardian;
 import org.guardian.params.QueryParams;
 
 public abstract class AbstractCommand implements Runnable {
+
     protected CommandSender sender;
     protected QueryParams params;
     protected Guardian plugin;
@@ -14,9 +15,11 @@ public abstract class AbstractCommand implements Runnable {
         this.params = params;
         this.plugin = Guardian.getInstance();
         if (async) {
-            if (plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, this) == -1)
+            if (plugin.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, this) == -1) {
                 throw new Exception("Failed to schedule the command");
-        } else
+            }
+        } else {
             run();
+        }
     }
 }

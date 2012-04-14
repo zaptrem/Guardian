@@ -33,11 +33,6 @@ public class SearchCommand extends BaseCommand {
         // TODO display help
     }
 
-    @Override
-    public boolean permission() {
-        return sender.hasPermission("guardian.lookup");
-    }
-
     public class CommandSearch extends AbstractCommand {
 
         public CommandSearch(CommandSender sender, QueryParams params, boolean async) throws Exception {

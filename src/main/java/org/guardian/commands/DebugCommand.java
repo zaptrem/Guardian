@@ -40,17 +40,6 @@ public class DebugCommand extends BaseCommand {
     }
 
     @Override
-    public boolean permission() {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
-    @Override
-    public void moreHelp() {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
     public boolean permission(CommandSender csender) {
         // TODO Auto-generated method stub
         return true;

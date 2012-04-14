@@ -23,11 +23,6 @@ public class PreviewCancelCommand extends BaseCommand {
     }
 
     @Override
-    public boolean permission() {
-        return true;
-    }
-
-    @Override
     public boolean permission(CommandSender csender) {
         // TODO Auto-generated method stub
         return true;

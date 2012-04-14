@@ -89,16 +89,19 @@ public abstract class BaseCommand {
      *
      * @return true if the user has permission, false if not
      */
-    public abstract boolean permission();
-    
+    public final boolean permission() {
+        return permission(sender);
+    }
+
     public abstract boolean permission(CommandSender csender);
-    
+
     public abstract BaseCommand newInstance();
 
     /**
      * Sends advanced help to the sender
      */
-    public abstract void moreHelp();
+    public void moreHelp() {
+    }
 
     /**
      * Displays the help information for this command
