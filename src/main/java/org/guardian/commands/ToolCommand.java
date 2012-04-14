@@ -39,11 +39,7 @@ public class ToolCommand extends BaseCommand {
 
     @Override
     public boolean permission(CommandSender csender) {
-        if (args.isEmpty()) {
-            return true;
-        } else {
-            return csender.hasPermission("guardian.tools." + args.get(0));
-        }
+        return csender.hasPermission("guardian.tools." + args.get(0));
     }
 
     @Override
