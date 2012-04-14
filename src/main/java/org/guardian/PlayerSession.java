@@ -16,7 +16,6 @@ public class PlayerSession {
     private Map<Tool, SessionToolData> toolDatas;
     private List<Entry> entryCache;
     private QueryParams lastQuery;
-    public boolean toolsEnabled = true; // TODO this properly
 
     public PlayerSession(CommandSender sender) {
         this.sender = sender;

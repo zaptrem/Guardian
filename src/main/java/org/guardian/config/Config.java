@@ -136,7 +136,7 @@ public final class Config {
                 boolean giveTool = config.getBoolean(path + ".giveTool", true);
                 List<String> params = Arrays.asList(config.getString(path + ".params").split(" "));
                 tools.add(new Tool(toolName, aliases, leftClickBehavior, rightClickBehavior, defaultEnabled, item, params, mode, giveTool));
-                Bukkit.getServer().getPluginManager().addPermission(new Permission("guardian.tools." + toolName, PermissionDefault.TRUE));
+                Bukkit.getServer().getPluginManager().addPermission(new Permission("guardian.tools." + toolName, PermissionDefault.OP));
             } catch (Exception ex) {
                 BukkitUtils.warning("Error at parsing tool '" + toolName + "':)", ex);
             }

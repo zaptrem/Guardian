@@ -3,11 +3,10 @@ package org.guardian.tools;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.entity.Player;
-import org.guardian.params.QueryParams;
 
 public class SessionToolData {
 
-    private boolean enabled;
+    private boolean enabled = true;
     private ToolMode mode;
     private List<String> params;
 

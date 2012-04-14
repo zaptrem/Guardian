@@ -1,31 +1,35 @@
 package org.guardian.commands;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.guardian.PlayerSession;
+import org.guardian.tools.SessionToolData;
+import org.guardian.tools.Tool;
 import org.guardian.util.BukkitUtils;
 
 public class ToolCommand extends BaseCommand {
 
     public ToolCommand() {
         name = "tool";
-        usage = "<- <enable/disable> toggle all your tools";
-        minArgs = 0;
+        usage = "<- <enable/disable> toggle the specified tool";
+        minArgs = 1;
         maxArgs = 1;
+        allowConsole = false;
     }
 
     @Override
     public boolean execute() {
         PlayerSession session = plugin.getSessionManager().getSession(sender);
-        if (!args.isEmpty()) {
-            if (args.get(0).equalsIgnoreCase("enable")) {
-                session.toolsEnabled = true;
-            } else {
-                session.toolsEnabled = false;
-            }
+        Tool byname = plugin.getConf().toolsByName.get(args.get(0));
+        SessionToolData data = session.getToolDatas().get(byname);
+        data.setEnabled(!data.isEnabled());
+        if (data.isEnabled()) {
+            ((Player) sender).getInventory().addItem(new ItemStack(byname.item, 1));
         }
-        session.toolsEnabled = !session.toolsEnabled;
-        BukkitUtils.sendMessage(sender, ChatColor.GREEN + "Your tools are now " + ChatColor.GOLD + ((session.toolsEnabled) ? "enabled" : "disabled"));
+        BukkitUtils.sendMessage(sender, ChatColor.GREEN + "Your tool is now " + ChatColor.GOLD + ((data.isEnabled()) ? "enabled" : "disabled"));
         return true;
     }
 
@@ -42,8 +46,7 @@ public class ToolCommand extends BaseCommand {
 
     @Override
     public boolean permission(CommandSender csender) {
-        // TODO Auto-generated method stub
-        return true;
+        return sender.hasPermission("guardian.tools." + args.get(0));
     }
 
     @Override

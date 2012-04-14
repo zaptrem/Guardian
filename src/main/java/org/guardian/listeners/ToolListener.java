@@ -27,7 +27,7 @@ public class ToolListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.hasBlock() && event.getMaterial() != null && plugin.getSessionManager().getSession(event.getPlayer()).toolsEnabled) {
+        if (event.hasBlock() && event.getMaterial() != null) {
             int type = event.getMaterial().getId();
             Tool tool = plugin.getConf().toolsByType.get(type);
             if (tool != null) {
