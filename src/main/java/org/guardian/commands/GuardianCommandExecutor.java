@@ -44,7 +44,6 @@ public class GuardianCommandExecutor implements CommandExecutor {
         String[] tempArgs = args;
         
         while (index < guardCmdArray.length && tempArgs.length > 0) {
-            BukkitUtils.info(Arrays.toString(tempArgs));
             guardCmd = guardCmdArray[index];
             if(tempArgs[0].equalsIgnoreCase(guardCmd.name)) {
                 if(guardCmd.subCommands.size() > 0 && tempArgs.length > 1) {
