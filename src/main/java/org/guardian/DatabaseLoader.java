@@ -15,14 +15,16 @@ public class DatabaseLoader {
 
     public static DatabaseBridge loadBridge(File file) {
         DatabaseBridge theBridge = null;
+        PluginDescriptionFile bridgeDescription = null;
         try {
             // Load the jar
             JarFile jar = new JarFile(file);
             // Load the info about the bridge
             JarEntry entry = jar.getJarEntry("bridge.yml");
             InputStream stream = jar.getInputStream(entry);
+            bridgeDescription = new PluginDescriptionFile(stream);
             // Get the main class
-            String main = new PluginDescriptionFile(stream).getMain();
+            String main = bridgeDescription.getMain();
             // Clean it all up
             stream.close();
             jar.close();
@@ -45,6 +47,8 @@ public class DatabaseLoader {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        Guardian.getInstance().getConf().bridgeDescription = bridgeDescription;
+        BukkitUtils.info("Loading " + bridgeDescription.getName() + " v" + bridgeDescription.getVersion());
         // Lets return it
         return theBridge;
     }
