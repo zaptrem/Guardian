@@ -47,10 +47,11 @@ public class Guardian extends JavaPlugin {
             HttpURLConnection connection = (HttpURLConnection) test.openConnection();
             connection.connect();
             JSONObject object = (JSONObject) new JSONParser().parse(new InputStreamReader(connection.getInputStream()));
-            if(Integer.parseInt(guardian.getDescription().getVersion()) < Integer.parseInt(object.get("number").toString())) {
+            String version = guardian.getDescription().getVersion();
+            if (!version.equals("Unknown") && Integer.parseInt(version) < Integer.parseInt(object.get("number").toString())) {
                 BukkitUtils.info("Guardian is out of date, please download the latest");
             }
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             BukkitUtils.severe("Error occurred while checking if Guardian is up to date", ex);
         }
     }

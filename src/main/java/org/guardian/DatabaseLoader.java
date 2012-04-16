@@ -29,11 +29,23 @@ public class DatabaseLoader {
             bridgeDescription = new PluginDescriptionFile(stream);
             // Get the main class
             String main = bridgeDescription.getMain();
+            try {
+                URL test = new URL("http://guardian.nekotech.tk:8080/job/Guardian-MySQL/Guardian-MySQL-RB/api/json");
+                HttpURLConnection connection = (HttpURLConnection) test.openConnection();
+                connection.connect();
+                JSONObject object = (JSONObject) new JSONParser().parse(new InputStreamReader(connection.getInputStream()));
+                String version = bridgeDescription.getVersion();
+                if (!version.equals("Unknown") && Integer.parseInt(version) < Integer.parseInt(object.get("number").toString())) {
+                    BukkitUtils.info("Guardian-Bridge is out of date, please download the latest");
+                }
+            } catch (Exception ex) {
+                BukkitUtils.severe("Error occurred while checking if Guardian is up to date", ex);
+            }
             // Clean it all up
             stream.close();
             jar.close();
             // Get a new classloader
-            URLClassLoader classLoader = new URLClassLoader(new URL[] { file.toURI().toURL() }, DatabaseBridge.class.getClassLoader());
+            URLClassLoader classLoader = new URLClassLoader(new URL[]{file.toURI().toURL()}, DatabaseBridge.class.getClassLoader());
             // Load the class
             Class<?> clazz = classLoader.loadClass(main);
             // Construct it
