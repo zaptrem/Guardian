@@ -56,6 +56,7 @@ public final class Config {
     // Other
     public PluginDescriptionFile bridgeDescription;
     private Guardian plugin = Guardian.getInstance();
+    private String lastVersion;
 
     public Config() {
         load();
@@ -154,6 +155,10 @@ public final class Config {
         }
         // Materials
         materialDataManager = new MaterialData(new File(plugin.getDataFolder().getPath() + File.separator + "materials.yml"));
+        String version = plugin.getDescription().getVersion();
+        lastVersion = config.getString("version", version);
+        config.set("version", version);
+        plugin.saveConfig();
     }
 
     public boolean isLogged(String world) {
