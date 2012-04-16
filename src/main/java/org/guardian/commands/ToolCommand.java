@@ -45,8 +45,6 @@ public class ToolCommand extends BaseCommand {
         
         public SubToolCommand(String paramName) {
             name = paramName;
-            minArgs = 1;
-            maxArgs = 1;
             allowConsole = false;
         }
 
