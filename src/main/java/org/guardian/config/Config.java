@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.guardian.ActionType;
 import org.guardian.Guardian;
 import org.guardian.params.QueryParams;
@@ -53,6 +54,7 @@ public final class Config {
     // Materials
     public MaterialData materialDataManager;
     // Other
+    public PluginDescriptionFile bridgeDescription;
     private Guardian plugin = Guardian.getInstance();
 
     public Config() {
