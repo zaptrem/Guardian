@@ -3,6 +3,8 @@ package org.guardian;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.jar.JarEntry;
@@ -10,6 +12,8 @@ import java.util.jar.JarFile;
 import java.util.zip.ZipException;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.guardian.util.BukkitUtils;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 public class DatabaseLoader {
 
@@ -46,6 +50,17 @@ public class DatabaseLoader {
             BukkitUtils.severe("The database bridge appears to be an invalid jar file");
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+        try {
+            URL test = new URL("http://guardian.nekotech.tk:8080/job/Guardian/Guardian-RB/api/json");
+            HttpURLConnection connection = (HttpURLConnection) test.openConnection();
+            connection.connect();
+            JSONObject object = (JSONObject) new JSONParser().parse(new InputStreamReader(connection.getInputStream()));
+            if(Integer.parseInt(bridgeDescription.getVersion()) < Integer.parseInt(object.get("number").toString())) {
+                BukkitUtils.info("Guardian-MySQL is out of date, please download the latest");
+            }
+        } catch(Exception ex) {
+            BukkitUtils.severe("Error occurred while checking if Guardian-MySQL is up to date", ex);
         }
         Guardian.getInstance().getConf().bridgeDescription = bridgeDescription;
         BukkitUtils.info("Loading " + bridgeDescription.getName() + " v" + bridgeDescription.getVersion());
