@@ -3,6 +3,9 @@ package org.guardian;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,6 +22,8 @@ import org.guardian.listeners.inventory.InventoryClick;
 import org.guardian.params.QueryParams;
 import org.guardian.util.BukkitUtils;
 import org.guardian.util.Utils;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 public class Guardian extends JavaPlugin {
 
@@ -37,6 +42,17 @@ public class Guardian extends JavaPlugin {
     @Override
     public void onLoad() {
         guardian = this;
+        try {
+            URL test = new URL("http://guardian.nekotech.tk:8080/job/Guardian/Guardian-RB/api/json");
+            HttpURLConnection connection = (HttpURLConnection) test.openConnection();
+            connection.connect();
+            JSONObject object = (JSONObject) new JSONParser().parse(new InputStreamReader(connection.getInputStream()));
+            if(Integer.parseInt(guardian.getDescription().getVersion()) < Integer.parseInt(object.get("number").toString())) {
+                BukkitUtils.info("Guardian is out of date, please download the latest");
+            }
+        } catch(Exception ex) {
+            BukkitUtils.severe("Error occurred while checking if Guardian is up to date", ex);
+        }
     }
 
     @Override

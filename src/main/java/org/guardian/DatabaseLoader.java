@@ -51,17 +51,6 @@ public class DatabaseLoader {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        try {
-            URL test = new URL("http://guardian.nekotech.tk:8080/job/Guardian/Guardian-RB/api/json");
-            HttpURLConnection connection = (HttpURLConnection) test.openConnection();
-            connection.connect();
-            JSONObject object = (JSONObject) new JSONParser().parse(new InputStreamReader(connection.getInputStream()));
-            if(Integer.parseInt(bridgeDescription.getVersion()) < Integer.parseInt(object.get("number").toString())) {
-                BukkitUtils.info("Guardian-MySQL is out of date, please download the latest");
-            }
-        } catch(Exception ex) {
-            BukkitUtils.severe("Error occurred while checking if Guardian-MySQL is up to date", ex);
-        }
         Guardian.getInstance().getConf().bridgeDescription = bridgeDescription;
         BukkitUtils.info("Loading " + bridgeDescription.getName() + " v" + bridgeDescription.getVersion());
         // Lets return it
