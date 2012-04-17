@@ -2,6 +2,7 @@ package org.guardian;
 
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -95,7 +96,7 @@ public class Guardian extends JavaPlugin {
             return;
         }
         // Start the consumer
-        consumerId = getServer().getScheduler().scheduleAsyncRepeatingTask(this, database.getConsumer(), getConf().delayBetweenRuns * 20, getConf().delayBetweenRuns * 20);
+        consumerId = getServer().getScheduler().scheduleAsyncRepeatingTask(this, database, getConf().delayBetweenRuns * 20, getConf().delayBetweenRuns * 20);
         if (consumerId <= 0) {
             fatalError("Failed to start the consumer");
             return;
@@ -148,6 +149,30 @@ public class Guardian extends JavaPlugin {
         getServer().getScheduler().cancelTask(consumerId);
         // Cancel anything else that happens to be working for us
         getServer().getScheduler().cancelTasks(this);
+        if (database != null) {
+            if (database.getQueueSize() > 0) {
+                BukkitUtils.info("Waiting for consumer ...");
+                int tries = 10;
+                while (database.getQueueSize() > 0) {
+                    BukkitUtils.info("Remaining queue size: " + database.getQueueSize());
+                    if (tries > 0)
+                        BukkitUtils.info("Remaining tries: " + tries);
+                    else {
+                        BukkitUtils.info("Unable to save queue to database. Trying to write to a local file.");
+                        try {
+                            database.writeLocalDump();
+                            BukkitUtils.info("Successfully dumped queue.");
+                        } catch (IOException ex) {
+                            BukkitUtils.severe("Failed to write. Given up.", ex);
+                            break;
+                        }
+                    }
+                    database.run();
+                    tries--;
+                }
+            }
+        }
+        BukkitUtils.info("Guardian disabled.");
     }
 
     public void fatalError(String error) {

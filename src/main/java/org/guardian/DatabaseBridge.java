@@ -7,17 +7,19 @@ import java.util.List;
 import org.guardian.entries.Entry;
 import org.guardian.params.QueryParams;
 
-public interface DatabaseBridge extends Closeable {
+public interface DatabaseBridge extends Closeable, Runnable {
 
-    boolean init() throws SQLException;
+    public void dumpFailedEntry(Entry entry);
 
     public Runnable getConsumer();
+
+    public List<Entry> getEntries(QueryParams params) throws SQLException;
+
+    public int getQueueSize();
+
+    boolean init() throws SQLException;
 
     public void queueEntry(Entry entry);
 
     public void writeLocalDump() throws IOException;
-
-    public void dumpFailedEntry(Entry entry);
-
-    public List<Entry> getEntries(QueryParams params) throws SQLException;
 }

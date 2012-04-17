@@ -9,9 +9,8 @@ import org.guardian.util.BukkitUtils;
 
 public class BlockEntry extends DataEntry {
 
-    private int typeFrom, typeTo;
-    private byte dataFrom;
-    private final byte dataTo;
+    protected int typeFrom, typeTo;
+    protected byte dataFrom, dataTo;
 
     public BlockEntry(ActionType action, String playerName, Location loc, long date, int typeFrom, byte dataFrom, int typeTo, byte dataTo, String pluginName) {
         super(action, playerName, loc, loc.getWorld().getName(), date, pluginName);
@@ -47,6 +46,10 @@ public class BlockEntry extends DataEntry {
 
     public byte getDataAfter() {
         return dataTo;
+    }
+    
+    public void setDataAfter(byte dataAfter) {
+        dataTo = dataAfter;
     }
 
     /**
