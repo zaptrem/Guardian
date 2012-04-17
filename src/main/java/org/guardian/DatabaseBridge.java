@@ -11,8 +11,6 @@ public interface DatabaseBridge extends Closeable, Runnable {
 
     public void dumpFailedEntry(Entry entry);
 
-    public Runnable getConsumer();
-
     public List<Entry> getEntries(QueryParams params) throws SQLException;
 
     public int getQueueSize();

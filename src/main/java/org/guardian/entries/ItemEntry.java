@@ -12,8 +12,8 @@ import org.guardian.util.BukkitUtils;
 
 public class ItemEntry extends DataEntry {
 
-    private int typeId, data, amount;
-    private Map<Enchantment, Integer> enchantments;
+    protected int typeId, data, amount;
+    protected Map<Enchantment, Integer> enchantments;
 
     public ItemEntry(ActionType action, String playerName, Location loc, long date, ItemStack item, String pluginName) {
         super(action, playerName, loc, loc.getWorld().getName(), date, pluginName);
