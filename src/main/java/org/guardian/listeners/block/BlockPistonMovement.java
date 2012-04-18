@@ -14,12 +14,14 @@ public class BlockPistonMovement extends LoggingListener{
 	
 		@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	    public void onBlockPistonExtend(BlockPistonExtendEvent event) {
-		 
+			
 		 LinkedList<Block>blocks = new LinkedList<Block>(event.getBlocks());
 		 Block temp = blocks.pollFirst();
+		 if (temp!=null) {
 		 consumer.queueEntry(new BlockEntry(ActionType.BLOCK_FROM_TO, PISTON, temp.getLocation(), System.currentTimeMillis(), temp.getTypeId(), temp.getData(),  0, (byte)0, PLUGIN));
 		 for (Block block : blocks) {
 			 consumer.queueEntry(new BlockEntry(ActionType.BLOCK_FROM_TO, PISTON, block.getLocation(), System.currentTimeMillis(), temp.getTypeId(), temp.getData(), block.getTypeId(), block.getData(), PLUGIN));
 	     	 temp = block;
-	     }
+	     }}
+
 }}
