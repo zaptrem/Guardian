@@ -19,14 +19,7 @@ public class BlockPistonMovement extends LoggingListener{
 		 Block temp = blocks.pollFirst();
 		 consumer.queueEntry(new BlockEntry(ActionType.BLOCK_FROM_TO, PISTON, temp.getLocation(), System.currentTimeMillis(), temp.getTypeId(), temp.getData(),  0, (byte)0, PLUGIN));
 		 for (Block block : blocks) {
-	     
-	     
-	   
-	      	 System.out.println("FROM "+temp.getType()+" TO "+block.getType()  );
-	    	 consumer.queueEntry(new BlockEntry(ActionType.BLOCK_FROM_TO, PISTON, block.getLocation(), System.currentTimeMillis(), temp.getTypeId(), temp.getData(), block.getTypeId(), block.getData(), PLUGIN));
-	     
-	     temp = block;
-	    
-		 }
-		
+			 consumer.queueEntry(new BlockEntry(ActionType.BLOCK_FROM_TO, PISTON, block.getLocation(), System.currentTimeMillis(), temp.getTypeId(), temp.getData(), block.getTypeId(), block.getData(), PLUGIN));
+	     	 temp = block;
+	     }
 }}
