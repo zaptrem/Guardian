@@ -117,6 +117,7 @@ public class Guardian extends JavaPlugin {
         }
         if (conf.superWorldConfig.isLogging(ActionType.BLOCK_FROM_TO)) {
             new BlockFromTo();
+            new BlockPistonMovement();
         }
         if (conf.superWorldConfig.isLogging(ActionType.BLOCK_SPREAD)) {
             new BlockSpread();
