@@ -39,8 +39,8 @@ public class MaterialName {
             cfg.set("31.0", "dead long grass");
             cfg.set("31.2", "fern");
             for (byte i = 0; i < 7; i++) {
-                cfg.set("35." + i, toReadable(Material.STEP.getNewData(i)));
-                cfg.set("351." + i, toReadable(Material.DOUBLE_STEP.getNewData(i)));
+                cfg.set("44." + i, toReadable(Material.STEP.getNewData(i)));
+                cfg.set("43." + i, toReadable(Material.DOUBLE_STEP.getNewData(i)));
             }
             for (byte i = 0; i < 16; i++) {
                 cfg.set("35." + i, toReadable(Material.WOOL.getNewData(i)));
