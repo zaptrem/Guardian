@@ -14,6 +14,12 @@ public class PlayerBucketEmpty extends LoggingListener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerBucketEmpty(final PlayerBucketEmptyEvent event) {
     	Block block = event.getBlockClicked().getRelative(event.getBlockFace());
-     	consumer.queueEntry(new BlockEntry(ActionType.BLOCK_PLACE, event.getPlayer().getName(), block.getLocation(), System.currentTimeMillis(), 0 , (byte) 0 ,  Material.WATER.getId(), block.getData(), PLUGIN));
+    	int id = 0;
+    	if (event.getBucket().compareTo(Material.LAVA_BUCKET) == 0) {
+    		id = Material.LAVA.getId();
+    	} else {
+    		id = Material.WATER.getId();
+    	}
+     	consumer.queueEntry(new BlockEntry(ActionType.BLOCK_PLACE, event.getPlayer().getName(), block.getLocation(), System.currentTimeMillis(), 0 , (byte) 0 ,  id, block.getData(), PLUGIN));
     }
 }
