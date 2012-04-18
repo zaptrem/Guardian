@@ -9,6 +9,8 @@ public class DeathEntry extends DataEntry {
 
     private String cause, killer;
 
+    protected DeathEntry() { }
+    
     public DeathEntry(ActionType action, String playerName, Location loc, String worldName, long date, String pluginName) {
         super(action, playerName, loc, worldName, date, pluginName);
     }

@@ -15,6 +15,8 @@ public class ItemEntry extends DataEntry {
     protected int typeId, data, amount;
     protected Map<Enchantment, Integer> enchantments;
 
+    protected ItemEntry() { }
+    
     public ItemEntry(ActionType action, String playerName, Location loc, long date, ItemStack item, String pluginName) {
         super(action, playerName, loc, loc.getWorld().getName(), date, pluginName);
         typeId = item.getTypeId();

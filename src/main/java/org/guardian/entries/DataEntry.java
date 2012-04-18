@@ -17,7 +17,9 @@ public abstract class DataEntry implements Entry {
     protected boolean rollbacked;
     protected String pluginName;
     protected List<DataEntry> children;
-
+    
+    protected DataEntry() { }
+    
     protected DataEntry(ActionType action, String playerName, Location loc, String worldName, long date, String pluginName) {
         this(-1, date, action, playerName, worldName, loc, false, pluginName, null);
     }
