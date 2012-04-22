@@ -56,7 +56,7 @@ public class BukkitUtils {
      */
     public static void info(String msg) {
         final StringBuilder out = new StringBuilder();
-        out.append("[Guardian] ");
+        out.append("[Guardian v" + Guardian.getInstance().getDescription().getVersion()  + "] ");
         out.append(msg);
         log.log(Level.INFO, out.toString());
     }
@@ -68,7 +68,7 @@ public class BukkitUtils {
      */
     public static void warning(String msg) {
         final StringBuilder out = new StringBuilder();
-        out.append("[Guardian] ");
+        out.append("[Guardian v" + Guardian.getInstance().getDescription().getVersion()  + "] ");
         out.append(msg);
         log.log(Level.WARNING, out.toString());
     }
@@ -80,7 +80,7 @@ public class BukkitUtils {
      * @param ex
      */
     public static void warning(String msg, Exception ex) {
-        log.log(Level.WARNING, "[Guardian] " + msg + ":", ex);
+        log.log(Level.WARNING, "[Guardian v" + Guardian.getInstance().getDescription().getVersion()  + "] " + msg + ":", ex);
     }
 
     /**
@@ -90,7 +90,7 @@ public class BukkitUtils {
      */
     public static void severe(String msg) {
         final StringBuilder out = new StringBuilder();
-        out.append("[Guardian] ");
+        out.append("[Guardian v" + Guardian.getInstance().getDescription().getVersion()  + "] ");
         out.append(msg);
         log.log(Level.SEVERE, out.toString());
     }
@@ -102,7 +102,7 @@ public class BukkitUtils {
      * @param ex
      */
     public static void severe(String msg, Exception ex) {
-        log.log(Level.SEVERE, "[Guardian] " + msg + ":", ex);
+        log.log(Level.SEVERE, "[Guardian v" + Guardian.getInstance().getDescription().getVersion()  + "] " + msg + ":", ex);
     }
 
     /**
