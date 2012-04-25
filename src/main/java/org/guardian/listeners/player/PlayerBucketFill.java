@@ -13,6 +13,6 @@ public class PlayerBucketFill extends LoggingListener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerBucketFill(final PlayerBucketFillEvent event) {
     	Block block = event.getBlockClicked();
-    	  consumer.queueEntry(new ItemEntry(ActionType.PLAYER_BUCKET_FILL, event.getPlayer().getName(), block.getLocation(), System.currentTimeMillis(), event.getPlayer().getItemInHand(), PLUGIN));
+    	consumer.queueEntry(new ItemEntry(ActionType.PLAYER_BUCKET_FILL, event.getPlayer().getName(), block.getLocation(), System.currentTimeMillis(), event.getPlayer().getItemInHand(), PLUGIN));
     }
 }
