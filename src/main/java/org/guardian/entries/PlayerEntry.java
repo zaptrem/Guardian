@@ -6,16 +6,17 @@ import org.guardian.ActionType;
 
 public class PlayerEntry implements Entry {
 
-    private int playerId;
-    private String name, ip;
-    private long firstLogin, lastLogin, onlineTime;
+    protected int playerId;
+    protected String name, ip;
+    protected long firstLogin, lastLogin, onlineTime, leaveTime;
+    protected boolean playerLogin, playerLogout;
 
-    public int getId() {
+    public int getPlayerId() {
         return playerId;
     }
 
-    public void setId(int id) {
-        playerId = id;
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
     }
 
     public String getName() {
@@ -58,12 +59,34 @@ public class PlayerEntry implements Entry {
         this.onlineTime = onlineTime;
     }
 
-    @Override
+    public long getLeaveTime() {
+        return leaveTime;
+    }
+
+    public void setLeaveTime(long leaveTime) {
+        this.leaveTime = leaveTime;
+    }
+
+    public boolean isPlayerLogin() {
+        return playerLogin;
+    }
+
+    public void setPlayerLogin(boolean playerLogin) {
+        this.playerLogin = playerLogin;
+    }
+
+    public boolean isPlayerLogout() {
+        return playerLogout;
+    }
+
+    public void setPlayerLogout(boolean playerLogout) {
+        this.playerLogout = playerLogout;
+    }
+
     public String getMessage() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
     public ActionType getAction() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
