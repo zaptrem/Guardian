@@ -30,7 +30,17 @@ public class WorldConfig {
             actions[action.ordinal()] = cfg.getBoolean(action.getConfigPath());
         }
         ignored = cfg.getBoolean("ignored");
-        ignoredPlayers = new HashSet<String>(cfg.getStringList("ignoredPlayers"));
+        ignoredPlayers = new HashSet<String>();
+
+        // Cicadia:
+        //ignoredPlayers = new HashSet<String>(cfg.getStringList("ignoredPlayers"));
+        
+        // Issue #74 [patch] (ignoredPlayers doesn't have to be typed in lowercase)
+        
+        // Load the ignoredPlayers into HashSet and lowercase all player names.
+        for (String player : cfg.getStringList("ignoredPlayers")) {
+            ignoredPlayers.add(player.toLowerCase());
+        }
     }
 
     public boolean isIgnored() {
