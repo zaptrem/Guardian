@@ -51,7 +51,7 @@ public class Guardian extends JavaPlugin {
                 BukkitUtils.info("Guardian is out of date, please download the latest");
             }
         } catch (Exception ex) {
-            BukkitUtils.severe("Error occurred while checking if Guardian is up to date", ex);
+            BukkitUtils.severe("Error occurred while checking if Guardian is up to date");
         }
     }
 
